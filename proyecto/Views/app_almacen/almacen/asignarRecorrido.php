@@ -12,12 +12,12 @@ require("../../../Model/session/session_almacen2.php");
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <title>Asignar Lotes a Camiones</title>
+    <title>Asignar Recorrido a camiones</title>
 </head>
 
 <body>
     <div class="title">
-        <h1>Asignar Lotes a Camiones</h1>
+        <h1>Asignar Recorrido a Camiones</h1>
     </div>
     <form action="../../../intermediario/postDataAPI.php" method="post" class="form">
         <h3 class="form__title">Ingrese datos</h3>
@@ -36,11 +36,21 @@ require("../../../Model/session/session_almacen2.php");
         require("../../../intermediario/getDataAPI.php");
         ?>
         <div class="datos">
-            <p>ID del Lote:</p>
+            <p>ID del Recorrido:</p>
             <select name="IDR">
                 <?php
+
+                $IDRMostradas = array(); // Un array para hacer un seguimiento de las matrículas mostradas
+
                 foreach ($array as $fila) {
-                    echo '<option value="' . $fila['IDR'] . '">' . $fila['IDR'] . '</option>';
+                    $IDR = $fila['IDR'];
+
+                    // Verifica si el recorrido ya se ha mostrado
+                    if (!in_array($IDR, $IDRMostradas)) {
+                        // Si no se ha mostrado, muestra el recorrido y agrega al array
+                        $IDRMostradas[] = $IDR;
+                        echo '<option value="' . $fila['IDR'] . '">' . $fila['IDR'] . '</option>';
+                    }
                 }
                 ?>
             </select>

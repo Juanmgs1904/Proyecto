@@ -60,14 +60,14 @@ require("../../../../Model/session/session_almacen3.php");
                     ?>
                     <div class="datos">
                         <?php
-                        echo '<a href="#" onclick="confirmDelete(' . $fila['codigo'] . ');">' . '<div class="option">Eliminar</div>'  . ' </a>';
+                        echo '<a href="#" onclick="confirmDelete(\''  . $fila['codigo'] . '\', \'' . $_GET["IDL"] . '\');">' . '<div class="option">Eliminar</div>'  . ' </a>';
                         ?>
                         <script>
-                            function confirmDelete(codigo) {
+                            function confirmDelete(codigo, IDL) {
                                 var confirmation = confirm("¿Estás seguro de que deseas eliminar este paquete del lote?");
                                 if (confirmation) {
                                     // Si el usuario confirma, redirige a la página de eliminación
-                                    window.location.href = "../../../../intermediario/deleteDataAPI.php?codigoL=" + codigo;
+                                    window.location.href = "../../../../intermediario/deleteDataAPI.php?codigoL=" + codigo + "&IDL="+IDL;
                                 }
                             }
                         </script>

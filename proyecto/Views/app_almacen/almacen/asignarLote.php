@@ -45,7 +45,7 @@ require("../../../Model/session/session_almacen2.php");
                 ?>
             </select>
         </div>
-        <input type="submit" value="Asignar Paquete" class="boton_form">
+        <input type="submit" value="Asignar Lote" class="boton_form">
     </form>
 
     <div class="botones">

@@ -36,13 +36,13 @@ require("../../../../Model/session/session_administrador3.php");
     </header>
     <div class="info_tabla">
         <div class="tabla">
-            <div class="grid5">
+            <div class="gridU">
 
-                <div class="datos pFilaH">MAIL</div>
-                <div class="datos pFilaH">CONTRASEÑA</div>
-                <div class="datos pFilaH">ESTADO</div>
-                <div class="datos pFilaH">ROL</div>
-                <div class="datos pFilaH">OPCIONES</div>
+                <div class="datos pFilaHU">MAIL</div>
+                <div class="datos pFilaHU">CONTRASEÑA</div>
+                <div class="datos pFilaHU">ESTADO</div>
+                <div class="datos pFilaHU">ROL</div>
+                <div class="datos pFilaHU">OPCIONES</div>
 
                 <?php
                 $conexion = new mysqli("localhost", "root", "", "proyecto");
@@ -51,26 +51,22 @@ require("../../../../Model/session/session_administrador3.php");
                 foreach ($filas->fetch_all(MYSQLI_ASSOC) as $fila) {
                 ?>
 
-                    <div class="datos pFilaV pFilaV">Mail</div>
+                    <div class="datos pFilaVU">Mail</div>
                     <div class="datos"><?php echo $fila['Mail'] . " "; ?></div>
-                    <div class="datos pFilaV pFilaV">Contraseña</div>
+                    <div class="datos pFilaVU">Contraseña</div>
                     <div class="datos"><?php echo $fila['Contraseña'] . " "; ?></div>
-                    <div class="datos pFilaV pFilaV">Estado</div>
+                    <div class="datos pFilaVU">Estado</div>
                     <div class="datos"><?php echo $fila['Estado'] . " "; ?></div>
-                    <div class="datos pFilaV pFilaV">Rol</div>
+                    <div class="datos pFilaVU">Rol</div>
                     <div class="datos"><?php echo $fila['Rol'] . " "; ?></div>
-                    <div class="datos pFilaV pFilaV">OPCIONES</div>
+                    <div class="datos pFilaVU">OPCIONES</div>
                     <div class="datos">
                         <?php
                         echo '<a href="usuario_modificar.php?Mail=' . $fila['Mail'] . '&Contraseña=' . $fila['Contraseña'] .
                             '&Estado=' . $fila['Estado'] . '&Rol=' . $fila['Rol'] . '">' . '<img src="../../img/modificar.svg" alt="Imagen modificar">' . ' </a>';
                         ?>
                         <?php
-                        echo '<a href="../../eliminar.php?Mail=' . $fila['Mail'] . '">' . '<img src="../../img/eliminar.svg" alt="Imagen eliminar">' . ' </a>';
-                        ?>
-                        
-                        <?php
-                        echo '<a href="#" onclick="confirmDelete(' . $fila['Mail'] .');">' . '<img src="../../img/eliminar.svg" alt="Imagen eliminar">' . ' </a>';
+                        echo '<a href="#" onclick="confirmDelete(\''  . $fila['Mail'] . '\');">' . '<img src="../../img/eliminar.svg" alt="Imagen eliminar">' . ' </a>';
                         ?>
                         <script>
                             function confirmDelete(Mail) {

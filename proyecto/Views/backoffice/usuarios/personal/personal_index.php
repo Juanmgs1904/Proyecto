@@ -64,7 +64,7 @@ require("../../../../Model/session/session_administrador3.php");
                             echo '<a href="personal_modificar.php?ciP=' . $fila['CIP'] . '&cargo=' . $fila['Cargo'] . '&fechaN=' . $fila['FechaNacimiento'] . '">' . '<img src="../../img/modificar.svg" alt="Imagen modificar">' . ' </a>';
                             ?>
                             <?php
-                            echo '<a href="#" onclick="confirmDelete(' . $fila['CIP'] . ');">' . '<img src="../../img/eliminar.svg" alt="Imagen eliminar">' . ' </a>';
+                            echo '<a href="#" onclick="confirmDelete(\''  . $fila['CIP'] . '\');">' . '<img src="../../img/eliminar.svg" alt="Imagen eliminar">' . ' </a>';
                             ?>
                             <script>
                                 function confirmDelete(CIP) {

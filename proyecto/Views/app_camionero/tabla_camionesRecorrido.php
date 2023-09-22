@@ -1,5 +1,5 @@
 <?php
-$url = 'http://localhost/proyecto/controller/transito/C_camion.php';//cambiar a sigue
+$url = 'http://localhost/proyecto/controller/transito/C_sigue.php';
 require("../../intermediario/getDataAPI.php");
 require("../../Model/session/session_camion.php");
 ?>
@@ -9,7 +9,7 @@ require("../../Model/session/session_camion.php");
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lotes Camiones</title>
+    <title>Recorrido Camiones</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;900&family=Roboto:wght@400;700;900&display=swap" rel="stylesheet">
@@ -55,7 +55,7 @@ require("../../Model/session/session_camion.php");
                 ?>
                 <div class="datosT">
                     <?php
-                    echo '<a href="recorrido.php?id=' . $id . '">' . "Ver Recorrido" . ' </a>';
+                    echo '<a href="recorrido.php?matricula=' . $id . '">' . "Ver Recorrido" . ' </a>';
                     ?>
                 </div>
         <?php

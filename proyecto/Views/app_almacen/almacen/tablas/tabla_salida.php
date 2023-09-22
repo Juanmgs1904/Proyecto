@@ -60,10 +60,19 @@ require("../../../../Model/session/session_almacen3.php");
                 <?php
                 $matricula = $fila['Matricula'];
                 ?>
-                <div class="datos">
-                    <?php
-                    echo '<a href="../../../../intermediario/deleteDataAPI.php?matriculaS=' . $fila['Matricula'] . '&idA=' . $fila['IDA'] . '&fechaSalida=' . $fila['FechaSalida'] . '">' . "Eliminar" . ' </a>';
+                 <div class="datos">
+                    <?php                           
+                    echo '<a href="#" onclick="confirmDelete(\''  . $fila['Matricula'] . '\', \'' . $fila["IDA"] . '\', \'' . $fila["FechaSalida"] . '\');">' . '<div class="option">Eliminar</div>' . ' </a>';
                     ?>
+                    <script>
+                        function confirmDelete(matricula, IDA, FechaSalida) {
+                            var confirmation = confirm("¿Estás seguro de que deseas eliminar este paquete de la camioneta?");
+                            if (confirmation) {
+                                // Si el usuario confirma, redirige a la página de eliminación
+                                window.location.href = "../../../../intermediario/deleteDataAPI.php?matriculaS=" + matricula + "&IDA=" + IDA + "&fechaSalida="+ FechaSalida;
+                            }
+                        }
+                    </script>
                 </div>
             <?php
             }

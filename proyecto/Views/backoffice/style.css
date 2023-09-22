@@ -303,6 +303,16 @@ a {
     width: 90%;
 }
 
+.gridU {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    background-color: var(--grisO);
+    font-size: 2rem;
+    border: solid 2px #000;
+    margin: 5rem auto;
+    width: 90%;
+}
+
 .grid6 {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
@@ -359,6 +369,26 @@ a {
 }
 
 .datos img:hover {
+    transform: scale(1.1);
+}
+
+.datosR {
+    background-color: var(--fondoBTN);
+    border: 2px solid #000;
+    padding: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.datosR img {
+    height: 3rem;
+    width: 2rem;
+    transition: .5s;
+    margin: 1rem 0;
+}
+
+.datosR img:hover {
     transform: scale(1.1);
 }
 
@@ -420,6 +450,37 @@ a {
     display: none;
     text-align: center;
     background-color:var(--fondoPfila);
+}
+
+.pFilaHC {
+    font-weight: 900;
+    display: block;
+    text-align: center;   
+    background-color: var(--fondoPfila);
+}
+.pFilaVC {
+    font-weight: 900;
+    display: none;
+    text-align: center;
+    background-color:var(--fondoPfila);
+}
+
+.pFilaHU {
+    font-weight: 900;
+    display: block;
+    text-align: center;   
+    background-color: var(--fondoPfila);
+}
+.pFilaVU {
+    font-weight: 900;
+    display: none;
+    text-align: center;
+    background-color:var(--fondoPfila);
+}
+
+.remito{
+    width: 2rem;
+    height: 3rem;
 }
 
 /* Formularios */
@@ -521,6 +582,23 @@ a {
     flex-direction: column;
     justify-content: space-around;
     gap: 5rem;
+}
+
+
+@media (max-width: 1250px){
+    .pFilaHU {
+        display: none;
+    }
+    
+    .pFilaVU {
+        display: block;
+    }
+    
+    .gridU{
+        grid-template-columns: repeat(2, 1fr);
+
+    }
+
 }
 
 

@@ -36,10 +36,11 @@ require("../../../../Model/session/session_administrador3.php");
             </div>
         </header>
         <div class="info_tabla">
-            <div class="grid2">
+            <div class="grid3">
 
-                <div class="datos pFila">ID</div>
-                <div class="datos pFila">OPCIONES</div>
+                <div class="datos pFilaH">ID</div>
+                <div class="datos pFilaH">ruta</div>
+                <div class="datos pFilaH">OPCIONES</div>
 
                 <?php
                 $conexion = new mysqli("localhost", "root", "", "proyecto");
@@ -47,12 +48,15 @@ require("../../../../Model/session/session_administrador3.php");
                 $filas = $conexion->query($sentencia);
                 foreach ($filas->fetch_all(MYSQLI_ASSOC) as $fila) {
                 ?>
-
+                    <div class="datos pFilaV">ID</div>
                     <div class="datos"><?php echo $fila['idI'] . " "; ?></div>
+                    <div class="datos pFilaV">ruta</div>
+                    <div class="datos"><?php echo $fila['ruta'] . " "; ?></div>
+                    <div class="datos pFilaV">OPCIONES</div>
                     <div class="datos">
 
                         <?php
-                            echo '<a href="#" onclick="confirmDelete(' . $fila['idI'] . ');">' . '<img src="../../img/eliminar.svg" alt="Imagen eliminar">' . ' </a>';
+                            echo '<a href="#" onclick="confirmDelete(\''  . $fila['idI'] . '\');">' . '<img src="../../img/eliminar.svg" alt="Imagen eliminar">' . ' </a>';
                             ?>
                             <!-- Resto del código -->
 

@@ -33,21 +33,6 @@ require("../../../Model/session/session_almacenInterno2.php");
                 ?>
             </select>
         </div>
-
-        <?php
-        $url = 'http://localhost/proyecto/controller/almacen/C_almacenI.php';
-        require("../../../intermediario/getDataAPI.php");        
-        ?>
-        <div class="datos">
-            <p>ID del Almacén:</p>
-            <select name="idI">
-                <?php
-                foreach ($array as $fila) {
-                    echo '<option value="' . $fila['idI'] . '">' . $fila['idI'] . '</option>';
-                }
-                ?>
-            </select>
-        </div>
         <div class="datos">
             <p>Hora de llegada:</p>
             <input type="datetime-local" name="fechaLlegada" class="input" placeholder="Ingrese hora" required>

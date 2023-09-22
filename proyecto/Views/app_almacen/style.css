@@ -270,7 +270,12 @@ a {
     color: var(--letra);
     background-color: #fff;
 }
-
+.paqueteE_grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    color: var(--letra);
+    background-color: #fff;
+}
 
 .lotes_grid {
     display: grid;
@@ -284,7 +289,12 @@ a {
     color: var(--letra);
     background-color: #fff;
 }
-
+.loteE_grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    color: var(--letra);
+    background-color: #fff;
+}
 
 .almacenes__grid {
     display: grid;

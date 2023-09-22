@@ -72,7 +72,7 @@ require("../../../Model/session/session_administrador2.php");
                             '&fEntrega=' . $fila['fEntrega'] . '&Destinatario=' . $fila['Destinatario'] .'&Destino=' . $fila['Destino'] . '">' . '<img src="../img/modificar.svg" alt="Imagen modificar">' . ' </a>';
                             ?>
                             <?php
-                            echo '<a href="#" onclick="confirmDelete(' . $fila['codigo'] . ');">' . '<img src="../img/eliminar.svg" alt="Imagen eliminar">' . ' </a>';
+                            echo '<a href="#" onclick="confirmDelete(\''  . $fila['codigo'] . '\');">' . '<img src="../img/eliminar.svg" alt="Imagen eliminar">' . ' </a>';
                             ?>
                             <!-- Resto del código -->
 

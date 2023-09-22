@@ -18,7 +18,7 @@ require("../../../../Model/session/session_almacenInterno3.php");
 </head>
 
 <body class="fondo">
-<header class="header">
+    <header class="header">
         <div class="header__contenedor">
             <div class="header__home">
                 <a href="../../index.php">
@@ -34,26 +34,25 @@ require("../../../../Model/session/session_almacenInterno3.php");
 
                 <ul class="nav__lista">
                     <li><a href="#"><?php echo $_SESSION['mail']; ?></a></li>
-                    <a href="../../../../index.php"><li class="cerrar">Cerrar Sesión</li></a>
+                    <a href="../../../../index.php">
+                        <li class="cerrar">Cerrar Sesión</li>
+                    </a>
                 </ul>
             </div>
         </div>
     </header>
     <div class="tabla__contenedor">
         <div class="titulo">
-            <h2>SALIDAS DE CAMIONES</h2>
+            <h2>SALIDAS DE CAMIONETAS</h2>
         </div>
-        <div class="grid">
+        <div class="gridCam">
             <div class="datos pFilaH">MATRÍCULA</div>
-            <div class="datos pFilaH">ID ALMACÉN</div>
             <div class="datos pFilaH">FECHA</div>
             <div class="datos pFilaH">OPCIONES</div>
             <?php
             foreach ($array as $fila) {
             ?><div class="datos pFilaV">MATRÍCULA</div>
                 <div class="datos"><?php echo $fila['MatriculaC'] . " "; ?></div>
-                <div class="datos pFilaV">ID ALMACÉN</div>
-                <div class="datos"><?php echo $fila['idI'] . " "; ?></div>
                 <div class="datos pFilaV">FECHA</div>
                 <div class="datos"><?php echo $fila['FechaSalida'] . " "; ?></div>
                 <div class="datos pFilaV">OPCIONES</div>
@@ -62,8 +61,17 @@ require("../../../../Model/session/session_almacenInterno3.php");
                 ?>
                 <div class="datos">
                     <?php
-                    echo '<a href="../../../../intermediario/deleteDataAPI.php?matriculaSC=' . $fila['MatriculaC'] . '&idI=' . $fila['idI'] . '&fechaSalida=' . $fila['FechaSalida'] . '">' . "Eliminar" . ' </a>';
+                    echo '<a href="#" onclick="confirmDelete(\''  . $fila['MatriculaC'] . '\', \'' . $fila["FechaSalida"] . '\');">' . '<div class="option">Eliminar</div>' . ' </a>';
                     ?>
+                    <script>
+                        function confirmDelete(matriculaC, FechaSalida) {
+                            var confirmation = confirm("¿Estás seguro de que deseas eliminar este paquete de la camioneta?");
+                            if (confirmation) {
+                                // Si el usuario confirma, redirige a la página de eliminación
+                                window.location.href = "../../../../intermediario/deleteDataAPI.php?matriculaSC=" + matriculaC + "&fechaSalida=" + FechaSalida;
+                            }
+                        }
+                    </script>
                 </div>
             <?php
             }

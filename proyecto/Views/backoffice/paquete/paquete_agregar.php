@@ -33,7 +33,7 @@ require ("../../../Model/session/session_administrador2.php");
             </div>
             <div class="form_info">
                 <label class="fechaV">Fecha de entrega:</label>
-                <input type="date" name="fEntrega">
+                <input type="date" name="fEntrega" required>
             </div>
             <div class="form_info">
                 <label>Destiantario:</label>

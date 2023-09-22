@@ -3,22 +3,20 @@ require_once(realpath(dirname(__FILE__) . '/../conexion/conexion.php'));
 class llegada extends conexion {
 
     private $matriculaC = "";
-    private $idI = "";
     private $fLlegada = "";
 
     public function listaHoras(){
-        $sentencia = "SELECT MatriculaC, idI, FechaLlegada FROM va_llegada";
+        $sentencia = "SELECT MatriculaC, FechaLlegada FROM va_llegada";
         $arrayDatos = parent::obtenerDatos($sentencia);
         return $arrayDatos;
     }
     public function post($json){
         $_respuestas = new respuestas;
         $datos = json_decode($json, true);
-        if(!isset($datos['matriculaC']) || !isset($datos['idI']) || !isset($datos['fechaLlegada'])){
+        if(!isset($datos['matriculaC']) || !isset($datos['fechaLlegada'])){
             return $_respuestas->error_400();
         }else{
             $this->matriculaC = $datos['matriculaC'];
-            $this->idI = $datos['idI'];
             $this->fLlegada = $datos['fechaLlegada'];
             $respuestaId = $this->altaHora();
             if($respuestaId){
@@ -34,9 +32,9 @@ class llegada extends conexion {
         
     }
     private function altaHora(){
-        $sentencia = "INSERT INTO va_llegada(MatriculaC,idI,FechaLlegada)
+        $sentencia = "INSERT INTO va_llegada(MatriculaC,FechaLlegada)
         VALUES
-        ('".$this->matriculaC."','". $this->idI."','". $this->fLlegada."')";
+        ('".$this->matriculaC."','". $this->fLlegada."')";
         $respuesta = parent::guardar($sentencia);
         if($respuesta){
             return $respuesta;
@@ -48,11 +46,10 @@ class llegada extends conexion {
         public function put($json){
         $_respuestas = new respuestas;
         $datos = json_decode($json, true);
-        if(!isset($datos['matriculaC']) || !isset($datos['idI']) || !isset($datos['fechaLlegada'])){
+        if(!isset($datos['matriculaC']) || !isset($datos['fechaLlegada'])){
             return $_respuestas->error_400();
         }else{
             $this->matriculaC = $datos['matriculaC'];
-            $this->idI = $datos['idI'];
             $this->fLlegada = $datos['fechaLlegada'];
             $respuestaFilas = $this->modificarHora();
             if($respuestaFilas){
@@ -67,8 +64,7 @@ class llegada extends conexion {
         }
      }   
      private function modificarHora(){
-        $sentencia = "UPDATE va_llegada SET FechaLlegada = '" . $this->fLlegada . "',
-        IDI = '". $this->idI . "' WHERE MatriculaC = '" . $this->matriculaC . "'";
+        $sentencia = "UPDATE va_llegada SET FechaLlegada = '" . $this->fLlegada . "' WHERE MatriculaC = '" . $this->matriculaC . "'";
         $respuesta = parent::guardar($sentencia);
         if($respuesta >= 1){
             return $respuesta;
@@ -80,11 +76,10 @@ class llegada extends conexion {
     public function delete($json){
         $_respuestas = new respuestas;
         $datos = json_decode($json, true);
-        if(!isset($datos['matriculaC']) || !isset($datos['idI']) || !isset($datos['fechaLlegada'])){
+        if(!isset($datos['matriculaC']) || !isset($datos['fechaLlegada'])){
             return $_respuestas->error_400();
         }else{
             $this->matriculaC = $datos['matriculaC'];
-            $this->idI = $datos['idI'];
             $this->fLlegada = $datos['fechaLlegada'];
             $respuestaFilas = $this->eliminarHora();
             if($respuestaFilas){
@@ -99,7 +94,7 @@ class llegada extends conexion {
         }
     }
     private function eliminarHora(){
-        $sentencia = "DELETE FROM va_llegada WHERE MatriculaC = '" . $this->matriculaC . "' AND idI = '" . $this->idI . "' AND FechaLlegada = '" . $this->fLlegada . "'";
+        $sentencia = "DELETE FROM va_llegada WHERE MatriculaC = '" . $this->matriculaC . "' AND FechaLlegada = '" . $this->fLlegada . "'";
         $respuesta = parent::guardar($sentencia);
         if($respuesta >= 1){
             return $respuesta;

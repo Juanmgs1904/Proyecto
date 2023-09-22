@@ -61,8 +61,9 @@ if (isset($_POST['MatriculaV'])) {
 //almacenInterno
 if (isset($_POST['idI'])) {
     $idI = $_POST['idI'];
-    $sentencia = "INSERT INTO almacenInterno (idI) 
-                    VALUES('$idI')";
+    $ruta = $_POST['ruta'];
+    $sentencia = "INSERT INTO almacenInterno (idI, ruta) 
+                    VALUES('$idI', '$ruta')";
     $filas = $conexion->query($sentencia);
     header("Location: almacenes/almacenInterno/almacenInterno_index.php");
 }

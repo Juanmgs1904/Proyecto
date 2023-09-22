@@ -30,10 +30,11 @@ switch($_SERVER['REQUEST_METHOD']){
         }else{
             if(isset($_GET['idA'])){
                 //solicita datos al modelo
-                $respuesta = $_lotes->listaLotes($_GET['idA']);
+                $respuesta = $_lotes->listaLotesAlmacen($_GET['idA']);
     
                 require('../../Routes/R_almacen.php');
             }else{
+                $respuesta = $_lotes->listaLotes();
                 require('../../Routes/R_almacen.php');
             }
         }

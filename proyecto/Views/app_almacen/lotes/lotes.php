@@ -77,7 +77,7 @@ require("../../../Model/session/session_almacen2.php");
                 ?>
                 <div class="op">
                     <?php
-                    echo '<a href="lote.php?id=' . $id . '&idA=' . $idA . '">' . '<div class="option">Ver Remito</div>' . ' </a>';
+                    echo '<a href="loteE.php?id=' . $id . '&idA=' . $idA . '">' . '<div class="option">Ver Remito</div>' . ' </a>';
                     ?>
                     <?php
                     if ($mostrar == true) {

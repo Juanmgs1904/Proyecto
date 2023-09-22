@@ -42,6 +42,18 @@ class conexion {
         }
         return $this->hacerUTF8($resultadoArray);
     }
+    public function SobtenerDatos($sentencia, $sentencia2){
+        $resultado = $this->conexion->query($sentencia);
+        $resultadoArray = array();
+        foreach($resultado as $key){
+            $resultadoArray[] = $key;//crea una nueva fila en el array
+        }
+        $resultado2 = $this->conexion->query($sentencia2);
+        foreach($resultado2 as $key){
+            $resultadoArray[] = $key;//crea una nueva fila en el array
+        }
+        return $this->hacerUTF8($resultadoArray);
+    }
     public function guardar($sentencia){//Devulve la cantidad de filas afectadas por la sentencia
         $resultado = $this->conexion->query($sentencia);
         return $this->conexion->affected_rows;

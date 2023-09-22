@@ -170,6 +170,12 @@ a {
     color: var(--letra);
 }
 
+.gridCam {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    color: var(--letra);
+}
+
 .PAC_grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);

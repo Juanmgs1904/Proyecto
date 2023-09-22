@@ -13,11 +13,9 @@ switch($_SERVER['REQUEST_METHOD']){
     case 'GET':
             //solicita datos al modelo
             $respuesta = $_lotesAC->listaLotesAC();
-
             require('../../Routes/R_almacen.php');
     break;
     default:
         require ('../../Routes/R_almacen.php');
     break;
 }
-?>

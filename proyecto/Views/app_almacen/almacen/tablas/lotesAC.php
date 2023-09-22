@@ -10,7 +10,7 @@ require("../../../../Model/session/session_almacen3.php");
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tabla de Paquetes</title>
+    <title>Tabla de Lotes</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;900&family=Roboto:wght@400;700;900&display=swap" rel="stylesheet">
@@ -42,7 +42,7 @@ require("../../../../Model/session/session_almacen3.php");
     </header>
     <div class="tabla__contenedor">
         <div class="titulo">
-            <h2>lotes asignados</h2>
+            <h2>Lotes asignados</h2>
         </div>
         <div class="PAC_grid">
             <div class="datos pFila">ID del Lote</div>
@@ -58,15 +58,15 @@ require("../../../../Model/session/session_almacen3.php");
                     $IDL = $fila['IDL'];
                     ?>
                     <div class="datos">
-                        <?php
-                        echo '<a href="#" onclick="confirmDelete(' . $fila['IDL'] . ');">' . '<div class="option">Eliminar</div>'  . ' </a>';
+                        <?php         
+                        echo '<a href="#" onclick="confirmDelete(\''  . $fila['IDL'] . '\', \'' . $_GET["matricula"] . '\');">' . '<div class="option">Eliminar</div>'  . ' </a>';
                         ?>
                         <script>
-                            function confirmDelete(IDL) {
+                            function confirmDelete(IDL, matricula) {
                                 var confirmation = confirm("¿Estás seguro de que deseas eliminar este Lote del Camión?");
                                 if (confirmation) {
                                     // Si el usuario confirma, redirige a la página de eliminación
-                                    window.location.href = "../../../../intermediario/deleteDataAPI.php?IDL=" + IDL;
+                                    window.location.href = "../../../../intermediario/deleteDataAPI.php?IDL=" + IDL + "&matricula=" + matricula;
                                 }
                             }
                         </script>

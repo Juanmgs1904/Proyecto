@@ -43,7 +43,7 @@ require("../../Model/session/session_almacenExterno.php");
         <div class="opciones">
             
         <div class="opcion">
-                <a href="lotes/almacenes.php" class="BTN">Ingresar</a>
+                <a href="lotes/lotesE.php" class="BTN">Ingresar</a>
                 <div class="infoOp">
                     <h2>Lotes</h2>
                     <img src="img/lotes.svg" alt="Imagen lotes">
@@ -55,7 +55,7 @@ require("../../Model/session/session_almacenExterno.php");
                 <div class="infoOp">
                     <img src="img/paquetes.svg" alt="Imagen paquetes">
                     <h2>Paquetes</h2>
-                </div><a href="paquete/paquetes.php" class="BTN">Ingresar</a>
+                </div><a href="paquete/paquetesE.php" class="BTN">Ingresar</a>
             </div><!--Opción-->
             <div class="opcion">
                 <a href="almacen/almacenExterno.php" class="BTN">Ingresar</a> 

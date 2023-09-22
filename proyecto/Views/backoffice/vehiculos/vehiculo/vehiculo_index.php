@@ -1,5 +1,5 @@
 <?php
-require("../../../../Model/session/session_administrador2.php");
+require("../../../../Model/session/session_administrador3.php");
 
 ?>
 <!DOCTYPE html>
@@ -62,7 +62,7 @@ require("../../../../Model/session/session_administrador2.php");
                         echo '<a href="vehiculo_modificar.php?MatriculaV=' . $fila['MatriculaV'] . '&Estado=' . $fila['Estado'] . '&Disponibilidad=' . $fila['Disponibilidad'] . '">' . '<img src="../../img/modificar.svg" alt="Imagen modificar">' . ' </a>';
                         ?>
                         <?php
-                        echo '<a href="#" onclick="confirmDelete(' . $fila['MatriculaV'] . ');">' . '<img src="../../img/eliminar.svg" alt="Imagen eliminar">' . ' </a>';
+                        echo '<a href="#" onclick="confirmDelete(\''  . $fila['MatriculaV'] . '\');">' . '<img src="../../img/eliminar.svg" alt="Imagen eliminar">' . ' </a>';
                         ?>
                         <!-- Resto del código -->
 

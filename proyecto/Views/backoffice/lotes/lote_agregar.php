@@ -37,10 +37,24 @@ require ("../../../Model/session/session_administrador2.php");
                 <label class="fechaN">Tiempo Estimado:</label>
                 <input type="datetime-local" name="tiempoEstimado" required>
             </div>
-            <div class="form_info">
-                <label class="fechaN">ID Almacén:</label>
-                <input type="text" name="idI" required>
-            </div>
+            <?php
+            $conexion = new mysqli("localhost", "root", "", "proyecto");
+            $sentencia = "SELECT CIP FROM personal WHERE CIP NOT IN (SELECT CIP FROM trabaja)";
+            $filas = $conexion->query($sentencia);
+            $sentencia = "SELECT idI FROM almaceninterno";
+            $filas = $conexion->query($sentencia);
+            ?>
+                <div class="form_info">
+                    <label class="fechaN">ID del Almacén:</label>
+                    <select name="idI" required>
+                        <?php
+                        foreach ($filas->fetch_all(MYSQLI_ASSOC) as $fila) {
+                            echo '<option value="' . $fila['idI'] . '">' . $fila['idI'] . '</option>';
+                        }
+                        ?>
+                    </select>
+                </div>
+            
             <input type="submit" value="Agregar" class="btn">
         </form>
     </div>

@@ -1,5 +1,5 @@
 <?php
-require ("../../../../Model/session/session_administrador2.php");
+require ("../../../../Model/session/session_administrador3.php");
 ?>
 <!DOCTYPE html>
 <html lang="es">

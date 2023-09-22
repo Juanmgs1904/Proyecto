@@ -68,7 +68,7 @@ require("../../../Model/session/session_administrador2.php");
                             '&Ruta=' . $fila['Ruta'] .'&tiempoEstimado=' . $fila['tiempoEstimado'].'&idI=' . $fila['idI'] .'">' . '<img src="../img/modificar.svg" alt="Imagen modificar">' . ' </a>';
                             ?>
                             <?php
-                            echo '<a href="#" onclick="confirmDelete(' . $fila['IDL'] . ');">' . '<img src="../img/eliminar.svg" alt="Imagen eliminar">' . ' </a>';
+                            echo '<a href="#" onclick="confirmDelete(\''  . $fila['IDL'] . '\');">' . '<img src="../img/eliminar.svg" alt="Imagen eliminar">' . ' </a>';
                             ?>
                             <!-- Resto del código -->
 

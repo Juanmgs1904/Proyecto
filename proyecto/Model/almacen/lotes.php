@@ -10,7 +10,12 @@ class lotes extends conexion {
     private $tiempoEstimado = "";
     private $idI = "";
 
-    public function listaLotes($idA){
+    public function listaLotes(){
+        $sentencia = "SELECT * FROM lotes";
+        $arrayDatos = parent::obtenerDatos($sentencia);
+        return $arrayDatos;
+    }
+    public function listaLotesAlmacen($idA){
         if($idA == 1){
             $sentencia = "SELECT IDL,Peso,Estado,idI FROM lotes WHERE Estado = 'No Asignado'";
         }else{
@@ -24,6 +29,7 @@ class lotes extends conexion {
         $arrayDatos = parent::obtenerDatos($sentencia);
         return $arrayDatos;
     }
+
     public function post($json){
         $_respuestas = new respuestas;
         $datos = json_decode($json, true);

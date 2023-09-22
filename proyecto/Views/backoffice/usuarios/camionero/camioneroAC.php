@@ -55,7 +55,7 @@ require("../../../../Model/session/session_administrador3.php");
                             ?>
                             <div class="datos">
                                 <?php
-                                echo '<a href="#" onclick="confirmDelete(' . $fila['CIC'] . ');">' . '<div class="option">Eliminar</div>'  . ' </a>';
+                                echo '<a href="#" onclick="confirmDelete(\''  . $fila['CIC'] . '\');">' . '<img src="../../img/eliminar.svg" alt="Imagen eliminar">' . ' </a>';
                                 ?>
                                 <script>
                                     function confirmDelete(CIC) {

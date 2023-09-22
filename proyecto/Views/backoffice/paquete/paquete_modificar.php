@@ -16,6 +16,9 @@ require ("../../../Model/session/session_administrador2.php");
     $Estado = $_GET['Estado'];
     $fRecibo = $_GET['fRecibo'];
     $fEntrega = $_GET['fEntrega'];
+    
+    $Destinatario = $_GET['Destinatario'];
+    $Destino = $_GET['Destino'];
     ?>
     <div class="contenedor_form">
         <h1>Ingresar Datos</h1>

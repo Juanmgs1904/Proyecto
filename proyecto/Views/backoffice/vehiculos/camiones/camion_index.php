@@ -29,7 +29,7 @@ require("../../../../Model/session/session_administrador2.php");
 
                 <ul class="nav__lista">
                     <li><a href="#"><?php echo $_SESSION['mail']; ?></a></li>
-                    <a href="../../../index.php"><li class="cerrar">Cerrar Sesión</li></a>
+                    <a href="../../../../index.php"><li class="cerrar">Cerrar Sesión</li></a>
                 </ul>
             </div>
         </div>
@@ -73,7 +73,7 @@ require("../../../../Model/session/session_administrador2.php");
                             '&Tipo=' . $fila['Tipo'] . '">' . '<img src="../../img/modificar.svg" alt="Imagen modificar">' . ' </a>';
                         ?>
                         <?php
-                        echo '<a href="#" onclick="confirmDelete(' . $fila['Matricula'] . ');">' . '<img src="../../img/eliminar.svg" alt="Imagen eliminar">' . ' </a>';
+                        echo '<a href="#" onclick="confirmDelete(\''  . $fila['Matricula'] . '\');">' . '<img src="../../img/eliminar.svg" alt="Imagen eliminar">' . ' </a>';
                         ?>
                         <!-- Resto del código -->
 

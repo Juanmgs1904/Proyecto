@@ -23,7 +23,7 @@ switch($_SERVER['REQUEST_METHOD']){
     //Mostrar
     case 'GET':
             //solicita datos al modelo
-            $respusigue = $_sigue->listaHoras();
+            $respuesta = $_sigue->listaHoras();
 
             require('../../Routes/R_almacen.php');
     break;

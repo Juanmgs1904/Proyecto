@@ -62,7 +62,7 @@ require("../../../../Model/session/session_administrador3.php");
                             echo '<a href="camionero_modificar.php?ciC=' . $fila['CIC'] . '&fechaVL=' . $fila['FechaVL'] . '&turno=' . $fila['Turno'] . '">' . '<img src="../../img/modificar.svg" alt="Imagen modificar">' . ' </a>';
                             ?>
                             <?php
-                            echo '<a href="#" onclick="confirmDelete(' . $fila['CIC'] . ');">' . '<img src="../../img/eliminar.svg" alt="Imagen eliminar">' . ' </a>';
+                            echo '<a href="#" onclick="confirmDelete(\''  . $fila['CIC'] . '\');">' . '<img src="../../img/eliminar.svg" alt="Imagen eliminar">' . ' </a>';
                             ?>
                             <script>
                                 function confirmDelete(CIC) {

@@ -60,8 +60,7 @@ if (isset($_POST['MatriculaV'])) {
 if (isset($_POST['id'])) {
     $id = $_POST['id'];
     $ubicacion = $_POST['ubicacion'];
-    $ruta = $_POST['ruta'];
-    $sentencia = "UPDATE almacen SET  ubicacion='$ubicacion', ruta=$ruta WHERE id = $id";
+    $sentencia = "UPDATE almacen SET  ubicacion='$ubicacion' WHERE id = $id";
     $conexion->query($sentencia);
     header("Location: almacenes/almacen/almacen_index.php");
 }

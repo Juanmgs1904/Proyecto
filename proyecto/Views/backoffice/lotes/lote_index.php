@@ -61,7 +61,7 @@ require("../../../Model/session/session_administrador2.php");
                         <div class="datos"><?php echo $fila['idI'] . " "; ?></div>
                         <div class="datos pFilaV">OPCIONES</div>
                         <?php
-                        echo '<a href="verRemitoL.php?IDL=' . $fila['IDL'] . '">' . '<div class="datos">Ver Remito</div>' . ' </a>';
+                        echo '<a href="verRemitoL.php?IDL=' . $fila['IDL'] . '">' . '<div class="datosR">'.'<img src="../img/icono_remito.png" alt="Imagen eliminar">'.'</div>' . ' </a>';
                         ?>
                     <?php
                     }

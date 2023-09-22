@@ -18,10 +18,6 @@ require ("../../../../Model/session/session_administrador3.php");
                 <label>Ubicacion:</label>
                 <input type="text" name="ubicacion" required>
             </div>
-            <div class="form_info">
-                <label>Ruta:</label>
-                <input type="number" name="ruta" required>
-            </div>
             <input type="submit" value="Agregar" class="btn">
         </form>
     </div>

@@ -14,7 +14,6 @@ require ("../../../../Model/session/session_administrador3.php");
     <?php
     $id = $_GET['id'];
     $ubicacion = $_GET['ubicacion'];
-    $ruta = $_GET['ruta'];
     ?>
     <div class="contenedor_form">
         <h1>Ingresar Datos</h1>
@@ -26,10 +25,6 @@ require ("../../../../Model/session/session_administrador3.php");
             <div class="form_info">
                 <label>Ubicacion:</label>
                 <input type="text" name="ubicacion" value="<?=$ubicacion?>" required>
-            </div>
-            <div class="form_info">
-                <label>Ruta:</label>
-                <input type="number" name="ruta" value="<?=$ruta?>" required>
             </div>
             <input type="submit" value="Modificar" class="btn">
         </form>

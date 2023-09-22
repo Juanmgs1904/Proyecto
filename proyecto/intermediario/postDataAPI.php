@@ -1,6 +1,31 @@
 <?php
 $ch = curl_init();
 //Lote
+if(isset($_POST['DestinoE']) && isset($_POST['almacenExterno']) && isset($_POST['tiempoEstimado']) && isset($_POST['idI'])){
+    $Destino = $_POST['DestinoE'];
+    $almacenExterno = $_POST['almacenExterno'];
+    $tiempoEstimado = $_POST['tiempoEstimado'];
+    $idI = $_POST['idI'];
+
+    $datos = [
+        'estado' => "No Asignado",
+        'destino' => $Destino,
+        'almacenExterno' => $almacenExterno,
+        'tiempoEstimado' => $tiempoEstimado,
+        'idI' => $idI
+    ];
+    $json = json_encode($datos);
+    curl_setopt($ch,CURLOPT_URL,"http://localhost/proyecto/controller/almacen/C_lotesE.php");
+    curl_setopt($ch,CURLOPT_POST, true);
+    curl_setopt($ch,CURLOPT_POSTFIELDS, $json);
+    curl_setopt($ch,CURLOPT_RETURNTRANSFER, true);
+    curl_exec($ch);
+    if(curl_errno($ch)){
+        echo curl_error($ch);
+    }else{
+       header("location: http://localhost/proyecto/Views/app_almacen/lotes/lotesE.php");
+    }
+}
 if(isset($_POST['Destino']) && isset($_POST['Ruta']) && isset($_POST['tiempoEstimado'])){
     $Destino = $_POST['Destino'];
     $Ruta = $_POST['Ruta'];
@@ -28,7 +53,7 @@ if(isset($_POST['Destino']) && isset($_POST['Ruta']) && isset($_POST['tiempoEsti
 }
 
 //Paquete
-if(isset($_POST['peso']) && isset($_POST['fRecibo']) && isset($_POST['fEntrega']) && isset($_POST['Destinatario']) && isset($_POST['Destino'])){
+if(isset($_POST['peso']) && isset($_POST['fRecibo']) && isset($_POST['fEntrega']) && isset($_POST['Destinatario']) && isset($_POST['Destino'])&& isset($_POST['idA'])){
     $Peso = $_POST['peso'];
     $Estado = "NoAsignado";
     $fRecibo = $_POST['fRecibo'];
@@ -55,6 +80,34 @@ if(isset($_POST['peso']) && isset($_POST['fRecibo']) && isset($_POST['fEntrega']
         echo curl_error($ch);
     }else{
        header("location: http://localhost/proyecto/Views/app_almacen/paquete/paquetes.php?id=$idA");
+    }
+}
+if(isset($_POST['peso']) && isset($_POST['fRecibo']) && isset($_POST['fEntrega']) && isset($_POST['Destinatario']) && isset($_POST['Destino'])){
+    $Peso = $_POST['peso'];
+    $Estado = "enAlmacenExterno";
+    $fRecibo = $_POST['fRecibo'];
+    $fEntrega = $_POST['fEntrega'];
+    $Destinatario = $_POST['Destinatario'];
+    $Destino = $_POST['Destino'];
+
+    $datos = [
+        'Peso' => $Peso,
+        'Estado' => $Estado,
+        'fRecibo' => $fRecibo,
+        'fEntrega' => $fEntrega,
+        'Destinatario' => $Destinatario,
+        'Destino' => $Destino
+    ];
+    $json = json_encode($datos);
+    curl_setopt($ch,CURLOPT_URL,"http://localhost/proyecto/controller/almacen/C_paquetesE.php");
+    curl_setopt($ch,CURLOPT_POST, true);
+    curl_setopt($ch,CURLOPT_POSTFIELDS, $json);
+    curl_setopt($ch,CURLOPT_RETURNTRANSFER, true);
+    curl_exec($ch);
+    if(curl_errno($ch)){
+        echo curl_error($ch);
+    }else{
+       header("location: http://localhost/proyecto/Views/app_almacen/paquete/paquetesE.php");
     }
 }
 
@@ -152,15 +205,13 @@ if(isset($_POST['Matricula']) && isset($_POST['idA']) && isset($_POST['fechaSali
     }
 }
 
-//Camion 
-if(isset($_POST['MatriculaC']) && isset($_POST['idI']) && isset($_POST['fechaLlegada'])){
+//Camioneta llegada 
+if(isset($_POST['MatriculaC']) && isset($_POST['fechaLlegada'])){
     $MatriculaC = $_POST['MatriculaC'];
-    $idI = $_POST['idI'];
     $fechaLlegada = $_POST['fechaLlegada'];
 
     $datos = [
         'matriculaC' => $MatriculaC,
-        'idI' => $idI,
         'fechaLlegada' => $fechaLlegada
     ];
     $json = json_encode($datos);
@@ -179,14 +230,12 @@ if(isset($_POST['MatriculaC']) && isset($_POST['idI']) && isset($_POST['fechaLle
 
 
 //Camioneta salida
-if(isset($_POST['MatriculaC']) && isset($_POST['idI']) && isset($_POST['fechaSalida'])){
+if(isset($_POST['MatriculaC']) && isset($_POST['fechaSalida'])){
     $MatriculaC = $_POST['MatriculaC'];
-    $idI = $_POST['idI'];
     $fechaSalida = $_POST['fechaSalida'];
 
     $datos = [
         'matriculaC' => $MatriculaC,
-        'idI' => $idI,
         'fechaSalida' => $fechaSalida
     ];
     $json = json_encode($datos);

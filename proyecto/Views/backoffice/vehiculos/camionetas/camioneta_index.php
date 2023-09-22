@@ -1,5 +1,5 @@
 <?php
-require("../../../../Model/session/session_administrador2.php");
+require("../../../../Model/session/session_administrador3.php");
 
 ?>
 <!DOCTYPE html>
@@ -29,7 +29,7 @@ require("../../../../Model/session/session_administrador2.php");
 
                 <ul class="nav__lista">
                     <li><a href="#"><?php echo $_SESSION['mail']; ?></a></li>
-                    <a href="../../../index.php"><li class="cerrar">Cerrar Sesión</li></a>
+                    <a href="../../../../index.php"><li class="cerrar">Cerrar Sesión</li></a>
                 </ul>
             </div>
         </div>
@@ -49,9 +49,9 @@ require("../../../../Model/session/session_administrador2.php");
                 ?>
                     <div class="datos"><?php echo $fila['MatriculaC'] . " "; ?></div>
                     <div class="datosL">
-
+                    
                         <?php
-                        echo '<a href="#" onclick="confirmDelete(' . $fila['MatriculaC'] . ');">' . '<img src="../../img/eliminar.svg" alt="Imagen eliminar">' . ' </a>';
+                        echo '<a href="#" onclick="confirmDelete(\''  . $fila['MatriculaC'] . '\');">' . '<img src="../../img/eliminar.svg" alt="Imagen eliminar">' . ' </a>';
                         ?>
                         <!-- Resto del código -->
 

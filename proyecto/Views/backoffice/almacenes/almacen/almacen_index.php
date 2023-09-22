@@ -38,11 +38,11 @@ require("../../../../Model/session/session_administrador3.php");
         <div class="info_tabla">
 
             <div class="tabla">
-                <div class="grid4">
+                <div class="grid3">
 
                     <div class="datos pFilaH">ID</div>
                     <div class="datos pFilaH">Ubicación</div>
-                    <div class="datos pFilaH">ruta</div>
+                    
                     <div class="datos pFilaH">OPCIONES</div>
 
                     <?php
@@ -56,15 +56,14 @@ require("../../../../Model/session/session_administrador3.php");
                         <div class="datos"><?php echo $fila['id'] . " "; ?></div>
                         <div class="datos pFilaV">ubicacion</div>
                         <div class="datos"><?php echo $fila['ubicacion'] . " "; ?></div>
-                        <div class="datos pFilaV">ruta</div>
-                        <div class="datos"><?php echo $fila['ruta'] . " "; ?></div>
+                        
                         <div class="datos pFilaV">OPCIONES</div>
                         <div class="datosL">
                             <?php
-                            echo '<a href="almacen_modificar.php?id=' . $fila['id'] . '&ubicacion=' . $fila['ubicacion'] . '&ruta=' . $fila['ruta'] . '">' . '<img src="../../img/modificar.svg" alt="Imagen modificar">' . ' </a>';
+                            echo '<a href="almacen_modificar.php?id=' . $fila['id'] . '&ubicacion=' . $fila['ubicacion'] . '">' . '<img src="../../img/modificar.svg" alt="Imagen modificar">' . ' </a>';
                             ?>
                             <?php
-                            echo '<a href="#" onclick="confirmDelete(' . $fila['id'] . ');">' . '<img src="../../img/eliminar.svg" alt="Imagen eliminar">' . ' </a>';
+                            echo '<a href="#" onclick="confirmDelete(\''  . $fila['id'] . '\');">' . '<img src="../../img/eliminar.svg" alt="Imagen eliminar">' . ' </a>';
                             ?>
                             <!-- Resto del código -->
 

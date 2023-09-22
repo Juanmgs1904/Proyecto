@@ -10,7 +10,7 @@ require("../../../../Model/session/session_almacen3.php");
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tabla de Camionetas</title>
+    <title>Tabla de Camiones</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;900&family=Roboto:wght@400;700;900&display=swap" rel="stylesheet">
@@ -65,7 +65,7 @@ require("../../../../Model/session/session_almacen3.php");
                     ?>
                     <div class="datos">
                         <?php
-                        echo '<a href="lotesAC.php?matricula=' . $fila['Matricula'] . '">Ver Paquetes</a>';
+                        echo '<a href="lotesAC.php?matricula=' . $fila['Matricula'] . '">Ver Lotes</a>';
                         ?>
                     </div>
             <?php
