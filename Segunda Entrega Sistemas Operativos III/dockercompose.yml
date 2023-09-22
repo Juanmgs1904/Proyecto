@@ -1,0 +1,28 @@
+version: '3.9'
+services:
+  db3BF:
+    image: mysql:8
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root1234
+      MYSQL_DATABASE: proyecto
+    ports:
+      - 3306:3306
+    volumes:
+      - ./var/lib/mysql:/var/lib/mysql
+    networks:
+      mynetwork:
+        ipv4_address: 172.128.20.4
+
+  Docker:
+    image: build 
+    context:
+    Docker file: docker file
+
+networks:
+  mynetwork:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.128.20.2
