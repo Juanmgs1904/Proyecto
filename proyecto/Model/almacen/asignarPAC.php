@@ -6,7 +6,7 @@ class asignarPAC extends conexion {
     private $MatriculaC = "";
 
     public function listaPAC(){
-        $sentencia = "SELECT codigo, MatriculaC FROM transporta";
+        $sentencia = "SELECT codigo, MatriculaC FROM vwPaquetecamioneta";
         $arrayDatos = parent::obtenerDatos($sentencia);
         return $arrayDatos;
     }
@@ -35,9 +35,7 @@ class asignarPAC extends conexion {
         $sentencia = "INSERT INTO transporta(codigo,MatriculaC)
         VALUES
         ('".$this->codigo."','". $this->MatriculaC."')";
-        $sentencia2 = "UPDATE paquetes SET estado = 'CamionetaAsignada' WHERE codigo = ".$this->codigo."";
         $respuesta = parent::guardar($sentencia);
-        parent::guardar($sentencia2);
         if($respuesta){
             return $respuesta;
         }else{
@@ -96,9 +94,7 @@ class asignarPAC extends conexion {
     }
     private function eliminarPAC(){
         $sentencia = "DELETE FROM transporta WHERE codigo = '" . $this->codigo . "'";
-        $sentencia2 = "UPDATE paquetes SET Estado = 'LoteDesarmado' WHERE codigo = ".$this->codigo."";
         $respuesta = parent::guardar($sentencia);
-        parent::guardar($sentencia2);
         if($respuesta >= 1){
             return $respuesta;
         }else{

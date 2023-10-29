@@ -1,4 +1,5 @@
 <?php
+$empresa = $_GET['empresa'];
 require("../../../Model/session/session_almacenExterno2.php");
 ?>
 <!DOCTYPE html>
@@ -18,7 +19,7 @@ require("../../../Model/session/session_almacenExterno2.php");
     <header class="header">
         <div class="header__contenedor">
             <div class="header__home">
-                <a href="../index.php">
+                <?php echo '<a href="../indexExterno.php?empresa='.$empresa.'">'; ?>
                     <img src="../img/Logo_sistema.png" alt="Logo de max truck">
                 </a>
             </div>
@@ -40,7 +41,7 @@ require("../../../Model/session/session_almacenExterno2.php");
     </header>
     <main class="opciones__contenedor">
         <div class="opciones__grid">
-            <a href="asignarPaqueteAL.php" class="opcion opcion1">
+            <?php echo '<a href="asignarPaqueteALE.php?empresa='.$empresa.'" class="opcion opcion1">'; ?>
                 <div class="imagenes">
                     <img src="../img/paquetes.svg" alt="imagen paquete">
                     <img src="../img/flecha.svg" alt="imagen flecha">
@@ -51,7 +52,7 @@ require("../../../Model/session/session_almacenExterno2.php");
                 </div>
             </a>
             
-            <a href="asignarLote.php" class="opcion opcion2">
+            <?php echo '<a href="asignarLoteE.php?empresa='.$empresa.'" class="opcion opcion2">'; ?>
                 <div class="imagenes">
                     <img src="../img/lotes.svg" alt="imagen lotes">
                     <img src="../img/flecha.svg" alt="imagen flecha">
@@ -61,30 +62,9 @@ require("../../../Model/session/session_almacenExterno2.php");
                     <h3>Asignar Lotes a Camiones</h3>
                 </div>
             </a>
-
-            <a href="llegadaAE.php" class="opcion opcion3">
-                <div class="imagenes">
-                    <img src="../img/almacen.svg" alt="imagen almacén">
-                    <img src="../img/flecha.svg" alt="imagen flecha" class="rota-horizontal">
-                    <img src="../img/camion.svg" alt="imagen camión" class="rota-horizontal">
-                </div>
-                <div class="texto">
-                    <h3>Marcar Hora de LLegada</h3>
-                </div>
-            </a>
-            <a href="salidaAE.php" class="opcion opcion4">
-                <div class="imagenes">
-                    <img src="../img/almacen.svg" alt="imagen almacén">
-                    <img src="../img/flecha.svg" alt="imagen flecha">
-                    <img src="../img/camion.svg" alt="imagen camión">
-                </div>
-                <div class="texto">
-                    <h3>Marcar Hora de Salida</h3>
-                </div>
-            </a>
         </div>
         <div class="almacen_volver">
-            <a href="../index.php" class="btn">Volver</a>
+            <?php echo '<a href="../indexExterno.php?empresa='.$empresa.'" class="btn">'; ?>Volver</a>
         </div>
     </main>
 </body>

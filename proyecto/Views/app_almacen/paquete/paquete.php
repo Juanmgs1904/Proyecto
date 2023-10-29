@@ -28,7 +28,7 @@ require("../../../Model/session/session_almacen2.php");
 <header class="header">
         <div class="header__contenedor">
             <div class="header__home">
-                <a href="../index.php">
+            <?php echo '<a href="../index.php?idA='.$idA.'">' ?>
                     <img src="../img/Logo_sistema.png" alt="Logo de max truck">
                 </a>
             </div>
@@ -56,7 +56,6 @@ require("../../../Model/session/session_almacen2.php");
             <div class="datos pFilaH">FECHA DE ENTREGA</div>
             <div class="datos pFilaH">Destinatario</div>
             <div class="datos pFilaH">Destino</div>
-            <!--<div class="datos pFilaH">OPCIONES</div>-->
             <?php
             foreach ($array as $fila) {
             ?>
@@ -70,16 +69,6 @@ require("../../../Model/session/session_almacen2.php");
                 <div class="datos"><?php echo $fila['Destinatario'] . " "; ?></div>
                 <div class="datos pFilaV">Destino</div>
                 <div class="datos"><?php echo $fila['Destino'] . " "; ?></div>
-                <!--
-                <div class="datos pFilaV">OPCIONES</div>
-                <div class="op">
-                    <?php
-                    /*echo '<a href="modificar_paquete.php?codigo=' . $fila['codigo'] . '&peso=' . $fila['Peso'] .
-                        '&estado=' . $fila['Estado'] . '&fRecibo=' . $fila['fRecibo'] . '&fEntrega=' . $fila['fEntrega'] .
-                        '&Destinatario=' . $fila['Destinatario'] . '&Destino='.  $fila['Destino'] .'&idA='.$idA.'">' . '<div class="option">Modificar</div>' . '</a>';
-                    */?>
-                </div>
-            -->
             <?php
             }
             ?>
@@ -88,7 +77,7 @@ require("../../../Model/session/session_almacen2.php");
     <div>
         <div class="btn_volver">
             <?php
-            echo '<a href="paquetes.php?id=' . $idA . '" class="btn">' . "Volver" . ' </a>';
+            echo '<a href="paquetes.php?idA=' . $idA . '" class="btn">' . "Volver" . ' </a>';
             ?>
         </div>
     </div>

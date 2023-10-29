@@ -21,7 +21,7 @@ require("../../../../Model/session/session_administrador2.php");
                 </a>
             </div>
             <div class="header__titulo">
-                <h1>Gestión de Camiones</h1>
+                <h1 data-section="header" data-value="camion">Gestión de Camiones</h1>
             </div>
             <div class="header__logo">
                 <input type="checkbox" id="menuD" class="menu-toggle">
@@ -29,7 +29,17 @@ require("../../../../Model/session/session_administrador2.php");
 
                 <ul class="nav__lista">
                     <li><a href="#"><?php echo $_SESSION['mail']; ?></a></li>
-                    <a href="../../../../index.php"><li class="cerrar">Cerrar Sesión</li></a>
+                    <div class="flags" id="flags">
+                        <div class="flags__item" data-language="es">
+                            <img src="../../../../img/es.svg" alt="opción español">
+                        </div>
+                        <div class="flags__item" data-language="en">
+                            <img src="../../../../img/en.svg" alt="opción inglés">
+                        </div>
+                    </div>
+                    <a href="../../../../index.php">
+                        <li class="cerrar" data-section="header" data-value="logout">Cerrar Sesión</li>
+                    </a>
                 </ul>
             </div>
         </div>
@@ -38,34 +48,34 @@ require("../../../../Model/session/session_administrador2.php");
         <div class="tabla">
             <div class="grid7">
 
-                <div class="datos pFilaH pFilaHC">Matricula</div>
-                <div class="datos pFilaH pFilaHC">Peso</div>
-                <div class="datos pFilaH pFilaHC">Alto</div>
-                <div class="datos pFilaH pFilaHC">Ancho</div>
-                <div class="datos pFilaH pFilaHC">Largo</div>
-                <div class="datos pFilaH pFilaHC">Tipo</div>
-                <div class="datos pFilaH pFilaHC">OPCIONES</div>
+                <div class="datos pFilaH pFilaHC" label data-section="camion" data-value="matricula">Matricula</div>
+                <div class="datos pFilaH pFilaHC" data-section="camion" data-value="peso">Peso</div>
+                <div class="datos pFilaH pFilaHC" data-section="camion" data-value="alto">Alto</div>
+                <div class="datos pFilaH pFilaHC" data-section="camion" data-value="ancho">Ancho</div>
+                <div class="datos pFilaH pFilaHC" data-section="camion" data-value="largo">Largo</div>
+                <div class="datos pFilaH pFilaHC" data-section="camion" data-value="tipo">Tipo</div>
+                <div class="datos pFilaH pFilaHC" data-section="paquete" data-value="opciones">OPCIONES</div>
 
                 <?php
-                $conexion = new mysqli("localhost", "root", "", "proyecto");
+                $conexion = new mysqli("localhost", "root", "", "ocean");
                 $sentencia = "SELECT * FROM camion";
                 $filas = $conexion->query($sentencia);
                 foreach ($filas->fetch_all(MYSQLI_ASSOC) as $fila) {
                 ?>
 
-                    <div class="datos pFilaV pFilaVC">Matricula</div>
+                    <div class="datos pFilaV pFilaVC" label data-section="camion" data-value="matricula">Matricula</div>
                     <div class="datos"><?php echo $fila['Matricula'] . " "; ?></div>
-                    <div class="datos pFilaV pFilaVC">Peso</div>
+                    <div class="datos pFilaV pFilaVC" data-section="camion" data-value="peso">Peso</div>
                     <div class="datos"><?php echo $fila['Peso'] . " "; ?></div>
-                    <div class="datos pFilaV pFilaVC">Alto</div>
+                    <div class="datos pFilaV pFilaVC" data-section="camion" data-value="alto">Alto</div>
                     <div class="datos"><?php echo $fila['Alto'] . " "; ?></div>
-                    <div class="datos pFilaV pFilaVC">Ancho</div>
+                    <div class="datos pFilaV pFilaVC" data-section="camion" data-value="ancho">Ancho</div>
                     <div class="datos"><?php echo $fila['Ancho'] . " "; ?></div>
-                    <div class="datos pFilaV pFilaVC">Largo</div>
+                    <div class="datos pFilaV pFilaVC" data-section="camion" data-value="largo">Largo</div>
                     <div class="datos"><?php echo $fila['Largo'] . " "; ?></div>
-                    <div class="datos pFilaV pFilaVC">Tipo</div>
+                    <div class="datos pFilaV pFilaVC" data-section="camion" data-value="tipo">Tipo</div>
                     <div class="datos"><?php echo $fila['Tipo'] . " "; ?></div>
-                    <div class="datos pFilaV pFilaVC">OPCIONES</div>
+                    <div class="datos pFilaV pFilaVC" data-section="paquete" data-value="opciones">OPCIONES</div>
                     <div class="datosL">
                         <?php
                         echo '<a href="camion_modificar.php?Matricula=' . $fila['Matricula'] . '&Peso=' . $fila['Peso'] .
@@ -78,8 +88,19 @@ require("../../../../Model/session/session_administrador2.php");
                         <!-- Resto del código -->
 
                         <script>
+                            const selectedLanguage = sessionStorage.getItem('selectedLanguage');
+
+                            const messages = {
+                                es: {
+                                    confirmacion_eliminar: "¿Estás seguro de que deseas eliminar este paquete?"
+                                },
+                                en: {
+                                    confirmacion_eliminar: "Are you sure you want to delete this package?"
+                                }
+                            };
+
                             function confirmDelete(Matricula) {
-                                var confirmation = confirm("¿Estás seguro de que deseas eliminar este camión?");
+                                var confirmation = confirm(messages[selectedLanguage].confirmacion_eliminar);
                                 if (confirmation) {
                                     // Si el usuario confirma, redirige a la página de eliminación
                                     window.location.href = "../../eliminar.php?Matricula=" + Matricula;
@@ -95,10 +116,12 @@ require("../../../../Model/session/session_administrador2.php");
         </div>
     </div>
     <div class="btn_tabla">
-        <a href="../vehiculos.php" class="btn">Volver</a>
-        <a href="camion_agregar.php" class="btn">Agregar Camión</a>
+        <a href="../vehiculos.php" class="btn" data-section="boton" data-value="volver">Volver</a>
+        <a href="camion_agregar.php" class="btn" data-section="boton" data-value="agregarCamion">Agregar Camión</a>
 
     </div>
+    <script src="script.js"></script>
+
 </body>
 
 </html>

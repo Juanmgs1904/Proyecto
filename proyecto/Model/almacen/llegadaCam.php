@@ -5,9 +5,10 @@ class llegada extends conexion {
     private $matriculaC = "";
     private $fLlegada = "";
 
-    public function listaHoras(){
-        $sentencia = "SELECT MatriculaC, FechaLlegada FROM va_llegada";
-        $arrayDatos = parent::obtenerDatos($sentencia);
+    public function listaHoras($idA){
+        $sentencia1 = "SELECT MatriculaC FROM va WHERE idI = $idA";
+        $sentencia2 = "SELECT MatriculaC, FechaLlegada FROM va_llegada WHERE MatriculaC IN ($sentencia1)";
+        $arrayDatos = parent::obtenerDatos($sentencia2);
         return $arrayDatos;
     }
     public function post($json){
@@ -36,7 +37,7 @@ class llegada extends conexion {
         VALUES
         ('".$this->matriculaC."','". $this->fLlegada."')";
         $respuesta = parent::guardar($sentencia);
-        if($respuesta){
+        if($respuesta >= 1){
             return $respuesta;
         }else{
             return 0;
@@ -94,8 +95,10 @@ class llegada extends conexion {
         }
     }
     private function eliminarHora(){
-        $sentencia = "DELETE FROM va_llegada WHERE MatriculaC = '" . $this->matriculaC . "' AND FechaLlegada = '" . $this->fLlegada . "'";
-        $respuesta = parent::guardar($sentencia);
+        $sentencia1 = "UPDATE vehiculo SET Disponibilidad = 'enRuta' WHERE MatriculaV = '" . $this->matriculaC . "'";
+        $respuesta = parent::guardar($sentencia1);
+        $sentencia2 = "DELETE FROM va_llegada WHERE MatriculaC = '" . $this->matriculaC . "' AND FechaLlegada = '" . $this->fLlegada . "'";
+        $respuesta = parent::guardar($sentencia2);
         if($respuesta >= 1){
             return $respuesta;
         }else{

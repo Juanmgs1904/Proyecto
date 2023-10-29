@@ -22,9 +22,20 @@ switch($_SERVER['REQUEST_METHOD']){
 
     //Mostrar
     case 'GET':
+        $idA = $_GET['idA'];
+        if(isset($_GET['ruta'])){//si llega el valor por GET
+            $ruta = $_GET['ruta'];
+            if($ruta == true){
+                //solicita datos al modelo
+                $respuesta = $_va->camionetasRuta($idA);
+            }else{
+                //solicita datos al modelo
+                $respuesta = $_va->camionetasDisponibles($idA);
+            }
+        }else{
             //solicita datos al modelo
-            $respuesta = $_va->listaHoras();
-
+            $respuesta = $_va->listaCamionetas($idA);   
+        }
             require('../../Routes/R_almacen.php');
     break;
 

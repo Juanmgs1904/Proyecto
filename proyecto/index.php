@@ -2,8 +2,14 @@
 
 session_start();
 session_destroy();
+if(isset($_GET['lang'])){
+    $_SESSION['selectedLanguage'] = $_GET['lang'];
+}
+
+
 
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -19,7 +25,7 @@ session_destroy();
 </head>
 
 <body>
-    <header class="header">
+    <header class="header" id="header">
         <div class="header__img">
             <img src="img/header.jpg" alt="Header">
         </div>
@@ -29,11 +35,11 @@ session_destroy();
             <input type="checkbox" id="menuD" class="menu-toggle">
             <label for="menuD" class="label"><img src="img/menu.png" alt="imagen menu" class="menuimg"></label>
             <ul class="nav__lista">
-                <li class="nav__valor"><a href="index.php">Inicio</a></li>
-                <li class="nav__valor"><a href="index.php#nosotros">Sobre Nosotros</a></li>
-                <li class="nav__valor"><a href="Views/contacto/contacto.php">Contacto</a></li>
-                <li class="nav__valor"><a href="Views/app_seguimiento/index.php">Seguimiento</a></li>
-                <li class="nav__valor"><a href="Views/login/login.php">Iniciar Sesión</a></li>
+                <li class="nav__valor"><a href="index.php#header" data-section="nav" data-value="op1">Inicio</a></li>
+                <li class="nav__valor"><a href="index.php#nosotros" data-section="nav" data-value="op2">Sobre Nosotros</a></li>
+                <li class="nav__valor"><a href="Views/contacto/contacto.php" data-section="nav" data-value="op3">Contacto</a></li>
+                <li class="nav__valor"><a href="Views/app_seguimiento/index.php" data-section="nav" data-value="op4">Seguimiento</a></li>
+                <li class="nav__valor"><a href="Views/login/login.php" data-section="nav" data-value="op5">Iniciar Sesión</a></li>
             </ul>
         </div>
     </nav>
@@ -52,14 +58,14 @@ session_destroy();
 
 
     <section class="servicios">
-        <h2 class="text-center">Servicios</h2>
+        <h2 class="text-center" data-section="servicios" data-value="title">Servicios</h2>
         <div class="servicios__contenedor">
             <div class="icono">
                 <div class="servicios__icono">
                     <img src="img/icono_almacen.png" alt="imagen icono">
                 </div>
                 <div class="servicios__titulo text-center">
-                    <h3>Almacenes</h3>
+                    <h3 data-section="servicios" data-value="ser1">Almacenes</h3>
                 </div>
             </div>
             <div class="icono">
@@ -67,7 +73,7 @@ session_destroy();
                     <img src="img/icono_lotes.png" alt="imagen icono">
                 </div>
                 <div class="servicios__titulo text-center">
-                    <h3>Armado de Lotes</h3>
+                    <h3 data-section="servicios" data-value="ser2">Armado de Lotes</h3>
                 </div>
             </div>
             <div class="icono">
@@ -75,7 +81,7 @@ session_destroy();
                     <img src="img/icono_camion.png" alt="imagen icono">
                 </div>
                 <div class="servicios__titulo text-center">
-                    <h3>Transporte y Distribución</h3>
+                    <h3 data-section="servicios" data-value="ser3">Transporte y Distribución</h3>
                 </div>
             </div>
             <div class="icono">
@@ -83,7 +89,7 @@ session_destroy();
                     <img src="img/icono_uruguay.png" alt="imagen icono">
                 </div>
                 <div class="servicios__titulo text-center" id="nosotros">
-                    <h3>Comercio en todo el país</h3>
+                    <h3 data-section="servicios" data-value="ser4">Comercio en todo el país</h3>
                 </div>
             </div>
         </div>
@@ -92,8 +98,8 @@ session_destroy();
         <div class="sobre-nosotros__contenedor">
             <div class="espacio sobre-nosotros__grid">
                 <div class="sobre-nosotros__texto">
-                    <h2>Sobre Nosotros</h2>
-                    <p>Somos Quick Carry, empresa de logistica ubicada en Uruguay, con almacenes posicionados por todo
+                    <h2 data-section="sobreNosotros" data-value="title">Sobre Nosotros</h2>
+                    <p data-section="sobreNosotros" data-value="text">Somos Quick Carry, empresa de logistica ubicada en Uruguay, con almacenes posicionados por todo
                         el país, teniendo nuestra central principal en Montevideo.
                         <br>
                         Ademas de contar con un alto nivel tecnologico, nuestros sistemas también poseen un alto nivel
@@ -106,15 +112,15 @@ session_destroy();
         </div>
     </section>
     <section class="elegirnos">
-        <h2 class="text-center">¿Por qué Elegirnos?</h2>
+        <h2 class="text-center" data-section="elegirnos" data-value="title">¿Por qué Elegirnos?</h2>
         <div class="servicios__contenedor">
             <div class="icono">
                 <div class="servicios__icono">
                     <img src="img/icono_velocidad.svg" alt="imagen icono">
                 </div>
                 <div class="servicios__titulo text-center">
-                    <h3>Velocidad de Entrega</h3>
-                    <p>Optimiza el recorrido y el tiempo de reparto</p>
+                    <h3 data-section="elegirnos" data-value="elT1">Velocidad de Entrega</h3>
+                    <p data-section="elegirnos" data-value="el1">Optimiza el recorrido y el tiempo de reparto</p>
                 </div>
             </div>
             <div class="icono">
@@ -122,8 +128,8 @@ session_destroy();
                     <img src="img/icono_almacen.png" alt="imagen icono">
                 </div>
                 <div class="servicios__titulo text-center">
-                    <h3>Almacenes por Todo el País</h3>
-                    <p>Permite entregar productos en cualquier parte del país</p>
+                    <h3 data-section="elegirnos" data-value="elT2">Almacenes por Todo el País</h3>
+                    <p data-section="elegirnos" data-value="el2">Permite entregar productos en cualquier parte del país</p>
                 </div>
             </div>
             <div class="icono">
@@ -131,8 +137,8 @@ session_destroy();
                     <img src="img/icono_seguro.png" alt="imagen icono">
                 </div>
                 <div class="servicios__titulo text-center">
-                    <h3>Más Seguro</h3>
-                    <p>Evita las entregas fallidas. Trackeo y control de las entregas</p>
+                    <h3 data-section="elegirnos" data-value="elT3">Más Seguro</h3>
+                    <p data-section="elegirnos" data-value="el3">Evita las entregas fallidas. Trackeo y control de las entregas</p>
                 </div>
             </div>
             <div class="icono">
@@ -140,8 +146,8 @@ session_destroy();
                     <img src="img/icono_rentable.svg" alt="imagen icono">
                 </div>
                 <div class="servicios__titulo text-center">
-                    <h3>Más rentable</h3>
-                    <p>Mejora la satisfacción de los clientes y genera más ventas</p>
+                    <h3 data-section="elegirnos" data-value="elT4">Más rentable</h3>
+                    <p data-section="elegirnos" data-value="el4">Mejora la satisfacción de los clientes y genera más ventas</p>
                 </div>
             </div>
         </div>
@@ -154,6 +160,14 @@ session_destroy();
                     <h2 class="h-info">Max Truck</h2>
                 </div>
                 <h3>&#9400Quick Carry</h3>
+            </div>
+            <div class="flags" id="flags">
+                <div class="flags__item" data-language="es" onclick="changeLanguage('es')">
+                    <img src="img/es.svg" alt="opción español">
+                </div>
+                <div class="flags__item" data-language="en" onclick="changeLanguage('en')">
+                    <img src="img/en.svg" alt="opción inglés">
+                </div>
             </div>
         </div>
     </footer>

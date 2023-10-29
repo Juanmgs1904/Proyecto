@@ -1,6 +1,11 @@
 <?php
 
 session_start();
+
+if(isset($_GET['lang'])){
+    $_SESSION['selectedLanguage'] = $_GET['lang'];
+}
+
 $varsesion = $_SESSION['mail'];
 
 $app = $_SESSION['rol'];

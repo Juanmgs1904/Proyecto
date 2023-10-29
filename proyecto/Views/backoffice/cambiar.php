@@ -1,5 +1,5 @@
 <?php
-$conexion = new mysqli("localhost", "root", "", "proyecto");
+$conexion = new mysqli("localhost", "root", "", "ocean");
 
 //lote
 if (isset($_POST['IDL'])) {
@@ -7,10 +7,10 @@ if (isset($_POST['IDL'])) {
     $Peso = $_POST['Peso'];
     $Estado = $_POST['Estado'];
     $Destino = $_POST['Destino'];
-    $Ruta = $_POST['Ruta'];
-    $idI = $_POST['idI'];
     $tiempoEstimado = $_POST['tiempoEstimado'];
-    $sentencia = "UPDATE lotes SET  Peso='$Peso', Estado='$Estado', Destino='$Destino', Ruta='$Ruta', tiempoEstimado='$tiempoEstimado', idI='$idI' WHERE IDL = $IDL";
+    $IDR = $_POST['IDR'];
+    $IDA = $_POST['IDA'];
+    $sentencia = "UPDATE lotes SET  Peso='$Peso', Estado='$Estado', Destino='$Destino', tiempoEstimado='$tiempoEstimado', IDR='$IDR', IDA='$IDA' WHERE IDL = $IDL";
     $conexion->query($sentencia);
     header("Location: lotes/lote_index.php");
 }
@@ -38,7 +38,6 @@ if (isset($_POST['Matricula'])) {
     $Ancho = $_POST['Ancho'];
     $Largo = $_POST['Largo'];
     $Tipo = $_POST['Tipo'];
-    $conexion = new mysqli("localhost", "root", "", "proyecto");
     $sentencia = "UPDATE camion SET  Peso='$Peso', Alto='$Alto',
                     Ancho='$Ancho',Largo='$Largo',Tipo='$Tipo' WHERE Matricula = '$Matricula'";
     $conexion->query($sentencia);
@@ -50,7 +49,6 @@ if (isset($_POST['MatriculaV'])) {
     $MatriculaV = $_POST['MatriculaV'];
     $Estado = $_POST['Estado'];
     $Disponibilidad = $_POST['Disponibilidad'];
-    $conexion = new mysqli("localhost", "root", "", "proyecto");
     $sentencia = "UPDATE vehiculo SET  Estado='$Estado', Disponibilidad='$Disponibilidad' WHERE MatriculaV = '$MatriculaV'";
     $conexion->query($sentencia);
     header("Location: vehiculos/vehiculo/vehiculo_index.php");
@@ -76,7 +74,14 @@ if (isset($_POST['idE'])) {
     header("Location: almacenes/almacenExterno/almacenExterno_index.php");
 }
 
-
+//almacenInterno
+if (isset($_POST['idI'])) {
+    $idI = $_POST['idI'];
+    $ruta = $_POST['ruta'];
+    $sentencia = "UPDATE almacenInterno SET  ruta='$ruta' WHERE idI = $idI";
+    $conexion->query($sentencia);
+    header("Location: almacenes/almacenInterno/almacenInterno_index.php");
+}
 
 //camionero
 if (isset($_POST['ciC'])) {

@@ -1,3 +1,11 @@
+<?php
+session_start();
+
+if(isset($_GET['lang'])){
+    $_SESSION['selectedLanguage'] = $_GET['lang'];
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,53 +16,56 @@
     <title>Aplicación de Seguimiento</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;900&family=Roboto:wght@400;700;900&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;900&family=Roboto:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 
-<body>
+<body class="fondo">
     <header class="header">
         <div class="header__contenedor">
-            <div class="header__home">
-                <a href="../../index.php">
-                    <img src="img/home.svg" alt="imagen home">
-                </a>
+            <a href="../../index.php" class="home">
+                <img src="img/home.svg" alt="Icono home">
+            </a>
+            <div class="title">
+                <h1 class="text-center" data-section="seguimiento" data-value="title">Seguimiento</h1>
             </div>
-            <div class="header__titulo">
-                <h1>Seguimiento</h1>
-            </div>
-            <div class="header__logo">
-                <img src="img/Logo_sistema.png" alt="Logo de max truck">
-            </div>
+            <img src="img/Logo_sistema.png" alt="imagen logo"> 
         </div>
     </header>
-    <main class="opciones__contenedor">
-        <div class="opcion">
-            <div class="img">
-                <img src="img/paquetes.jpg" alt="Imagen Paquetes">
-                <div class="capa">
-                    <h3><a href="#" class="a">Ver paquetes</a></h3>
-                    <p>Ve los paquetes que lleva<br> cada camioneta</p>
+    <main class="info">
+        <div class="text">
+            <h3 class="text-center" data-section="seguimiento" data-value="subtitle">Ve Donde Está tu Paquete</h3>
+        </div>
+        <form action="infoPaquete.php" class="form" method="POST">
+            <div class="form__contenedor">
+                <img src="img/paquete_blanco.png" alt="imagen paquete">
+                <input type="text" name="codigo" data-section="seguimiento" data-value="codigo" placeholder="Ingrese el Código del Paquete" required>
+            </div>
+            <div class="btn">
+                <button type="submit" class="button" data-section="seguimiento" data-value="btn">Buscar</button>
+            </div>
+        </form>
+    </main>
+    <footer class="footer">
+        <div class="contact">
+            <div class="info">
+                <div class="logo_info">
+                    <img src="img/Logo_sistema.png" alt="logo" class="logo-system">
+                    <h2 class="h-info">Max Truck</h2>
                 </div>
+                <h3>&#9400Quick Carry</h3>
             </div>
-            <div class="titulo">
-                <h3><a href="#">Paquetes</a></h2>
-            </div>
-        </div>          
-        <div class="opcion">
-            <div class="img">
-                <img src="img/avisos.jpg" alt="Imagen Avisos">
-                <div class="capa">
-                    <h3><a href="#">Ver Avisos</a></h3>
-                    <p>Ve los avisos de demora<br> que tiene cada chofer</p>
+            <div class="flags" id="flags">
+                <div class="flags__item" data-language="es" onclick="changeLanguage('es')">
+                    <img src="../../img/es.svg" alt="opción español">
                 </div>
-            </div>
-            <div class="titulo">
-                <h3><a href="#">Avisos</a></h2>
+                <div class="flags__item" data-language="en" onclick="changeLanguage('en')">
+                    <img src="../../img/en.svg" alt="opción inglés">
+                </div>
             </div>
         </div>
-    </main>
+    </footer>
+    <script src="script.js"></script>
 </body>
 
 </html>

@@ -30,9 +30,9 @@ body {
 
 /* Globales */
 img {
-    width: 100%;
+    width: 95%;
     display: block;
-    height: auto;
+    height: 7rem;
 }
 
 h1 {
@@ -75,6 +75,7 @@ a {
     background-color: var(--fondoBTN);
     color: #000;
     display: inline-block;
+    text-align: center;
 }
 
 .btn:hover {
@@ -92,6 +93,12 @@ a {
 .header__contenedor {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+}
+
+.header__form {
+    display: flex;
+    justify-content: center;
     align-items: center;
 }
 
@@ -115,6 +122,24 @@ a {
     transform: scale(1.2);
 }
 
+.flags{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    gap: 2rem;
+}
+
+.flags__item {
+    width: 4rem;
+    transition: .5s;
+    height: 6rem;
+}
+
+.flags__item:hover {
+    transform: scale(1.1);
+    cursor: pointer;
+}
 
 /*menu desplegable*/
 #menuD {
@@ -140,7 +165,7 @@ a {
     position: absolute;
     border-radius: 2rem;
     border: solid 2px #000;
-    margin-top: -23rem;
+    margin-top: -26rem;
     z-index: 600;
 }
 
@@ -169,7 +194,7 @@ a {
 
 .menu-toggle:checked~.nav__lista {
     display: block;
-    margin-top: 23rem;
+    margin-top: 26rem;
     z-index: 2;
 }
 
@@ -584,6 +609,22 @@ a {
     gap: 5rem;
 }
 
+.text {
+    display: flex;
+    flex-direction: column;
+}
+
+.text .input {
+    flex: 2;
+}
+
+.textV {
+    display: none;
+}
+
+.textH {
+    display: flex;
+}
 
 @media (max-width: 1250px){
     .pFilaHU {
@@ -755,6 +796,23 @@ a {
     .pFilaV {
         display: block;
     }
+
+    .contenedor_form{
+        width: 90%;
+    }
+
+    .textV{
+        display: flex;
+    }
+
+    .textH{
+        display: none;
+    }
+
+    .info{
+        display: none;
+    }
+
 
 }
 

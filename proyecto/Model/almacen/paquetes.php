@@ -10,19 +10,21 @@ class paquetes extends conexion
     private $fEntrega = "";
     private $Destinatario = "";
     private $Destino = "";
+    private $token = "";
     public function listaPaquetes($idA)
     {
         if ($idA == 1) {
-            $sentencia = "SELECT * FROM paquetes WHERE Estado = 'enCentral' OR Estado = 'loteAsignado'";
+            $sentencia = "SELECT * FROM vwPaquetesEnLotes";
             $arrayDatos = parent::obtenerDatos($sentencia);
         } else {
             $sentencia1 = "SELECT lotes.IDL FROM lotes
-              INNER JOIN contiene ON lotes.IDL = contiene.IDL
-              WHERE lotes.idI = '$idA' AND lotes.Estado = 'Entregado'";
+              INNER JOIN contiene ON lotes.IDL = contiene.IDL 
+              JOIN va_hacia ON va_hacia.IDL = lotes.IDL
+              WHERE va_hacia.IDA = '$idA' AND lotes.Estado = 'entregado'";
 
             $sentencia2 = "SELECT paquetes. * FROM paquetes
               INNER JOIN contiene ON paquetes.codigo = contiene.codigo
-              WHERE contiene.IDL IN ($sentencia1)";
+              WHERE contiene.IDL IN ($sentencia1) AND (Estado = 'loteDesarmado' OR Estado = 'camionetaAsignada')";
 
             $arrayDatos = parent::obtenerDatos($sentencia2);
         }
@@ -138,11 +140,33 @@ class paquetes extends conexion
     }
     private function eliminarPaquete()
     {
-        $sentencia = "DELETE FROM paquetes WHERE codigo = '" . $this->codigo . "'";
-        $respuesta = parent::guardar($sentencia);
+        $sentencia1 = "DELETE FROM contiene WHERE codigo = '" . $this->codigo . "'";
+        $respuesta = parent::guardar($sentencia1);
+        $sentencia2 = "DELETE FROM paquetes WHERE codigo = '" . $this->codigo . "'";
+        $respuesta = parent::guardar($sentencia2);
         if ($respuesta >= 1) {
             return $respuesta;
         } else {
+            return 0;
+        }
+    }
+    private function buscarToken(){
+        $sentencia = "SELECT TokenId,Estado FROM personas_token WHERE Token = '" . $this->token . "' AND Estado = 'Activo'";
+        $respuesta = parent::obtenerDatos($sentencia);
+        if($respuesta){
+            return $respuesta;
+        }else{
+            return 0;
+        }
+    }
+    private function actualizarToken($tokenId){
+        date_default_timezone_set("America/Montevideo");//cambia la fecha y hora por default
+        $fecha = date('Y-m-d H:i:s');// Obtiene la fecha y hora actual;
+        $sentecia = "UPDATE personas_token SET Fecha = '$fecha' WHERE TokenId = '$tokenId'";
+        $respuesta = parent::guardar($sentecia);
+        if($respuesta >= 1){
+            return $respuesta;
+        }else{
             return 0;
         }
     }

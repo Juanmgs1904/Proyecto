@@ -1,4 +1,5 @@
 <?php
+$empresa = $_GET['empresa'];
 if (isset($_GET['codigo'])) {
     $codigo = $_GET['codigo'];
 }
@@ -25,7 +26,7 @@ require("../../../Model/session/session_almacen2.php");
 <header class="header">
         <div class="header__contenedor">
             <div class="header__home">
-                <a href="../index.php">
+                <?php echo '<a href="../indexExterno.php?empresa='.$empresa.'">'; ?>
                     <img src="../img/Logo_sistema.png" alt="Logo de max truck">
                 </a>
             </div>
@@ -72,7 +73,7 @@ require("../../../Model/session/session_almacen2.php");
                     <?php
                     echo '<a href="modificar_paqueteE.php?codigo=' . $fila['codigo'] . '&peso=' . $fila['Peso'] .
                         '&estado=' . $fila['Estado'] . '&fRecibo=' . $fila['fRecibo'] . '&fEntrega=' . $fila['fEntrega'] .
-                        '&Destinatario=' . $fila['Destinatario'] . '&Destino='.  $fila['Destino'] .'">' . '<div class="option">Modificar</div>' . '</a>';
+                        '&Destinatario=' . $fila['Destinatario'] . '&Destino='.  $fila['Destino'] .'&empresa='.$empresa.'">' . '<div class="option">Modificar</div>' . '</a>';
                     ?>
                 </div>
             
@@ -84,7 +85,7 @@ require("../../../Model/session/session_almacen2.php");
     <div>
         <div class="btn_volver">
             <?php
-            echo '<a href="paquetesE.php" class="btn">' . "Volver" . ' </a>';
+            echo '<a href="paquetesE.php?empresa='.$empresa.'" class="btn">' . "Volver" . ' </a>';
             ?>
         </div>
     </div>

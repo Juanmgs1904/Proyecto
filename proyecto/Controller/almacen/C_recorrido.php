@@ -5,11 +5,11 @@ require_once "../../Model/almacen/recorrido.php";
 $_respuestas = new respuestas;
 $_recorrido = new recorrido;
 
-header('Content-Type: application/json');//indica que va a devolver un json
+header('Content-Type: application/json'); //indica que va a devolver un json
 
-switch($_SERVER['REQUEST_METHOD']){
+switch ($_SERVER['REQUEST_METHOD']) {
 
-    //Añadir
+        //Añadir
     case 'POST':
         //recibir datos
         $datosPost = file_get_contents('php://input');
@@ -18,18 +18,22 @@ switch($_SERVER['REQUEST_METHOD']){
         $datosArray = $_recorrido->post($datosPost);
 
         require('../../Routes/R_almacen.php');
-    break;
+        break;
 
-    //Mostrar
+        //Mostrar
     case 'GET':
+        if (isset($_GET['mostrar'])) {
+            //solicita datos al modelo
+            $respuesta = $_recorrido->mostrarRecorrido();
+        } else {
             //solicita datos al modelo
             $respuesta = $_recorrido->listaHoras();
+        }
+        require('../../Routes/R_almacen.php');
+        break;
 
-            require('../../Routes/R_almacen.php');
-    break;
 
-    
-    //Eliminar
+        //Eliminar
     case 'DELETE':
         //recibir datos
         $datosPost = file_get_contents('php://input');
@@ -39,10 +43,9 @@ switch($_SERVER['REQUEST_METHOD']){
 
         require('../../Routes/R_almacen.php');
 
-    break;
+        break;
 
     default:
         require('../../Routes/R_almacen.php');
-    break;
+        break;
 }
-?>

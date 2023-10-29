@@ -266,7 +266,18 @@ ul {
 
 .contact {
     width: 99.9%;
-    height: auto;
+    display: flex;
+}
+
+.flags__item {
+    width: 4rem;
+    margin: 3rem;
+    transition: .5s;
+}
+
+.flags__item:hover {
+    transform: scale(1.1);
+    cursor: pointer;
 }
 
 .info {

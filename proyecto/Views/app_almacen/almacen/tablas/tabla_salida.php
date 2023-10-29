@@ -1,4 +1,5 @@
 <?php
+$idA = $_GET['idA'];
 $url = 'http://localhost/proyecto/controller/almacen/C_salida.php';
 require("../../../../intermediario/getDataAPI.php");
 require("../../../../Model/session/session_almacen3.php");
@@ -21,7 +22,7 @@ require("../../../../Model/session/session_almacen3.php");
 <header class="header">
         <div class="header__contenedor">
             <div class="header__home">
-                <a href="../../index.php">
+                <?php echo '<a href="../../index.php?idA='.$idA.'">'; ?>
                     <img src="../../img/Logo_sistema.png" alt="Logo de max truck">
                 </a>
             </div>
@@ -43,17 +44,14 @@ require("../../../../Model/session/session_almacen3.php");
         <div class="titulo">
             <h2>SALIDAS DE CAMIONES</h2>
         </div>
-        <div class="grid">
+        <div class="grid_llegada">
             <div class="datos pFilaH">MATRÍCULA</div>
-            <div class="datos pFilaH">ID ALMACÉN</div>
             <div class="datos pFilaH">FECHA</div>
             <div class="datos pFilaH">OPCIONES</div>
             <?php
             foreach ($array as $fila) {
             ?><div class="datos pFilaV">MATRÍCULA</div>
                 <div class="datos"><?php echo $fila['Matricula'] . " "; ?></div>
-                <div class="datos pFilaV">ID ALMACÉN</div>
-                <div class="datos"><?php echo $fila['IDA'] . " "; ?></div>
                 <div class="datos pFilaV">FECHA</div>
                 <div class="datos"><?php echo $fila['FechaSalida'] . " "; ?></div>
                 <div class="datos pFilaV">OPCIONES</div>
@@ -62,7 +60,7 @@ require("../../../../Model/session/session_almacen3.php");
                 ?>
                  <div class="datos">
                     <?php                           
-                    echo '<a href="#" onclick="confirmDelete(\''  . $fila['Matricula'] . '\', \'' . $fila["IDA"] . '\', \'' . $fila["FechaSalida"] . '\');">' . '<div class="option">Eliminar</div>' . ' </a>';
+                    echo '<a href="#" onclick="confirmDelete(\''  . $fila['Matricula'] . '\', \'' . $idA . '\', \'' . $fila["FechaSalida"] . '\');">' . '<div class="option">Eliminar</div>' . ' </a>';
                     ?>
                     <script>
                         function confirmDelete(matricula, IDA, FechaSalida) {
@@ -80,7 +78,7 @@ require("../../../../Model/session/session_almacen3.php");
         </div>
     </div>
     <div class="btn_volver">
-        <a href="../salidaAI.php" class="btn">Volver</a>
+        <?php echo '<a href="../salidaAI.php?idA='.$idA.'" class="btn">'; ?>Volver</a>
     </div>
 </body>
 

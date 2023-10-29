@@ -21,7 +21,7 @@ require("../../../../Model/session/session_administrador3.php");
                 </a>
             </div>
             <div class="header__titulo">
-                <h1>Gestión de Camionetas</h1>
+                <h1 data-section="header" data-value="camioneta">Gestión de Camionetas</h1>
             </div>
             <div class="header__logo">
                 <input type="checkbox" id="menuD" class="menu-toggle">
@@ -29,7 +29,17 @@ require("../../../../Model/session/session_administrador3.php");
 
                 <ul class="nav__lista">
                     <li><a href="#"><?php echo $_SESSION['mail']; ?></a></li>
-                    <a href="../../../../index.php"><li class="cerrar">Cerrar Sesión</li></a>
+                    <div class="flags" id="flags">
+                        <div class="flags__item" data-language="es">
+                            <img src="../../../../img/es.svg" alt="opción español">
+                        </div>
+                        <div class="flags__item" data-language="en">
+                            <img src="../../../../img/en.svg" alt="opción inglés">
+                        </div>
+                    </div>
+                    <a href="../../../../index.php">
+                        <li class="cerrar" data-section="header" data-value="logout">Cerrar Sesión</li>
+                    </a>
                 </ul>
             </div>
         </div>
@@ -38,26 +48,37 @@ require("../../../../Model/session/session_administrador3.php");
         <div class="tabla">
             <div class="grid2">
 
-                <div class="datos pFila">Matricula</div>
-                <div class="datos pFila">OPCIONES</div>
+                <div class="datos pFila" data-section="camioneta" data-value="matricula">Matricula</div>
+                <div class="datos pFila" data-section="paquete" data-value="opciones">OPCIONES</div>
 
                 <?php
-                $conexion = new mysqli("localhost", "root", "", "proyecto");
+                $conexion = new mysqli("localhost", "root", "", "ocean");
                 $sentencia = "SELECT * FROM camioneta";
                 $filas = $conexion->query($sentencia);
                 foreach ($filas->fetch_all(MYSQLI_ASSOC) as $fila) {
                 ?>
                     <div class="datos"><?php echo $fila['MatriculaC'] . " "; ?></div>
                     <div class="datosL">
-                    
+
                         <?php
                         echo '<a href="#" onclick="confirmDelete(\''  . $fila['MatriculaC'] . '\');">' . '<img src="../../img/eliminar.svg" alt="Imagen eliminar">' . ' </a>';
                         ?>
                         <!-- Resto del código -->
 
                         <script>
+                            const selectedLanguage = sessionStorage.getItem('selectedLanguage');
+
+                            const messages = {
+                                es: {
+                                    confirmacion_eliminar: "¿Estás seguro de que deseas eliminar este paquete?"
+                                },
+                                en: {
+                                    confirmacion_eliminar: "Are you sure you want to delete this package?"
+                                }
+                            };
+
                             function confirmDelete(MatriculaC) {
-                                var confirmation = confirm("¿Estás seguro de que deseas eliminar este camión?");
+                                var confirmation = confirm(messages[selectedLanguage].confirmacion_eliminar);
                                 if (confirmation) {
                                     // Si el usuario confirma, redirige a la página de eliminación
                                     window.location.href = "../../eliminar.php?MatriculaC=" + MatriculaC;
@@ -73,10 +94,11 @@ require("../../../../Model/session/session_administrador3.php");
         </div>
     </div>
     <div class="btn_tabla">
-        <a href="../vehiculos.php" class="btn">Volver</a>
-        <a href="camioneta_agregar.php" class="btn">Agregar Camión</a>
+        <a href="../vehiculos.php" class="btn" data-section="boton" data-value="volver">Volver</a>
+        <a href="camioneta_agregar.php" class="btn" data-section="boton" data-value="agregarCamioneta">Agregar Camioneta</a>
 
     </div>
+    <script src="script.js"></script>
 </body>
 
 </html>

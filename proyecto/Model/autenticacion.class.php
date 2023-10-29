@@ -11,6 +11,9 @@ class autenticacion extends conexion{
         }else{
             $rol = "";
             $mail = $datos['mail'];
+            $idA = $this->obtenerAlmacen($mail);
+            $empresa = $this->obtenerEmpresa($mail);
+            $matricula = $this->obtenerMatricula($mail);
             $contraseña = $datos['contraseña'];
             $contraseña = parent::encriptar($contraseña);
             $datos = $this->obtenerDatosUsuario($mail);
@@ -46,7 +49,10 @@ class autenticacion extends conexion{
                             $resultado = $_respuestas->respuesta;
                             $resultado['resultado'] = array(
                                 "token" => $token,
-                                "aplicación" => $rol
+                                "aplicación" => $rol,
+                                "idA" => $idA,
+                                "matricula" => $matricula,
+                                "empresa" => $empresa
                             );
                             return $resultado;
                         }else{//no se inserto
@@ -74,11 +80,44 @@ class autenticacion extends conexion{
             return 0;
         }
     }
+
+    private function obtenerAlmacen($mail){
+        $sentencia1 = "SELECT CI FROM personas WHERE Mail = '$mail'";
+        $sentencia2 = "SELECT CIP FROM personal WHERE CIP = ($sentencia1)";
+        $sentencia3 = "SELECT IDA FROM trabaja WHERE CIP = ($sentencia2)";
+        $datos = parent::obtenerDatos($sentencia3);
+        if(isset($datos[0]['IDA'])){//como el método que se llamo es un array, verifica si en la primera fila hay un valor
+            return $datos[0]['IDA'];
+        }else{
+            return 0;
+        }
+    }
+    private function obtenerEmpresa($mail){
+        $sentencia = "SELECT Empresa FROM usuario WHERE Empresa != 'QuickCarry'";
+        $datos = parent::obtenerDatos($sentencia);
+        if(isset($datos[0]['Empresa'])){//como el método que se llamo es un array, verifica si en la primera fila hay un valor
+            return $datos[0]['Empresa'];
+        }else{
+            return 0;
+        }
+    }
+    private function obtenerMatricula($mail){
+        $sentencia1 = "SELECT CI FROM personas WHERE Mail = '$mail'";
+        $sentencia2 = "SELECT CIC FROM camionero WHERE CIC = ($sentencia1)";
+        $sentencia3 = "SELECT MatriculaV FROM conduce WHERE CIC = ($sentencia2)";
+        $datos = parent::obtenerDatos($sentencia3);
+        if(isset($datos[0]['MatriculaV'])){//como el método que se llamo es un array, verifica si en la primera fila hay un valor
+            return $datos[0]['MatriculaV'];
+        }else{
+            return 0;
+        }
+    }
     private function insertarToken($Mail){
         $val = true;//es necesario crear la variable porque la funcion no funciona con el true
         $token = bin2hex(openssl_random_pseudo_bytes(16,$val));
         //bin2hex es una función de php que devuleve un String hexadecimal
         //openssl_random_pseudo_bytes genera cadena de bytes aleatoria, necesita 2 parámetros, cantidad de bytes y booleano
+        date_default_timezone_set("America/Montevideo");//cambia la fecha y hora por default
         $date = date("Y-m-d H:i");
         $estado = "Activo";
         $sentencia = "INSERT INTO personas_token (Mail, Token, Estado, Fecha)VALUES('$Mail','$token','$estado','$date')";

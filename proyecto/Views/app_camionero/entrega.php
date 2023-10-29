@@ -1,7 +1,8 @@
 <?php
+$matricula = $_GET['matricula'];
 require("../../Model/session/session_camioneta.php");
 
-$url = 'http://localhost/proyecto/controller/transito/C_camionetas.php';
+$url = 'http://localhost/proyecto/controller/transito/C_transporta.php?matricula='.$matricula.'';
 require("../../intermediario/getDataAPI.php");
 ?>
 <!DOCTYPE html>
@@ -18,31 +19,11 @@ require("../../intermediario/getDataAPI.php");
 </head>
 
 <body class="formulario">
-    <h1 class="text-center titulo">Aviso Entrega</h1>
-    <form action="../../intermediario/putDataAPI.php" method="post" class="form">
-        <h2 class="form__titulo text-center">Ingrese Datos</h2>
-        <div class="datos">
-            <p>Matricula:</p>
-            <select name="MatriculaC">
-                <?php
-                $matriculasMostradas = array();
-                foreach ($array as $fila) {
-                    $matriculaC = $fila['MatriculaC'];
-                    if (!in_array($matriculaC, $matriculasMostradas)) {
-                        // Si no se ha mostrado, muestra la matrícula y agrega al array
-                        $matriculasMostradas[] = $matriculaC;
-                        echo '<option value="' . $fila['MatriculaC'] . '">' . $fila['MatriculaC'] . '</option>';
-                    }
-                }
-                ?>
-            </select>
-        </div>
-        <?php
-        $url = 'http://localhost/proyecto/controller/transito/C_paquetes.php';
-        require("../../intermediario/getDataAPI.php");
-        ?>
-        <div class="datos">
-            <p>Codigo:</p>
+    <h1 class="text-center titulo" data-section="seleccionar" data-value="op5">Aviso Entrega</h1>
+    <?php echo '<form action="../../intermediario/putDataAPI.php?matricula='.$matricula.'" method="post" class="form">'; ?>
+        <h2 class="form__titulo text-center" data-section="header" data-value="ingresar">Ingrese Datos</h2>
+        <div class="text">
+        <label><b data-section="paquete" data-value="codigo">Codigo:</b></label>
             <select name="codigoE">
                 <?php
                 foreach ($array as $fila) {
@@ -52,12 +33,13 @@ require("../../intermediario/getDataAPI.php");
             </select>
         </div>
         <div class="form__btn">
-            <input type="submit" value="Marcar Entrega" class="btn">
+            <input type="submit" value="Marcar Entrega" class="btn" data-section="boton" data-value="entregado">
         </div>
     </form>
     <div class="btn_volver">
-        <a href="indexCamioneta.php" class="boton">Volver</a>
+        <?php echo '<a href="indexCamioneta.php?matricula='.$matricula.'" class="boton" data-section="boton" data-value="volver">'; ?>Volver</a>
     </div>
+    <script src="script.js"></script>
 </body>
 
 </html>

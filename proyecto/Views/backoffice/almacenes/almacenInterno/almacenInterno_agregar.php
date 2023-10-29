@@ -13,14 +13,14 @@ require("../../../../Model/session/session_administrador3.php");
 
 <body class="fondo">
     <div class="contenedor_form">
-        <h1>Ingresar Datos</h1>
+        <h1 data-section="header" data-value="ingresar">Ingresar Datos</h1>
         <form class="form" action="../../insertar.php" method="post">
             <?php
-            $conexion = new mysqli("localhost", "root", "", "proyecto");
-            $sentencia = "SELECT * FROM almacen WHERE id NOT IN (SELECT idE FROM AlmacenExterno) AND id NOT IN (SELECT idI FROM AlmacenInterno)";
+            $conexion = new mysqli("localhost", "root", "", "ocean");
+            $sentencia = "SELECT * FROM vwalmacen";
             $filas = $conexion->query($sentencia);
             ?>
-            <div class="form_info">
+            <div class="form_info text">
                 <label>ID:</label>
                 <select name="idI" required>
                     <?php
@@ -31,16 +31,17 @@ require("../../../../Model/session/session_administrador3.php");
                 </select>
             </div>
             
-            <div class="form_info">
-                <label>Ruta:</label>
+            <div class="form_info text">
+                <label data-section="almacenes" data-value="ruta">Ruta:</label>
                 <input type="number" name="ruta" required>
             </div>
-            <input type="submit" value="Agregar" class="btn">
+            <input type="submit" value="Agregar" class="btn"  data-section="boton" data-value="agregar"> 
         </form>
     </div>
     <div class="btn_volver">
-        <a href="almacenInterno_index.php" class="btn">Volver</a>
+        <a href="almacenInterno_index.php" class="btn" data-section="boton" data-value="volver">Volver</a>
     </div>
+    <script src="script.js"></script>
 </body>
 
 </html>

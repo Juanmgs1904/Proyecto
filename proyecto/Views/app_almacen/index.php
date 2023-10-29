@@ -1,6 +1,6 @@
 <?php
 require("../../Model/session/session_almacenInterno.php");
-
+$idA = $_GET['idA'];
 ?>
 
 <!DOCTYPE html>
@@ -17,15 +17,15 @@ require("../../Model/session/session_almacenInterno.php");
 </head>
 
 <body>
-<header class="header">
+    <header class="header">
         <div class="header__contenedor">
             <div class="header__home">
-                <a href="index.php">
-                    <img src="img/Logo_sistema.png" alt="Logo de max truck">
+                <?php echo '<a href="index.php?idA=' . $idA . '">'; ?>
+                <img src="img/Logo_sistema.png" alt="Logo de max truck">
                 </a>
             </div>
             <div class="header__titulo">
-                <h1>Bienvenido</h1>
+                <h1 data-section="header" data-value="title">Bienvenido</h1>
             </div>
             <div class="header__logo">
                 <input type="checkbox" id="menuD" class="menu-toggle">
@@ -33,45 +33,65 @@ require("../../Model/session/session_almacenInterno.php");
 
                 <ul class="nav__lista">
                     <li><a href="#"><?php echo $_SESSION['mail']; ?></a></li>
-                    <a href="../../index.php"><li class="cerrar">Cerrar Sesión</li></a>
+                    <a href="../../index.php">
+                        <li class="cerrar">Cerrar Sesión</li>
+                    </a>
                 </ul>
             </div>
         </div>
     </header>
     <main>
-        <div class="opciones"> 
+        <div class="opciones">
             <div class="opcion">
                 <div class="infoOp">
                     <img src="img/lotes.svg" alt="Imagen lotes">
                     <h2>Lotes</h2>
                 </div>
-                <a href="lotes/almacenes.php" class="BTN">Ingresar</a>
+                <?php echo '<a href="lotes/lotes.php?idA=' . $idA . '" class="BTN">' ?>Ingresar</a>
             </div><!--Opción-->
             <div class="opcion">
-                <a href="paquete/almacenes.php" class="BTN">Ingresar</a>
+                <?php echo '<a href="paquete/paquetes.php?idA=' . $idA . '" class="BTN">' ?>Ingresar</a>
                 <div class="infoOp">
                     <h2>Paquetes</h2>
                     <img src="img/paquetes.svg" alt="Imagen paquetes">
                 </div>
             </div><!--Opción-->
+            
+            <?php
+            if ($idA == 1) {
+                echo '<div class="opcion">';
+                echo '<div class="infoOp">';
+                echo '<img src="img/logo_ruta.png" alt="Imagen ruta">';
+                echo '<h2>Recorrido</h2>';
+                echo '</div>';
+                echo '<a href="recorrido/recorrido.php?idA=' . $idA . '" class="BTN">Ingresar</a>';
+                echo '</div><!--Opción-->';
+            }
+            ?>
+
             <div class="opcion">
-                <div class="infoOp">
-                    <img src="img/logo_ruta.png" alt="Imagen ruta">
-                    <h2>Recorrido</h2>
-                </div> 
-                <a href="recorrido/recorrido.php" class="BTN">Ingresar</a>
-                
-            </div><!--Opción-->
-            <div class="opcion">
-                <a href="almacen/almacenInterno.php" class="BTN">Ingresar</a>
-                <div class="infoOp">
-                    <h2>Almacén</h2>
-                    <img src="img/almacen.svg" alt="Imagen almacén">
+                <?php
+                if ($idA == 1) {
+                    echo '<a href="almacen/almacenInterno.php?idA=' . $idA . '" class="BTN">Ingresar</a>';
+                    echo '<div class="infoOp">';
+                    echo '<h2>Almacén</h2>';
+                    echo '<img src="img/almacen.svg" alt="Imagen almacén">';
+                    echo '</div>';
+                    echo '</div><!--Opción-->';
+                }else{
                     
-                </div>
-            </div><!--Opción-->
+                    echo '<div class="infoOp">';
+                    echo '<img src="img/almacen.svg" alt="Imagen almacén">';
+                    echo '<h2>Almacén</h2>';
+                    echo '</div>';
+                    echo '<a href="almacen/almacenInterno.php?idA=' . $idA . '" class="BTN">Ingresar</a>';
+                    echo '</div><!--Opción-->';
+                }
+
+                ?>
         </div><!--Fin listado opciones-->
     </main>
+    <script src="script.js"></script>
 </body>
 
 </html>

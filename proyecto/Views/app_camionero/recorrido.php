@@ -1,6 +1,6 @@
 <?php
 $matricula = $_GET['matricula'];
-$url = 'http://localhost/proyecto/controller/transito/C_sigue.php?matricula=' . $matricula . '';
+$url = 'http://localhost/proyecto/controller/transito/C_vaHacia.php?matricula=' . $matricula . '';
 require("../../intermediario/getDataAPI.php");
 require("../../Model/session/session_camion.php");
 ?>
@@ -21,12 +21,12 @@ require("../../Model/session/session_camion.php");
     <header class="header">
         <div class="header__contenedor">
             <div class="header__home">
-                <a href="indexCamion.php">
-                    <img src="img/Logo_sistema.png" alt="Logo de max truck">
+                <?php echo '<a href="indexCamion.php?matricula=' . $matricula . '">'; ?>
+                <img src="img/Logo_sistema.png" alt="Logo de max truck">
                 </a>
             </div>
             <div class="header__titulo">
-                <h1>Rutas que sigue el camión</h1>
+                <h1 data-section="header" data-value="recorrido">Recorrido</h1>
             </div>
             <div class="header__logo">
                 <input type="checkbox" id="menuD" class="menu-toggle">
@@ -34,40 +34,48 @@ require("../../Model/session/session_camion.php");
 
                 <ul class="nav__lista">
                     <li><a href="#"><?php echo $_SESSION['mail']; ?></a></li>
+                    <div class="flags" id="flags">
+                        <div class="flags__item" data-language="es">
+                            <img src="../../img/es.svg" alt="opción español">
+                        </div>
+                        <div class="flags__item" data-language="en">
+                            <img src="../../img/en.svg" alt="opción inglés">
+                        </div>
+                    </div>
+
                     <a href="../../index.php">
-                        <li class="cerrar">Cerrar Sesión</li>
+                        <li class="cerrar" data-section="header" data-value="logout">Cerrar Sesión</li>
                     </a>
                 </ul>
             </div>
         </div>
     </header>
-    <div class="grid_tablaR __contenedor">
-        <div class="datosT pFila">Ruta</div>
-        <?php
-        foreach ($array as $fila) {
-            if (isset($fila['nroRuta'])) { ?>
-                <div class="datosT"><?php echo $fila['nroRuta'] . " "; ?></div>
+    <div class="tabla__contenedor">
+        <div class="titulo">
+            <h2 data-section="recorrido" data-value="titulo">Almacenes de Destino</h2>
+        </div>
+        <div class="recorrido_grid">
+            <div class="datos pFilaH" data-section="recorrido" data-value="almacen">ALMACENES</div>
+            <div class="datos pFilaH" data-section="recorrido" data-value="ubicacion">UBICACIÓN</div>
+            <div class="datos pFilaH" data-section="recorrido" data-value="distancia">DISTANCIA</div>
             <?php
-                $id = $fila['nroRuta'];
-            }
-        }
-        ?>
-    </div>
-    <div class="grid_tablaR __contenedor">
-        <div class="datosT pFila">Almacén</div>
-        <?php
-        foreach ($array as $fila) {
-            if (isset($fila['idI'])) { ?>
-                <div class="datosT"><?php echo $fila['idI'] . " "; ?></div>
+            foreach ($array as $fila) {
+            ?>
+                <div class="datos pFilaV" data-section="recorrido" data-value="almacen">Almacenes</div>
+                <div class="datos"><?php echo $fila['IDA'] . " "; ?></div>
+                <div class="datos pFilaV" data-section="recorrido" data-value="ubicacion">Ubicación</div>
+                <div class="datos"><?php echo $fila['Ubicacion'] . " "; ?></div>
+                <div class="datos pFilaV" data-section="recorrido" data-value="distancia">Distancia</div>
+                <div class="datos"><?php echo $fila['Distancia'] . " "; ?></div>
             <?php
-                $id = $fila['idI'];
             }
-        }
-        ?>
+            ?>
+        </div>
     </div>
     <div class="btn_volver">
-        <a href="tabla_camionesRecorrido.php" class="btn">Volver</a>
+        <?php echo '<a href="indexCamion.php?matricula=' . $matricula . '" class="btn" data-section="boton" data-value="volver">'; ?>Volver</a>
     </div>
+    <script src="script.js"></script>
 </body>
 
 </html>

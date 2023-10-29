@@ -1,5 +1,6 @@
 <?php
-$url = 'http://localhost/proyecto/controller/transito/C_paquetesC.php';
+$matriculaC = $_GET['matricula'];
+$url = 'http://localhost/proyecto/controller/transito/C_transporta.php?matricula='.$matriculaC.'';
 require("../../intermediario/getDataAPI.php");
 require("../../Model/session/session_camioneta.php");
 ?>
@@ -20,12 +21,12 @@ require("../../Model/session/session_camioneta.php");
     <header class="header">
         <div class="header__contenedor">
             <div class="header__home">
-                <a href="indexCamioneta.php">
+                <?php echo '<a href="indexCamioneta.php?matricula='.$matriculaC.'">'; ?>
                     <img src="img/Logo_sistema.png" alt="Logo de max truck">
                 </a>
             </div>
             <div class="header__titulo">
-                <h1>Paquetes de la Camioneta</h1>
+                <h1 data-section="header" data-value="paquetesC">Paquetes de la Camioneta</h1>
             </div>
             <div class="header__logo">
                 <input type="checkbox" id="menuD" class="menu-toggle">
@@ -33,18 +34,29 @@ require("../../Model/session/session_camioneta.php");
 
                 <ul class="nav__lista">
                     <li><a href="#"><?php echo $_SESSION['mail']; ?></a></li>
-                    <a href="../../index.php"><li class="cerrar">Cerrar Sesión</li></a>
+                    <div class="flags" id="flags">
+                        <div class="flags__item" data-language="es">
+                            <img src="../../img/es.svg" alt="opción español">
+                        </div>
+                        <div class="flags__item" data-language="en">
+                            <img src="../../img/en.svg" alt="opción inglés">
+                        </div>
+                    </div>
+
+                    <a href="../../index.php">
+                        <li class="cerrar" data-section="header" data-value="logout">Cerrar Sesión</li>
+                    </a>
                 </ul>
             </div>
         </div>
     </header>
     <div class="grid_tabla __contenedor">
-        <div class="datosT pFila">CÓDIGO</div>
-        <div class="datosT pFila">OPCIÓN</div>
+        <div class="datosT pFila" data-section="paquete" data-value="codigo">CÓDIGO</div>
+        <div class="datosT pFila" data-section="paquete" data-value="opciones">OPCIÓN</div>
         <?php
         foreach ($array as $fila) {
             $matricula = $fila['MatriculaC'];
-            if ($matricula == $_GET["id"]) {
+            if ($matricula == $matriculaC) {
         ?>
                 <div class="datosT"><?php echo $fila['codigo'] . " "; ?></div>
                 <?php
@@ -52,7 +64,7 @@ require("../../Model/session/session_camioneta.php");
                 ?>
                 <div class="datosT">
                     <?php
-                    echo '<a href="remitoP.php?id=' . $id . '">' . "Ver Remito" . ' </a>';
+                    echo '<a href="remitoP.php?id=' . $id . '&matricula='.$matriculaC.'" data-section="boton" data-value="ver">' . "Ver Remito" . ' </a>';
                     ?>
                 </div>
         <?php
@@ -61,8 +73,9 @@ require("../../Model/session/session_camioneta.php");
         ?>
     </div>
     <div class="btn_volver">
-        <a href="tabla_camionetas.php" class="btn">Volver</a>
+        <?php echo '<a href="indexCamioneta.php?matricula='.$matriculaC.'" class="btn" data-section="boton" data-value="volver">'; ?>Volver</a>
     </div>
+    <script src="script.js"></script>
 </body>
 
 </html>

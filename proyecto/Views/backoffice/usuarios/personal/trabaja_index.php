@@ -21,7 +21,7 @@ require("../../../../Model/session/session_administrador3.php");
                     </a>
                 </div>
                 <div class="header__titulo">
-                    <h1>Almacenes</h1>
+                    <h1 data-section="almacenes" data-value="titulo">Almacenes</h1>
                 </div>
                 <div class="header__logo">
                     <input type="checkbox" id="menuD" class="menu-toggle">
@@ -29,7 +29,17 @@ require("../../../../Model/session/session_administrador3.php");
 
                     <ul class="nav__lista">
                         <li><a href="#"><?php echo $_SESSION['mail']; ?></a></li>
-                        <a href="../../../../index.php"><li class="cerrar">Cerrar Sesión</li></a>
+                        <div class="flags" id="flags">
+                            <div class="flags__item" data-language="es">
+                                <img src="../../../../img/es.svg" alt="opción español">
+                            </div>
+                            <div class="flags__item" data-language="en">
+                                <img src="../../../../img/en.svg" alt="opción inglés">
+                            </div>
+                        </div>
+                        <a href="../../../../index.php">
+                            <li class="cerrar" data-section="header" data-value="logout">Cerrar Sesión</li>
+                        </a>
                     </ul>
                 </div>
             </div>
@@ -38,11 +48,11 @@ require("../../../../Model/session/session_administrador3.php");
             <div class="tabla">
                 <div class="grid2">
 
-                    <div class="datos pFila">ID del Almacén</div>
-                    <div class="datos pFila">OPCIONES</div>
+                    <div class="datos pFila" data-section="personal" data-value="id">ID del Almacén</div>
+                    <div class="datos pFila" data-section="paquete" data-value="opciones">OPCIONES</div>
 
                     <?php
-                    $conexion = new mysqli("localhost", "root", "", "proyecto");
+                    $conexion = new mysqli("localhost", "root", "", "ocean");
                     $sentencia = "SELECT IDA FROM trabaja";
                     $filas = $conexion->query($sentencia);
 
@@ -63,7 +73,7 @@ require("../../../../Model/session/session_administrador3.php");
                             ?>
                             <div class="datos">
                                 <?php
-                                echo '<a href="personal.php?IDA=' . $fila['IDA'] . '">Ver personal</a>';
+                                echo '<a href="personal.php?IDA=' . $fila['IDA'] . '"data-section="personal" data-value="op2">Ver personal</a>';
                                 ?>
                             </div>
                     <?php
@@ -75,9 +85,10 @@ require("../../../../Model/session/session_administrador3.php");
 
         </div>
         <div class="btn_tabla">
-            <a class="btn" href="trabaja_agregar.php">Volver</a>
+            <a class="btn" href="trabaja_agregar.php"  data-section="boton" data-value="volver">Volver</a>
         </div>
     </div>
+    <script src="script.js"></script>
 </body>
 
 </html>

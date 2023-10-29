@@ -3,15 +3,12 @@ require_once(realpath(dirname(__FILE__) . '/../conexion/conexion.php'));
 class lotesE extends conexion {
 
     private $idL = "";
-    private $peso = "";
-    private $estado = "";
-    private $destino = "";
     private $tiempoEstimado = "";
-    private $idI = "";
-    private $almacenExterno = "";
+    private $empresa = "";
+    private $enAlmacenExterno = "";
 
-    public function listaLotesE(){
-        $sentencia = "SELECT * FROM lotes WHERE enAlmacenExterno = 1";
+    public function listaLotesE($empresa){
+        $sentencia = "SELECT * FROM lotes WHERE enAlmacenExterno = 1 AND Empresa = '$empresa' AND Estado != 'entregado'";
         $arrayDatos = parent::obtenerDatos($sentencia);
         return $arrayDatos;
     }
@@ -19,15 +16,12 @@ class lotesE extends conexion {
     public function post($json){
         $_respuestas = new respuestas;
         $datos = json_decode($json, true);
-        if(!isset($datos['estado']) || !isset($datos['destino']) || !isset($datos['almacenExterno']) || !isset($datos['tiempoEstimado']) || !isset($datos['idI'])){
+        if(!isset($datos['tiempoEstimado']) || !isset($datos['empresa'])|| !isset($datos['enAlmacenExterno'])){
             return $_respuestas->error_400();
         }else{
-            $this->estado = $datos['estado'];
-            $this->destino = $datos['destino'];
-            $this->almacenExterno = $datos['almacenExterno'];
             $this->tiempoEstimado = $datos['tiempoEstimado'];
-            $this->idI = $datos['idI'];
-            if(isset($datos['peso'])){ $this->peso = $datos['peso']; }
+            $this->empresa = $datos['empresa'];
+            $this->enAlmacenExterno = $datos['enAlmacenExterno'];
             $respuestaId = $this->altaLote();
             if($respuestaId){
                 $respuesta = $_respuestas->respuesta;
@@ -42,9 +36,9 @@ class lotesE extends conexion {
         
     }
     private function altaLote(){
-        $sentencia = "INSERT INTO lotes(Peso,Estado,Destino,enAlmacenExterno,tiempoEstimado,idI)
+        $sentencia = "INSERT INTO lotes(tiempoEstimado,Empresa,enAlmacenExterno)
         VALUES
-        ('".$this->peso."','". $this->estado."','". $this->destino."','". $this->almacenExterno."','". $this->tiempoEstimado."','". $this->idI."')";
+        ('".$this->tiempoEstimado."','". $this->empresa."','".$this->enAlmacenExterno."')";
         $respuesta = parent::guardarId($sentencia);
         if($respuesta){
             return $respuesta;

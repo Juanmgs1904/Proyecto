@@ -6,7 +6,7 @@ class asignarPAL extends conexion {
     private $IDL = "";
 
     public function listaPAL(){
-        $sentencia = "SELECT codigo, IDL FROM contiene";
+        $sentencia = "SELECT codigo, IDL FROM vwPaquetesContiene";
         $arrayDatos = parent::obtenerDatos($sentencia);
         return $arrayDatos;
     }
@@ -35,9 +35,7 @@ class asignarPAL extends conexion {
         $sentencia = "INSERT INTO contiene(codigo,IDL)
         VALUES
         ('".$this->codigo."','". $this->IDL."')";
-        $sentencia2 = "UPDATE paquetes SET estado = 'LoteAsignado' WHERE codigo =". $this->codigo ."";
         $respuesta = parent::guardar($sentencia);
-        parent::guardar($sentencia2);
         if($respuesta){
             return $respuesta;
         }else{
@@ -96,9 +94,7 @@ class asignarPAL extends conexion {
     }
     private function eliminarPAL(){
         $sentencia = "DELETE FROM contiene WHERE codigo = '" . $this->codigo . "'";
-        $sentencia2 = "UPDATE paquetes SET Estado = 'NoAsignado' WHERE codigo = ".$this->codigo."";
         $respuesta = parent::guardar($sentencia);
-        parent::guardar($sentencia2);
         if($respuesta >= 1){
             return $respuesta;
         }else{

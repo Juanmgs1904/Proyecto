@@ -1,5 +1,6 @@
 <?php
-$url = 'http://localhost/proyecto/controller/almacen/C_asignarPAL.php';
+$idA = $_GET['idA'];
+$url = 'http://localhost/proyecto/controller/almacen/C_asignarPAL.php?idA='.$idA.'';
 require("../../../../intermediario/getDataAPI.php");
 require("../../../../Model/session/session_almacen3.php");
 ?>
@@ -22,7 +23,7 @@ require("../../../../Model/session/session_almacen3.php");
 <header class="header">
         <div class="header__contenedor">
             <div class="header__home">
-                <a href="../../index.php">
+                <?php echo '<a href="../../index.php?idA='.$idA.'">'; ?>
                     <img src="../../img/Logo_sistema.png" alt="Logo de max truck">
                 </a>
             </div>
@@ -44,7 +45,7 @@ require("../../../../Model/session/session_almacen3.php");
         <div class="titulo">
             <h2>Lotes</h2>
         </div>
-        <div class="PAC_grid">
+        <div class="LEC_grid">
             <div class="datos pFila">LOTES</div>
             <div class="datos pFila">OPCIÓN</div>
             <?php
@@ -64,7 +65,7 @@ require("../../../../Model/session/session_almacen3.php");
                     ?>
                     <div class="datos">
                         <?php
-                        echo '<a href="paquetesAL.php?IDL=' . $fila['IDL'] . '">Ver Paquetes</a>';
+                        echo '<a href="paquetesAL.php?IDL=' . $fila['IDL'] . '&idA='.$idA.'">Ver Paquetes</a>';
                         ?>
                     </div>
             <?php
@@ -74,7 +75,7 @@ require("../../../../Model/session/session_almacen3.php");
         </div>
     </div>
     <div class="btn_volver">
-        <a href="../asignarPaqueteAL.php" class="btn">Volver</a>
+        <?php echo '<a href="../asignarPaqueteAL.php?idA='.$idA.'" class="btn">'; ?>Volver</a>
     </div>
 </body>
 

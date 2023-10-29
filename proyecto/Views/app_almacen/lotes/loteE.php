@@ -1,4 +1,5 @@
 <?php
+$empresa = $_GET['empresa'];
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
 }
@@ -25,7 +26,7 @@ require("../../../Model/session/session_almacen2.php");
 <header class="header">
         <div class="header__contenedor">
             <div class="header__home">
-                <a href="../index.php">
+                <?php echo '<a href="../indexExterno.php?empresa='.$empresa.'">'; ?>
                     <img src="../img/Logo_sistema.png" alt="Logo de max truck">
                 </a>
             </div>
@@ -67,7 +68,7 @@ require("../../../Model/session/session_almacen2.php");
     <div>
         <div class="btn_volver">
             <?php
-            echo '<a href="lotesE.php" class="btn">Volver</a>';
+            echo '<a href="lotesE.php?empresa='.$empresa.'" class="btn">Volver</a>';
             ?>
         </div>
     </div>

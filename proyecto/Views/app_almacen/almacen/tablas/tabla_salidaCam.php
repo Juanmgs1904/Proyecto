@@ -1,4 +1,5 @@
 <?php
+$idA = $_GET['idA'];
 $url = 'http://localhost/proyecto/controller/almacen/C_salidaCam.php';
 require("../../../../intermediario/getDataAPI.php");
 require("../../../../Model/session/session_almacenInterno3.php");
@@ -21,7 +22,7 @@ require("../../../../Model/session/session_almacenInterno3.php");
     <header class="header">
         <div class="header__contenedor">
             <div class="header__home">
-                <a href="../../index.php">
+                <?php echo '<a href="../../index.php?idA='.$idA.'">'; ?>
                     <img src="../../img/Logo_sistema.png" alt="Logo de max truck">
                 </a>
             </div>
@@ -61,14 +62,14 @@ require("../../../../Model/session/session_almacenInterno3.php");
                 ?>
                 <div class="datos">
                     <?php
-                    echo '<a href="#" onclick="confirmDelete(\''  . $fila['MatriculaC'] . '\', \'' . $fila["FechaSalida"] . '\');">' . '<div class="option">Eliminar</div>' . ' </a>';
+                    echo '<a href="#" onclick="confirmDelete(\''  . $fila['MatriculaC'] . '\', \'' . $idA . '\', \'' . $fila["FechaSalida"] . '\');">' . '<div class="option">Eliminar</div>' . ' </a>';
                     ?>
                     <script>
-                        function confirmDelete(matriculaC, FechaSalida) {
+                        function confirmDelete(matriculaC, IDA, FechaSalida) {
                             var confirmation = confirm("¿Estás seguro de que deseas eliminar este paquete de la camioneta?");
                             if (confirmation) {
                                 // Si el usuario confirma, redirige a la página de eliminación
-                                window.location.href = "../../../../intermediario/deleteDataAPI.php?matriculaSC=" + matriculaC + "&fechaSalida=" + FechaSalida;
+                                window.location.href = "../../../../intermediario/deleteDataAPI.php?matriculaSC=" + matriculaC + "&idA=" + IDA + "&fechaSalida=" + FechaSalida;
                             }
                         }
                     </script>
@@ -79,7 +80,7 @@ require("../../../../Model/session/session_almacenInterno3.php");
         </div>
     </div>
     <div class="btn_volver">
-        <a href="../salidaCam.php" class="btn">Volver</a>
+        <?php echo '<a href="../salidaCam.php?idA='.$idA.'" class="btn">'; ?>Volver</a>
     </div>
 </body>
 

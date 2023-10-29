@@ -1,4 +1,5 @@
 <?php
+$idA = $_GET['idA'];
 $url = 'http://localhost/proyecto/controller/almacen/C_asignarPAC.php';
 require("../../../../intermediario/getDataAPI.php");
 require("../../../../Model/session/session_almacenInterno3.php");
@@ -22,7 +23,7 @@ require("../../../../Model/session/session_almacenInterno3.php");
 <header class="header">
         <div class="header__contenedor">
             <div class="header__home">
-                <a href="../../index.php">
+            <?php echo '<a href="../../index.php?idA='.$idA.'">'; ?>
                     <img src="../../img/Logo_sistema.png" alt="Logo de max truck">
                 </a>
             </div>
@@ -44,7 +45,7 @@ require("../../../../Model/session/session_almacenInterno3.php");
         <div class="titulo">
             <h2>Paquetes asignados</h2>
         </div>
-        <div class="PAC_grid">
+        <div class="LEC_grid">
             <div class="datos pFila">CÓDIGO</div>
             <div class="datos pFila">OPCIÓN</div>
             <?php
@@ -60,14 +61,14 @@ require("../../../../Model/session/session_almacenInterno3.php");
                     <div class="datos">
                         
                         <?php
-                        echo '<a href="#" onclick="confirmDelete(' . $fila['codigo'] . ');">' . '<div class="option">Eliminar</div>'  . ' </a>';
+                        echo '<a href="#" onclick="confirmDelete(\''  . $fila['codigo'] . '\', \'' . $idA . '\', \'' . $matriculaC . '\');">' . '<div class="option">Eliminar</div>'  . ' </a>';
                         ?>
                         <script>
-                            function confirmDelete(codigo) {
+                            function confirmDelete(codigo, idA, matricula) {
                                 var confirmation = confirm("¿Estás seguro de que deseas eliminar este paquete de la camioneta?");
                                 if (confirmation) {
                                     // Si el usuario confirma, redirige a la página de eliminación
-                                    window.location.href = "../../../../intermediario/deleteDataAPI.php?codigoC=" + codigo;
+                                    window.location.href = "../../../../intermediario/deleteDataAPI.php?codigoC=" + codigo + "&idA=" + idA + "&matricula=" + matricula;
                                 }
                             }
                         </script>
@@ -80,7 +81,7 @@ require("../../../../Model/session/session_almacenInterno3.php");
         </div>
     </div>
     <div class="btn_volver">
-        <a href="tabla_asignarPAC.php" class="btn">Volver</a><!--llevarlo a llegadaAE -->
+        <?php echo '<a href="tabla_asignarPAC.php?idA='.$idA.'" class="btn">'; ?>Volver</a>
     </div>
 </body>
 

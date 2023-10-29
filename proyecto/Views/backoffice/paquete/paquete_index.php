@@ -22,7 +22,7 @@ require("../../../Model/session/session_administrador2.php");
                 </a>
             </div>
             <div class="header__titulo">
-                <h1>Gestión de Paquetes</h1>
+                <h1 data-section="header" data-value="paquetes">Gestión de Paquetes</h1>
             </div>
             <div class="header__logo">
                 <input type="checkbox" id="menuD" class="menu-toggle">
@@ -30,7 +30,18 @@ require("../../../Model/session/session_administrador2.php");
 
                 <ul class="nav__lista">
                     <li><a href="#"><?php echo $_SESSION['mail']; ?></a></li>
-                    <a href="../../../index.php"><li class="cerrar">Cerrar Sesión</li></a>
+
+                    
+                    <div class="flags" id="flags">
+                        <div class="flags__item" data-language="es">
+                            <img src="../../../img/es.svg" alt="opción español">
+                        </div>
+                        <div class="flags__item" data-language="en">
+                            <img src="../../../img/en.svg" alt="opción inglés">
+                        </div>
+                    </div>
+
+                    <a href="../../../index.php"><li class="cerrar" data-section="header" data-value="logout">Cerrar Sesión</li></a>
                 </ul>
             </div>
         </div>
@@ -39,24 +50,24 @@ require("../../../Model/session/session_administrador2.php");
             <div class="tabla">
                 <div class="grid4">
 
-                    <div class="datos pFilaH">codigo</div>
-                    <div class="datos pFilaH">Peso</div>
-                    <div class="datos pFilaH">Estado</div>
-                    <div class="datos pFilaH">OPCIONES</div>
+                    <div class="datos pFilaH" data-section="paquete" data-value="codigo">codigo</div>
+                    <div class="datos pFilaH" data-section="paquete" data-value="peso">Peso</div>
+                    <div class="datos pFilaH" data-section="paquete" data-value="estado">Estado</div>
+                    <div class="datos pFilaH" data-section="paquete" data-value="opciones">OPCIONES</div>
 
                     <?php
-                    $conexion = new mysqli("localhost", "root", "", "proyecto");
-                    $sentencia = "SELECT * FROM paquetes";
+                    $conexion = new mysqli("localhost", "root", "", "ocean");
+                    $sentencia = "SELECT * FROM vwPaquetesNoEntregados";
                     $filas = $conexion->query($sentencia);
                     foreach ($filas->fetch_all(MYSQLI_ASSOC) as $fila) {
                     ?>
-                        <div class="datos pFilaV">Codigo</div>
+                        <div class="datos pFilaV" data-section="paquete" data-value="codigo">Codigo</div>
                         <div class="datos"><?php echo $fila['codigo'] . " "; ?></div>
-                        <div class="datos pFilaV">Peso</div>
+                        <div class="datos pFilaV" data-section="paquete" data-value="peso">Peso</div>
                         <div class="datos"><?php echo $fila['Peso'] . " "; ?></div>
-                        <div class="datos pFilaV">Estado</div>
+                        <div class="datos pFilaV" data-section="paquete" data-value="estado">Estado</div>
                         <div class="datos"><?php echo $fila['Estado'] . " "; ?></div>
-                        <div class="datos pFilaV">OPCIONES</div>
+                        <div class="datos pFilaV" data-section="paquete" data-value="opciones">OPCIONES</div>
                         <?php
                         echo '<a href="verRemitoP.php?codigo=' . $fila['codigo'] . '">' . '<div class="datosR">'.'<img src="../img/icono_remito.png" alt="Imagen eliminar">'.'</div>' . ' </a>';
                         ?>
@@ -67,12 +78,21 @@ require("../../../Model/session/session_administrador2.php");
                 </div>
             </div>
         </div>
+        
         <div class="btn_tabla">
-            <a class="btn" href="../index.php">Volver</a>
-            <a class="btn" href="paquete_agregar.php">Agregar paquete</a>
+            <a class="btn" href="../index.php" data-section="boton" data-value="volver">Volver</a>
+            <a class="btn" href="paquete_agregar.php" data-section="boton" data-value="agregarPaquete">Agregar paquete</a>
 
         </div>
+        <div class="btn_tabla">
+            <a class="btn" href="paquete_entregado.php" data-section="boton" data-value="paqueteEntregado">Paquetes Entregados</a>
+        </div>
     </div>
+
+    
+    <script src="script.js"></script>
+
+    
 </body>
 
 </html>

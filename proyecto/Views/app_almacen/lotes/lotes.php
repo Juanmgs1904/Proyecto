@@ -1,11 +1,6 @@
 <?php
-$mostrar = false;
-if (isset($_GET['id'])) {
-    $idA = $_GET['id'];
-    if ($idA == 1) {
-        $mostrar = true;
-    }
-}
+$idA = $_GET['idA'];
+
 $url = "http://localhost/proyecto/controller/almacen/C_lotes.php?idA=$idA";
 require("../../../intermediario/getDataAPI.php");
 
@@ -29,7 +24,7 @@ require("../../../Model/session/session_almacen2.php");
     <header class="header">
         <div class="header__contenedor">
             <div class="header__home">
-                <a href="../index.php">
+            <?php echo '<a href="../index.php?idA='.$idA.'">'; ?>
                     <img src="../img/Logo_sistema.png" alt="Logo de max truck">
                 </a>
             </div>
@@ -58,7 +53,6 @@ require("../../../Model/session/session_almacen2.php");
             <div class="datos pFilaH">ID</div>
             <div class="datos pFilaH">Estado</div>
             <div class="datos pFilaH">Peso</div>
-            <div class="datos pFilaH">ID Almacén</div>
             <div class="datos pFilaH">OPCIONES</div>
             <?php
             foreach ($array as $fila) {
@@ -69,23 +63,21 @@ require("../../../Model/session/session_almacen2.php");
                 <div class="datos"><?php echo $fila['Estado'] . " "; ?></div>
                 <div class="datos pFilaV">Peso</div>
                 <div class="datos"><?php echo $fila['Peso'] . " "; ?></div>
-                <div class="datos pFilaV">ID Almacén</div>
-                <div class="datos"><?php echo $fila['idI'] . " "; ?></div>
                 <div class="datos pFilaV">OPCIONES</div>
                 <?php
                 $id = $fila['IDL'];
                 ?>
                 <div class="op">
                     <?php
-                    echo '<a href="loteE.php?id=' . $id . '&idA=' . $idA . '">' . '<div class="option">Ver Remito</div>' . ' </a>';
+                    echo '<a href="lote.php?id=' . $id . '&idA=' . $idA . '">' . '<div class="option">Ver Remito</div>' . ' </a>';
                     ?>
                     <?php
-                    if ($mostrar == true) {
+                    if ($idA == 1) {
                         echo '<a href="#" onclick="confirmDelete('  . $fila['IDL'] . ');">' . '<div class="option">Eliminar</div></a>';
                     }
                     ?>
                     <script>
-                        function confirmDelete(IDL, idA) {
+                        function confirmDelete(IDL) {
                             var confirmation = confirm("¿Estás seguro de que deseas eliminar este Lote?");
                             if (confirmation) {
                                 // Si el usuario confirma, redirige a la página de eliminación
@@ -101,16 +93,22 @@ require("../../../Model/session/session_almacen2.php");
     </div>
     <div class="botones">
         <div class="btn_volver">
-            <a href="almacenes.php" class="btn">Volver</a>
+        <?php echo '<a href="../index.php?idA='.$idA.'" class="btn">' ?>Volver</a>
         </div>
         <div class="btn_tabla">
             <?php
-            if ($mostrar == true) {
+            if ($idA == 1) {
                 echo '<a href="agregar_lote.php" class="btn">Agregar Lote</a>';
             }
             ?>
         </div>
-
+        <div class="btn_tabla">
+            <?php
+            if ($idA == 1) {
+                echo '<a href="asignar_lote.php" class="btn">Asignar Lote</a>';
+            }
+            ?>
+        </div>
     </div>
 </body>
 

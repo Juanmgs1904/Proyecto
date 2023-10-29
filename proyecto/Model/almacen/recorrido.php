@@ -5,9 +5,14 @@ class recorrido extends conexion
 
     private $IDR = "";
 
+    public function mostrarRecorrido(){
+        $sentencia = "SELECT * FROM vwrecorridosnoasignados";
+        $arrayDatos = parent::obtenerDatos($sentencia);
+        return $arrayDatos;
+    }
     public function listaHoras()
     {
-        $sentencia = "SELECT IDR FROM recorrido";
+        $sentencia = "SELECT * FROM recorrido";
         $arrayDatos = parent::obtenerDatos($sentencia);
         return $arrayDatos;
     }
@@ -15,11 +20,11 @@ class recorrido extends conexion
     {
         $_respuestas = new respuestas;
 
-        $respuestaId = $this->altaHora();
+        $respuestaId = $this->altaRecorrido();
         if ($respuestaId) {
             $respuesta = $_respuestas->respuesta;
             $respuesta['resultado'] = array(
-                "Se marcó la hora de llegada del camión" => $respuestaId
+                "Se agregó el recorrido" => $respuestaId
             );
             return $respuesta;
         } else {
@@ -27,8 +32,7 @@ class recorrido extends conexion
         }
     }
 
-
-    private function altaHora()
+    private function altaRecorrido()
     {
         $sentencia = "INSERT INTO recorrido(IDR) VALUES (NULL)";
         $respuesta = parent::guardar($sentencia);

@@ -23,13 +23,15 @@ switch($_SERVER['REQUEST_METHOD']){
     //Mostrar
     case 'GET':
         if(isset($_GET['id'])){
+            $id = $_GET['id'];
             //solicita datos al modelo
-            $respuesta = $_paquetes->mostrarPaquete($_GET['id']);
+            $respuesta = $_paquetes->mostrarPaquete($id);
             require('../../Routes/R_almacen.php');
         }else{
             if(isset($_GET['idA'])){
+                $idA = $_GET['idA'];
                 //solicita datos al modelo
-                $respuesta = $_paquetes->listaPaquetes($_GET['idA']);
+                $respuesta = $_paquetes->listaPaquetes($idA);
             }
             require('../../Routes/R_almacen.php');
         }

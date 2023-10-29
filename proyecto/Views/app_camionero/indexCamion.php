@@ -1,4 +1,5 @@
 <?php
+$matricula = $_GET['matricula'];
 require("../../Model/session/session_camion.php");
 ?>
 <!DOCTYPE html>
@@ -18,12 +19,12 @@ require("../../Model/session/session_camion.php");
 <header class="header">
         <div class="header__contenedor">
             <div class="header__home">
-                <a href="indexCamion.php">
+                <?php echo '<a href="indexCamion.php?matricula='.$matricula.'">'; ?>
                     <img src="img/Logo_sistema.png" alt="Logo de max truck">
                 </a>
             </div>
             <div class="header__titulo">
-                <h1>Bienvenido</h1>
+                <h1 data-section="header" data-value="bienvenido">Bienvenido</h1>
             </div>
             <div class="header__logo">
                 <input type="checkbox" id="menuD" class="menu-toggle">
@@ -31,26 +32,40 @@ require("../../Model/session/session_camion.php");
 
                 <ul class="nav__lista">
                     <li><a href="#"><?php echo $_SESSION['mail']; ?></a></li>
-                    <a href="../../index.php"><li class="cerrar">Cerrar Sesión</li></a>
+                    
+                    <div class="flags" id="flags">
+                        <div class="flags__item" data-language="es">
+                            <img src="../../img/es.svg" alt="opción español">
+                        </div>
+                        <div class="flags__item" data-language="en">
+                            <img src="../../img/en.svg" alt="opción inglés">
+                        </div>
+                    </div>
+
+                    <a href="../../index.php">
+                        <li class="cerrar" data-section="header" data-value="logout">Cerrar Sesión</li>
+                    </a>
                 </ul>
             </div>
         </div>
     </header>
-    <h2 class="title text-center">Opciones</h2>
-    <main class="opciones">        
-        <a href="tabla_camiones.php" class="opcion">
+    <h2 class="title text-center" data-section="seleccionar" data-value="title">Opciones</h2>
+    <main class="opciones">
+        <?php echo '<a href="lotesC.php?matricula='.$matricula.'" class="opcion">';?>        
             <img src="img/lotes.svg" alt="imagen Lotes">
-            <p class="text-center">Ver Lotes</p>
+            <p class="text-center" data-section="seleccionar" data-value="op1">Ver Lotes</p>
         </a>
-        <a href="tabla_camionesRecorrido.php" class="opcion">
+        <?php echo '<a href="recorrido.php?matricula='.$matricula.'" class="opcion">'; ?>
             <img src="../app_almacen/img/logo_ruta.png" alt="imagen Ruta">
-            <p class="text-center">Ver Recorrido</p>
+            <p class="text-center" data-section="seleccionar" data-value="op2">Ver Recorrido</p>
         </a>
-        <a href="demoraCamion.php" class="opcion">
+        <?php echo '<a href="demoraCamion.php?matricula='.$matricula.'" class="opcion">'; ?>
             <img src="img/demora.svg" alt="Imagen Demora">
-            <p class="text-center">Aviso Demora</p>
+            <p class="text-center" data-section="seleccionar" data-value="op3">Aviso Demora</p>
         </a>
     </main>
+    <script src="script.js"></script>
+                    
 </body>
 
 </html>

@@ -1,5 +1,6 @@
 <?php
-$url = 'http://localhost/proyecto/controller/almacen/C_lotes.php';
+$idA = $_GET['idA'];
+$url = 'http://localhost/proyecto/controller/almacen/C_lotesAP.php?idA='.$idA.'';
 require("../../../intermediario/getDataAPI.php");
 
 require("../../../Model/session/session_almacen2.php");
@@ -19,10 +20,10 @@ require("../../../Model/session/session_almacen2.php");
     <div class="title">
         <h1>ASIGNAR PAQUETES A LOTES</h1>
     </div>
-    <form action="../../../intermediario/postDataAPI.php" method="post" class="form">
+    <?php echo '<form action="../../../intermediario/postDataAPI.php?idA='.$idA.'" method="post" class="form">'; ?>
         <h3 class="form__title">Ingrese datos</h3>
-        <div class="datos">
-            <p>ID del Lote:</p>
+        <div class="text">
+            <label><b>ID del Lote:</b></label>
             <select name="IDL">
                 <?php
                 foreach ($array as $fila) {
@@ -36,8 +37,8 @@ require("../../../Model/session/session_almacen2.php");
         $url = 'http://localhost/proyecto/controller/almacen/C_paquetesAL.php';
         require("../../../intermediario/getDataAPI.php");    
         ?>
-        <div class="datos">
-            <p>Codigo:</p>
+        <div class="text">
+            <label><b>Codigo:</b></label>
             <select name="codigo">
                 <?php
                 foreach ($array as $fila) {
@@ -51,10 +52,10 @@ require("../../../Model/session/session_almacen2.php");
 
     <div class="botones">
         <div class="btn_volver">
-            <a href="almacenInterno.php" class="btn">Volver</a>
+            <?php  echo '<a href="almacenInterno.php?idA='.$idA.'" class="btn">'; ?>Volver</a>
         </div>
         <div class="btn_tabla">
-            <a href="tablas/tabla_asignarPAL.php" class="btn">Ver Tabla</a>
+            <?php echo '<a href="tablas/tabla_asignarPAL.php?idA='.$idA.'" class="btn">'; ?>Ver Tabla</a>
         </div>
     </div>
 

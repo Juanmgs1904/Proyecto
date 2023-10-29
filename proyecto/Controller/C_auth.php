@@ -17,19 +17,19 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         session_start();
         $_SESSION['rol'] = $app;
         if ($app == "AlmacenInterno") {
-            header("location: http://localhost/proyecto/Views/app_almacen/index.php");
+            header("location: http://localhost/proyecto/Views/app_almacen/index.php?idA=$idA");
         } else {
             if ($app == "AlmacenExterno") {
-                header("location: http://localhost/proyecto/Views/app_almacen/indexExterno.php");
+                header("location: http://localhost/proyecto/Views/app_almacen/indexExterno.php?empresa=$empresa");
             } else {
                 if ($app == "Administrador") {
                     header("location: http://localhost/proyecto/Views/backoffice/index.php");
                 } else {
                     if ($app == "ChoferCamion") {
-                        header("location: http://localhost/proyecto/Views/app_camionero/indexCamion.php");
+                        header("location: http://localhost/proyecto/Views/app_camionero/indexCamion.php?matricula=$matricula");
                     } else {
                         if ($app == "ChoferCamioneta") {
-                            header("location: http://localhost/proyecto/Views/app_camionero/indexCamioneta.php");
+                            header("location: http://localhost/proyecto/Views/app_camionero/indexCamioneta.php?matricula=$matricula");
                         }
                     }
                 }

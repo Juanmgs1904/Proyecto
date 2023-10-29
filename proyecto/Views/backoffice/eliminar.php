@@ -1,5 +1,5 @@
 <?php
-$conexion = new mysqli("localhost", "root", "", "proyecto");
+$conexion = new mysqli("localhost", "root", "", "ocean");
 //lote
 if (isset($_GET['IDL'])) {
     $IDL = $_GET['IDL'];

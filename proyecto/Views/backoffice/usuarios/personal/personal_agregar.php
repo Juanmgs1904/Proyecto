@@ -12,14 +12,14 @@ require ("../../../../Model/session/session_administrador3.php");
 </head>
 <body class="fondo">
     <div class="contenedor_form">
-        <h1>Ingresar Datos</h1>
+        <h1 data-section="header" data-value="ingresar">Ingresar Datos</h1>
         <form class="form" action="../../insertar.php" method="post">
         <?php
-            $conexion = new mysqli("localhost", "root", "", "proyecto");
-            $sentencia = "SELECT * FROM personas WHERE CI NOT IN (SELECT CIC FROM camionero) AND CI NOT IN (SELECT CIP FROM personal)";
+            $conexion = new mysqli("localhost", "root", "", "ocean");
+            $sentencia = "SELECT * FROM vwpersonas";
             $filas = $conexion->query($sentencia);
             ?>
-            <div class="form_info">
+            <div class="form_info text">
                 <label>CI:</label>
                 <select name="ciP" required>
                     <?php
@@ -29,19 +29,20 @@ require ("../../../../Model/session/session_administrador3.php");
                     ?>
                 </select>
             </div>
-            <div class="form_info">
-                <label>Cargo:</label>
+            <div class="form_info text">
+                <label data-section="personal" data-value="cargo">Cargo:</label>
                 <input type="text" name="cargo" required>
             </div>
-            <div class="form_info">
-                <label class="fechaN">Fecha de Nacimiento:</label>
+            <div class="form_info text">
+                <label class="fechaN" data-section="personal" data-value="fecha">Fecha de Nacimiento:</label>
                 <input type="date" name="fechaN" required>
             </div>
-            <input type="submit" value="Agregar" class="btn">
+            <input type="submit" value="Agregar" class="btn" data-section="boton" data-value="agregar">
         </form>
     </div>
     <div class="btn_volver">
-        <a href="personal_index.php" class="btn">Volver</a>
+        <a href="personal_index.php" class="btn" data-section="boton" data-value="volver">Volver</a>
     </div>
+    <script src="script.js"></script>
 </body>
 </html>

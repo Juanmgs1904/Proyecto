@@ -12,42 +12,47 @@ require ("../../../Model/session/session_administrador2.php");
 </head>
 <body class="fondo">
     <div class="contenedor_form">
-        <h1>Ingresar Datos</h1>
+        <h1 data-section="header" data-value="ingresar">Ingresar Datos</h1>
         <form class="form" action="paquete_insertar.php" method="post">
-            <div class="form_info">
-                <label>Peso:</label>
+            <div class="form_info text">
+                <label data-section="paquete" data-value="peso">Peso:</label>
                 <input type="text" name="Peso" required>
             </div>
-            <div class="form_info">
-            <label>Estado:</label>
+            <div class="form_info text">
+                <label data-section="paquete" data-value="estado">Estado:</label>
                 <select name="Estado">
-                    <option value="No Asignado">No Asignado</option>
-                    <option value="LoteAsignado">Lote Asignado</option>
-                    <option value="CamionetaAsignada">Camioneta Asignada</option>
-                    <option value="Entregado">Entregado</option>
+                    <option value="enAlmacenExterno">En almacen externo</option>
+                    <option value="loteExternoAsignado">Lote Externo Asignado</option>
+                    <option value="enCentral">En Central</option>
+                    <option value="loteAsignado">Lote Asignado</option>
+                    <option value="loteDesarmado">Lote Desarmado</option>
+                    <option value="camionetaAsignada">Camioneta Asignada</option>
+                    <option value="entregado">Entregado</option>
                 </select>
             </div>
-            <div class="form_info">
-                <label class="fechaV">Fecha de recibo:</label>
+            <div class="form_info text">
+                <label class="fechaV" data-section="paquete" data-value="fechaRecibo">Fecha de recibo:</label>
                 <input type="date" name="fRecibo" required>
             </div>
-            <div class="form_info">
-                <label class="fechaV">Fecha de entrega:</label>
+            <div class="form_info text">
+                <label class="fechaV" data-section="paquete" data-value="fechaEntrega">Fecha de entrega:</label>
                 <input type="date" name="fEntrega" required>
             </div>
-            <div class="form_info">
-                <label>Destiantario:</label>
+            <div class="form_info text">
+                <label data-section="paquete" data-value="destinatario">Destiantario:</label>
                 <input type="text" name="Destinatario" required>
             </div>
-            <div class="form_info">
-                <label>Destino:</label>
+            <div class="form_info text">
+                <label data-section="paquete" data-value="destino">Destino:</label>
                 <input type="text" name="Destino" required>
             </div>
-            <input type="submit" value="Agregar" class="btn">
+            <input type="submit" value="Agregar" class="btn" data-section="boton" data-value="agregar">
         </form>
     </div>
-    <div class="btn_volver">
-        <a href="paquete_index.php" class="btn">Volver</a>
+    <div class="btn_tabla">
+        <a href="paquete_index.php" class="btn" data-section="boton" data-value="volver">Volver</a>
     </div>
+    
+    <script src="script.js"></script>
 </body>
 </html>

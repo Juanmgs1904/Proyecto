@@ -13,39 +13,49 @@ require("../../../../Model/session/session_administrador3.php");
 </head>
 
 <body>
-<header class="header">
-            <div class="header__contenedor">
-                <div class="header__home">
-                    <a href="../../index.php">
-                        <img src="../../img/Logo_sistema.png" alt="Logo de max truck">
-                    </a>
-                </div>
-                <div class="header__titulo">
-                    <h1>Gestión de Personas</h1>
-                </div>
-                <div class="header__logo">
-                        <input type="checkbox" id="menuD" class="menu-toggle">
-                        <label for="menuD" class="label"><img src="../../img/personas.png" alt="personas de max truck"></label>
-
-                        <ul class="nav__lista">
-                            <li><a href="#"><?php echo $_SESSION['mail']; ?></a></li>
-                            <a href="../../../../index.php"><li class="cerrar">Cerrar Sesión</li></a>
-                        </ul>
-                </div>
+    <header class="header">
+        <div class="header__contenedor">
+            <div class="header__home">
+                <a href="../../index.php">
+                    <img src="../../img/Logo_sistema.png" alt="Logo de max truck">
+                </a>
             </div>
-        </header>
+            <div class="header__titulo">
+                <h1 data-section="personas" data-value="personas">Gestión de Personas</h1>
+            </div>
+            <div class="header__logo">
+                <input type="checkbox" id="menuD" class="menu-toggle">
+                <label for="menuD" class="label"><img src="../../img/personas.png" alt="personas de max truck"></label>
+
+                <ul class="nav__lista">
+                    <li><a href="#"><?php echo $_SESSION['mail']; ?></a></li>
+                    <div class="flags" id="flags">
+                        <div class="flags__item" data-language="es">
+                            <img src="../../../../img/es.svg" alt="opción español">
+                        </div>
+                        <div class="flags__item" data-language="en">
+                            <img src="../../../../img/en.svg" alt="opción inglés">
+                        </div>
+                    </div>
+                    <a href="../../../../index.php">
+                        <li class="cerrar" data-section="header" data-value="logout">Cerrar Sesión</li>
+                    </a>
+                </ul>
+            </div>
+        </div>
+    </header>
     <div class="info_tabla">
         <div class="tabla">
             <div class="grid5">
 
                 <div class="datos pFilaH">CI</div>
-                <div class="datos pFilaH">NOMBRE</div>
-                <div class="datos pFilaH">TELÉFONO</div>
-                <div class="datos pFilaH">DIRECCIÓN</div>
-                <div class="datos pFilaH">OPCIONES</div>
+                <div class="datos pFilaH" data-section="persona" data-value="nombre">NOMBRE</div>
+                <div class="datos pFilaH" data-section="persona" data-value="telefono">TELÉFONO</div>
+                <div class="datos pFilaH" data-section="persona" data-value="direccion">DIRECCIÓN</div>
+                <div class="datos pFilaH" data-section="paquete" data-value="opciones">OPCIONES</div>
 
                 <?php
-                $conexion = new mysqli("localhost", "root", "", "proyecto");
+                $conexion = new mysqli("localhost", "root", "", "ocean");
                 $sentencia = "SELECT * FROM personas";
                 $filas = $conexion->query($sentencia);
                 foreach ($filas->fetch_all(MYSQLI_ASSOC) as $fila) {
@@ -53,13 +63,13 @@ require("../../../../Model/session/session_administrador3.php");
 
                     <div class="datos pFilaV">CI</div>
                     <div class="datos"><?php echo $fila['CI'] . " "; ?></div>
-                    <div class="datos pFilaV">Nombre</div>
+                    <div class="datos pFilaV" data-section="persona" data-value="nombre">Nombre</div>
                     <div class="datos"><?php echo $fila['Nombre'] . " "; ?></div>
-                    <div class="datos pFilaV">Telefono</div>
+                    <div class="datos pFilaV" data-section="persona" data-value="telefono">Telefono</div>
                     <div class="datos"><?php echo $fila['Telefono'] . " "; ?></div>
-                    <div class="datos pFilaV">Direccion</div>
+                    <div class="datos pFilaV" data-section="persona" data-value="direccion">Direccion</div>
                     <div class="datos"><?php echo $fila['Direccion'] . " "; ?></div>
-                    <div class="datos pFilaV">OPCIONES</div>
+                    <div class="datos pFilaV" data-section="paquete" data-value="opciones">OPCIONES</div>
                     <div class="datosL">
                         <?php
                         echo '<a href="personas_modificar.php?ci=' . $fila['CI'] .
@@ -69,8 +79,18 @@ require("../../../../Model/session/session_administrador3.php");
                         echo '<a href="#" onclick="confirmDelete(' . $fila['CI'] . ', \'' . $fila['Nombre'] . '\');">' . '<img src="../../img/eliminar.svg" alt="Imagen eliminar">' . ' </a>';
                         ?>
                         <script>
+                            const messages = {
+                                es: {
+                                    confirmacion_eliminar: "¿Estás seguro de que deseas eliminar a {0}?"
+                                },
+                                en: {
+                                    confirmacion_eliminar: "Are you sure you want to delete {0}?"
+                                }
+                            };
+
+
                             function confirmDelete(CI, Nombre) {
-                                var confirmation = confirm("¿Estás seguro de que deseas eliminar a " + Nombre + "?");
+                                var confirmation = confirm(messages[selectedLanguage].confirmacion_eliminar.replace('{0}', Nombre));
                                 if (confirmation) {
                                     // Si el usuario confirma, redirige a la página de eliminación
                                     window.location.href = "../../eliminar.php?ci=" + CI;
@@ -86,10 +106,11 @@ require("../../../../Model/session/session_administrador3.php");
         </div>
     </div>
     <div class="btn_tabla">
-        <a href="../usuarios.php" class="btn">Volver</a>
-        <a href="personas_agregar.php" class="btn">Agregar Persona</a>
+        <a href="../usuarios.php" class="btn" class="btn" data-section="boton" data-value="volver">Volver</a>
+        <a href="personas_agregar.php" class="btn" class="btn" data-section="boton" data-value="agregarPersona">Agregar Persona</a>
 
     </div>
+    <script src="script.js"></script>
 </body>
 
 </html>

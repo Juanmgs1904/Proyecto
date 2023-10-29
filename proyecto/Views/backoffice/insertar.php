@@ -1,5 +1,5 @@
 <?php
-$conexion = new mysqli("localhost", "root", "", "proyecto");
+$conexion = new mysqli("localhost", "root", "", "ocean");
 
 //conduce
 if (isset($_POST['CIC'])) {

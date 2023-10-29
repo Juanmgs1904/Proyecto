@@ -21,16 +21,26 @@ require("../../../../Model/session/session_administrador3.php");
                     </a>
                 </div>
                 <div class="header__titulo">
-                    <h1>Gestión de camioneros</h1>
+                    <h1 data-section="personas" data-value="camioneros">Gestión de camioneros</h1>
                 </div>
                 <div class="header__logo">
-                        <input type="checkbox" id="menuD" class="menu-toggle">
-                        <label for="menuD" class="label"><img src="../../img/personas.png" alt="personas de max truck"></label>
+                    <input type="checkbox" id="menuD" class="menu-toggle">
+                    <label for="menuD" class="label"><img src="../../img/personas.png" alt="personas de max truck"></label>
 
-                        <ul class="nav__lista">
-                            <li><a href="#"><?php echo $_SESSION['mail']; ?></a></li>
-                           <a href="../../../../index.php"><li class="cerrar">Cerrar Sesión</li></a>
-                        </ul>
+                    <ul class="nav__lista">
+                        <li><a href="#"><?php echo $_SESSION['mail']; ?></a></li>
+                        <div class="flags" id="flags">
+                            <div class="flags__item" data-language="es">
+                                <img src="../../../../img/es.svg" alt="opción español">
+                            </div>
+                            <div class="flags__item" data-language="en">
+                                <img src="../../../../img/en.svg" alt="opción inglés">
+                            </div>
+                        </div>
+                        <a href="../../../../index.php">
+                            <li class="cerrar" data-section="header" data-value="logout">Cerrar Sesión</li>
+                        </a>
+                    </ul>
                 </div>
             </div>
         </header>
@@ -39,12 +49,12 @@ require("../../../../Model/session/session_administrador3.php");
                 <div class="grid4">
 
                     <div class="datos pFilaH">CI</div>
-                    <div class="datos pFilaH">FECHA VENCIMIENTO LICENCIA</div>
-                    <div class="datos pFilaH">TURNO</div>
-                    <div class="datos pFilaH">OPCIONES</div>
+                    <div class="datos pFilaH" data-section="camionero" data-value="fecha">FECHA VENCIMIENTO LICENCIA</div>
+                    <div class="datos pFilaH" data-section="camionero" data-value="turno">TURNO</div>
+                    <div class="datos pFilaH" data-section="paquete" data-value="opciones">OPCIONES</div>
 
                     <?php
-                    $conexion = new mysqli("localhost", "root", "", "proyecto");
+                    $conexion = new mysqli("localhost", "root", "", "ocean");
                     $sentencia = "SELECT * FROM camionero";
                     $filas = $conexion->query($sentencia);
                     foreach ($filas->fetch_all(MYSQLI_ASSOC) as $fila) {
@@ -52,11 +62,11 @@ require("../../../../Model/session/session_administrador3.php");
 
                         <div class="datos pFilaV">CI</div>
                         <div class="datos"><?php echo $fila['CIC'] . " "; ?></div>
-                        <div class="datos pFilaV">FechaVL</div>
+                        <div class="datos pFilaV" data-section="camionero" data-value="fecha">FechaVL</div>
                         <div class="datos"><?php echo $fila['FechaVL'] . " "; ?></div>
-                        <div class="datos pFilaV">Turno</div>
+                        <div class="datos pFilaV" data-section="camionero" data-value="turno">Turno</div>
                         <div class="datos"><?php echo $fila['Turno'] . " "; ?></div>
-                        <div class="datos pFilaV">OPCIONES</div>
+                        <div class="datos pFilaV" data-section="paquete" data-value="opciones">OPCIONES</div>
                         <div class="datosL">
                             <?php
                             echo '<a href="camionero_modificar.php?ciC=' . $fila['CIC'] . '&fechaVL=' . $fila['FechaVL'] . '&turno=' . $fila['Turno'] . '">' . '<img src="../../img/modificar.svg" alt="Imagen modificar">' . ' </a>';
@@ -65,8 +75,19 @@ require("../../../../Model/session/session_administrador3.php");
                             echo '<a href="#" onclick="confirmDelete(\''  . $fila['CIC'] . '\');">' . '<img src="../../img/eliminar.svg" alt="Imagen eliminar">' . ' </a>';
                             ?>
                             <script>
+                                const selectedLanguage = sessionStorage.getItem('selectedLanguage');
+
+                                const messages = {
+                                    es: {
+                                        confirmacion_eliminar: "¿Estás seguro de que deseas eliminar este camionero?"
+                                    },
+                                    en: {
+                                        confirmacion_eliminar: "Are you sure you want to delete this Trucker?"
+                                    }
+                                };
+
                                 function confirmDelete(CIC) {
-                                    var confirmation = confirm("¿Estás seguro de que deseas eliminar a este camionero?");
+                                    var confirmation = confirm(messages[selectedLanguage].confirmacion_eliminar);
                                     if (confirmation) {
                                         // Si el usuario confirma, redirige a la página de eliminación
                                         window.location.href = "../../eliminar.php?ciC=" + CIC;
@@ -83,14 +104,15 @@ require("../../../../Model/session/session_administrador3.php");
 
         </div>
         <div class="btn_tabla">
-            <a class="btn" href="../usuarios.php">Volver</a>
-            <a class="btn" href="camionero_agregar.php">Agregar Camionero</a>
+            <a class="btn" href="../usuarios.php" data-section="boton" data-value="volver">Volver</a>
+            <a class="btn" href="camionero_agregar.php" data-section="boton" data-value="agregarCamionero">Agregar Camionero</a>
         </div>
 
         <div class="btn_tabla">
-            <a class="btn" href="conduce_agregar.php">Asignar Camión</a>
+            <a class="btn" href="conduce_agregar.php" data-section="boton" data-value="asignarV">Asignar Vehículo</a>
         </div>
     </div>
+    <script src="script.js"></script>
 </body>
 
 </html>

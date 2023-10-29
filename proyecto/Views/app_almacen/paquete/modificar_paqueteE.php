@@ -16,6 +16,7 @@ require("../../../Model/session/session_almacen2.php");
 
 <body>
     <?php
+    $empresa = $_GET['empresa'];
     $codigo = $_GET['codigo'];
     $peso = $_GET['peso'];
     $estado = $_GET['estado'];
@@ -27,37 +28,36 @@ require("../../../Model/session/session_almacen2.php");
     <div class="title">
         <h1>Modificar Paquete del Almacén</h1>
     </div>
-    <form action="../../../intermediario/putDataAPI.php" class="form" method="post">
+    <?php echo '<form action="../../../intermediario/putDataAPI.php?empresa='.$empresa.'" class="form" method="post">'; ?>
         <h3 class="form__title">Ingrese datos</h3>
-        <div class="info">
-            <h3>codigo:</h3>
+        <input type="hidden" name="Estado" value="<?= $estado ?>">
+        <div class="text">
+            <label><b>codigo:</b></label>
             <input type="text" name="codigo" class="input" value="<?= $codigo ?>" readonly>
         </div>
-        <div class="info">
-            <h3>Peso:</h3>
+        <div class="text">
+            <label><b>Peso:</b></label>
             <input type="text" name="peso" class="input" placeholder="Ingrese el Peso" value="<?= $peso ?>" required>
         </div>
-        <div class="info">
-            <h3>Fecha de Recibo:</h3>
-            <input type="date" name="fRecibo" placeholder="Ingrese la fecha de recibo" class="input" value="<?= $fRecibo ?>" required>
-        </div>
-        <div class="info">
-            <h3>Fecha de Entrega:</h3>
+        <input type="hidden" name="fRecibo" placeholder="Ingrese la fecha de recibo" class="input" value="<?= $fRecibo ?>" required>
+        <div class="text">
+            <label><b>Fecha de Entrega:</b></label>
             <input type="date" name="fEntrega" class="input" placeholder="Ingrese la fecha de Entrega" value="<?= $fEntrega ?>">
         </div>
-        <div class="info">
-            <h3>Destinatario:</h3>
+        <div class="text">
+            <label><b>Destinatario:</b></label>
             <input type="text" name="destinatario" placeholder="Destinatario" class="input" value="<?= $Destinatario ?>" required>
         </div>
-        <div class="info">
-            <h3>Destino:</h3>
+        <div class="text">
+            <label><b>Destino:</b></label>
             <input type="text" name="destino" class="input" placeholder="Destino" value="<?= $Destino ?>" required>
         </div>
+
         <input type="submit" value="Modificar" class="boton_form">
     </form>
     <div class="btn_volver">
         <?php
-        echo '<a href="paqueteE.php?codigo='. $codigo .'" class="btn">' . "Volver" . ' </a>';
+        echo '<a href="paqueteE.php?codigo='. $codigo .'&empresa='.$empresa.'" class="btn">' . "Volver" . ' </a>';
         ?>
     </div>
 </body>

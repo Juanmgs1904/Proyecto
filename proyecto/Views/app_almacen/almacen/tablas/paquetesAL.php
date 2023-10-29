@@ -1,4 +1,7 @@
 <?php
+if(isset($_GET['idA'])){
+    $idA = $_GET['idA'];
+}
 $url = 'http://localhost/proyecto/controller/almacen/C_asignarPAL.php';
 require("../../../../intermediario/getDataAPI.php");
 require("../../../../Model/session/session_almacen3.php");
@@ -22,7 +25,7 @@ require("../../../../Model/session/session_almacen3.php");
 <header class="header">
         <div class="header__contenedor">
             <div class="header__home">
-                <a href="../../index.php">
+                <?php echo '<a href="../../index.php?idA='.$idA.'">'; ?>
                     <img src="../../img/Logo_sistema.png" alt="Logo de max truck">
                 </a>
             </div>
@@ -44,7 +47,7 @@ require("../../../../Model/session/session_almacen3.php");
         <div class="titulo">
             <h2>Paquetes asignados</h2>
         </div>
-        <div class="PAC_grid">
+        <div class="LEC_grid">
             <div class="datos pFila">CÓDIGO</div>
             <div class="datos pFila">OPCIÓN</div>
             <?php
@@ -60,14 +63,14 @@ require("../../../../Model/session/session_almacen3.php");
                     ?>
                     <div class="datos">
                         <?php
-                        echo '<a href="#" onclick="confirmDelete(\''  . $fila['codigo'] . '\', \'' . $_GET["IDL"] . '\');">' . '<div class="option">Eliminar</div>'  . ' </a>';
+                        echo '<a href="#" onclick="confirmDelete(\''  . $fila['codigo'] . '\', \'' . $_GET["IDL"] . '\', \'' . $idA . '\');">' . '<div class="option">Eliminar</div>'  . ' </a>';
                         ?>
                         <script>
-                            function confirmDelete(codigo, IDL) {
+                            function confirmDelete(codigo, IDL, idA) {
                                 var confirmation = confirm("¿Estás seguro de que deseas eliminar este paquete del lote?");
                                 if (confirmation) {
                                     // Si el usuario confirma, redirige a la página de eliminación
-                                    window.location.href = "../../../../intermediario/deleteDataAPI.php?codigoL=" + codigo + "&IDL="+IDL;
+                                    window.location.href = "../../../../intermediario/deleteDataAPI.php?codigoL=" + codigo + "&IDL="+IDL + "&idA="+idA;
                                 }
                             }
                         </script>
@@ -75,12 +78,11 @@ require("../../../../Model/session/session_almacen3.php");
             <?php
                 }
             }
-
             ?>
         </div>
     </div>
     <div class="btn_volver">
-        <a href="tabla_asignarPAL.php" class="btn">Volver</a>
+        <?php echo '<a href="tabla_asignarPAL.php?idA='.$idA.'" class="btn">'; ?>Volver</a>
     </div>
 </body>
 

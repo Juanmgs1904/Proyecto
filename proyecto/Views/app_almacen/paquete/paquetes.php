@@ -1,11 +1,7 @@
 <?php
-$mostrar = false;
-if (isset($_GET['id'])) {
-    $idA = $_GET['id'];
-    if ($idA == 1) {
-        $mostrar = true;
-    }
-}
+
+$idA = $_GET['idA'];
+
 $url = "http://localhost/proyecto/controller/almacen/C_paquetes.php?idA=$idA";
 require("../../../intermediario/getDataAPI.php");
 
@@ -29,7 +25,7 @@ require("../../../Model/session/session_almacen2.php");
     <header class="header">
         <div class="header__contenedor">
             <div class="header__home">
-                <a href="../index.php">
+            <?php echo '<a href="../index.php?idA='.$idA.'">' ?>             
                     <img src="../img/Logo_sistema.png" alt="Logo de max truck">
                 </a>
             </div>
@@ -76,14 +72,15 @@ require("../../../Model/session/session_almacen2.php");
                     echo '<a href="paquete.php?codigo=' . $codigo . '&idA=' . $idA . '">' . '<div class="option">Ver Remito</div>' . ' </a>';
                     ?>
                     <?php
-                    echo '<a href="#" onclick="confirmDelete(' . $fila['codigo'] . ');">' . '<div class="option">Eliminar</div>'  . ' </a>';
+                    
+                    echo '<a href="#" onclick="confirmDelete(\''  . $fila['codigo'] . '\', \'' . $idA . '\');">' . '<div class="option">Eliminar</div>'  . ' </a>';
                     ?>
                     <script>
-                        function confirmDelete(codigo) {
+                        function confirmDelete(codigo,idA) {
                             var confirmation = confirm("¿Estás seguro de que deseas eliminar este paquete?");
                             if (confirmation) {
                                 // Si el usuario confirma, redirige a la página de eliminación
-                                window.location.href = "../../../intermediario/deleteDataAPI.php?codigo=" + codigo;
+                                window.location.href = "../../../intermediario/deleteDataAPI.php?codigo=" + codigo +"&idA=" + idA;
                             }
                         }
                     </script>
@@ -95,7 +92,7 @@ require("../../../Model/session/session_almacen2.php");
     </div>
     <div class="botones">
         <div class="btn_volver">
-            <a href="almacenes.php" class="btn">Volver</a>
+            <?php echo '<a href="../index.php?idA='.$idA.'" class="btn">' ?>Volver</a>
         </div>
         <?php
         if ($app == "AlmacenExterno") {

@@ -13,76 +13,95 @@ require("../../../Model/session/session_administrador2.php");
 
 <body>
     <div>
-    <header class="header">
-        <div class="header__contenedor">
-            <div class="header__home">
-                <a href="../index.php">
-                    <img src="../img/Logo_sistema.png" alt="Logo de max truck">
-                </a>
-            </div>
-            <div class="header__titulo">
-                <h1>Gestión de Lote</h1>
-            </div>
-            <div class="header__logo">
-                <input type="checkbox" id="menuD" class="menu-toggle">
-                <label for="menuD" class="label"><img src="../img/personas.png" alt="personas de max truck"></label>
+        <header class="header">
+            <div class="header__contenedor">
+                <div class="header__home">
+                    <a href="../index.php">
+                        <img src="../img/Logo_sistema.png" alt="Logo de max truck">
+                    </a>
+                </div>
+                <div class="header__titulo">
+                    <h1 data-section="header" data-value="lotes">Gestión de Lote</h1>
+                </div>
+                <div class="header__logo">
+                    <input type="checkbox" id="menuD" class="menu-toggle">
+                    <label for="menuD" class="label"><img src="../img/personas.png" alt="personas de max truck"></label>
 
-                <ul class="nav__lista">
-                    <li><a href="#"><?php echo $_SESSION['mail']; ?></a></li>
-                    <a href="../../../index.php"><li class="cerrar">Cerrar Sesión</li></a>
-                </ul>
+                    <ul class="nav__lista">
+                        <li><a href="#"><?php echo $_SESSION['mail']; ?></a></li>
+                        <div class="flags" id="flags">
+                            <div class="flags__item" data-language="es">
+                                <img src="../../../img/es.svg" alt="opción español">
+                            </div>
+                            <div class="flags__item" data-language="en">
+                                <img src="../../../img/en.svg" alt="opción inglés">
+                            </div>
+                        </div>
+                        <a href="../../../index.php">
+                            <li class="cerrar" class="cerrar" data-section="header" data-value="logout">Cerrar Sesión</li>
+                        </a>
+                    </ul>
+                </div>
             </div>
-        </div>
-    </header>
+        </header>
         <div class="info_tabla">
 
             <div class="tabla">
-                <div class="grid5">
+                <div class="grid4">
 
                     <div class="datos pFilaH">ID</div>
-                    <div class="datos pFilaH">Destino</div>
-                    <div class="datos pFilaH">Ruta</div>
-                    <div class="datos pFilaH">tiempoEstimado</div>
-                    <div class="datos pFilaH">OPCIONES</div>
+                    <div class="datos pFilaH" data-section="lote" data-value="destino">Destino</div>
+                    <div class="datos pFilaH" data-section="lote" data-value="tiempoEstimado">tiempoEstimado</div>
+                    <div class="datos pFilaH" data-section="lote" data-value="opciones">OPCIONES</div>
 
                     <?php
-                    $conexion = new mysqli("localhost", "root", "", "proyecto");
+                    $conexion = new mysqli("localhost", "root", "", "ocean");
                     $sentencia = "SELECT * FROM lotes";
                     $filas = $conexion->query($sentencia);
                     foreach ($filas->fetch_all(MYSQLI_ASSOC) as $fila) {
                         if ($fila['IDL'] == $_GET['IDL']) {
-                            
-                    ?>
-                        <div class="datos pFilaV">ID</div>
-                        <div class="datos"><?php echo $fila['IDL'] . " "; ?></div>
-                        <div class="datos pFilaV">Destino</div>
-                        <div class="datos"><?php echo $fila['Destino'] . " "; ?></div>
-                        <div class="datos pFilaV">Ruta</div>
-                        <div class="datos"><?php echo $fila['Ruta'] . " "; ?></div>
-                        <div class="datos pFilaV">tiempoEstimado</div>
-                        <div class="datos"><?php echo $fila['tiempoEstimado'] . " "; ?></div>
-                        <div class="datos pFilaV">OPCIONES</div>
-                        <div class="datosL">
-                            <?php
-                            echo '<a href="lote_modificar.php?IDL=' . $fila['IDL'] . '&Peso=' . $fila['Peso'] . '&Estado=' . $fila['Estado'] . '&Destino=' . $fila['Destino'] .
-                            '&Ruta=' . $fila['Ruta'] .'&tiempoEstimado=' . $fila['tiempoEstimado'].'&idI=' . $fila['idI'] .'">' . '<img src="../img/modificar.svg" alt="Imagen modificar">' . ' </a>';
-                            ?>
-                            <?php
-                            echo '<a href="#" onclick="confirmDelete(\''  . $fila['IDL'] . '\');">' . '<img src="../img/eliminar.svg" alt="Imagen eliminar">' . ' </a>';
-                            ?>
-                            <!-- Resto del código -->
 
-                            <script>
-                                function confirmDelete(IDL) {
-                                    var confirmation = confirm("¿Estás seguro de que deseas eliminar este Lote?");
-                                    if (confirmation) {
-                                        // Si el usuario confirma, redirige a la página de eliminación
-                                        window.location.href = "../eliminar.php?IDL=" + IDL;
+                    ?>
+                            <div class="datos pFilaV">ID</div>
+                            <div class="datos"><?php echo $fila['IDL'] . " "; ?></div>
+                            <div class="datos pFilaV" data-section="lote" data-value="destino">Destino</div>
+                            <div class="datos"><?php echo $fila['Destino'] . " "; ?></div>
+                            <div class="datos pFilaV" data-section="lote" data-value="tiempoEstimado">tiempoEstimado</div>
+                            <div class="datos"><?php echo $fila['tiempoEstimado'] . " "; ?></div>
+                            <div class="datos pFilaV" data-section="lote" data-value="opciones">OPCIONES</div>
+                            <div class="datosL">
+                                <?php
+                                echo '<a href="lote_modificar.php?IDL=' . $fila['IDL'] . '&Peso=' . $fila['Peso'] . '&Estado=' . $fila['Estado'] . '&Destino=' . $fila['Destino'] .
+                                    '&tiempoEstimado=' . $fila['tiempoEstimado'] . '">'
+                                    . '<img src="../img/modificar.svg" alt="Imagen modificar">' . ' </a>';
+                                ?>
+                                <?php
+                                echo '<a href="#" onclick="confirmDelete(\''  . $fila['IDL'] . '\');">' . '<img src="../img/eliminar.svg" alt="Imagen eliminar">' . ' </a>';
+                                ?>
+                                <!-- Resto del código -->
+
+                                <script>
+                                    const selectedLanguage = sessionStorage.getItem('selectedLanguage');
+
+                                    const messages = {
+                                        es: {
+                                            confirmacion_eliminar: "¿Estás seguro de que deseas eliminar este paquete?"
+                                        },
+                                        en: {
+                                            confirmacion_eliminar: "Are you sure you want to delete this package?"
+                                        }
+                                    };
+
+                                    function confirmDelete(IDL) {
+                                        var confirmation = confirm(messages[selectedLanguage].confirmacion_eliminar);
+                                        if (confirmation) {
+                                            // Si el usuario confirma, redirige a la página de eliminación
+                                            window.location.href = "../eliminar.php?IDL=" + IDL;
+                                        }
                                     }
-                                }
-                                // Resto del código JavaScript
-                            </script>
-                        </div>
+                                    // Resto del código JavaScript
+                                </script>
+                            </div>
 
                     <?php
                         }
@@ -94,7 +113,7 @@ require("../../../Model/session/session_administrador2.php");
 
         </div>
         <div class="btn_tabla">
-            <a class="btn" href="lote_index.php">Volver</a>
+            <a class="btn" href="lote_index.php" data-section="boton" data-value="volver">Volver</a>
         </div>
 
 </body>

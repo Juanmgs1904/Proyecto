@@ -33,11 +33,11 @@ class respuestas{
         );
         return $this->respuesta;
     }
-    public function error_401(){
+    public function error_401($string = "No Autorizado"){
         $this->respuesta['estado'] = "error";
         $this->respuesta['resultado'] = array(
             "error_id" => "401",
-            "error_msg" => "Se requiere autenticación y ha fallado, o no se ha proporcionado autorización"
+            "error_msg" => $string
         );
         return $this->respuesta;
     }

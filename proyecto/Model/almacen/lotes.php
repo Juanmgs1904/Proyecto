@@ -8,7 +8,7 @@ class lotes extends conexion {
     private $destino = "";
     private $ruta = "";
     private $tiempoEstimado = "";
-    private $idI = "";
+    private $enAlmacenExterno = "";
 
     public function listaLotes(){
         $sentencia = "SELECT * FROM lotes";
@@ -17,9 +17,9 @@ class lotes extends conexion {
     }
     public function listaLotesAlmacen($idA){
         if($idA == 1){
-            $sentencia = "SELECT IDL,Peso,Estado,idI FROM lotes WHERE Estado = 'No Asignado'";
+            $sentencia = "SELECT * FROM vwlotesnoasignados";
         }else{
-            $sentencia = "SELECT IDL,Peso,Estado,idI FROM lotes WHERE idI = '$idA' && Estado = 'Entregado'";
+            $sentencia = "SELECT lotes.* FROM lotes JOIN va_hacia ON lotes.IDL = va_hacia.IDL WHERE va_hacia.IDA = '$idA' && Estado = 'entregado'";
         }
         $arrayDatos = parent::obtenerDatos($sentencia);
         return $arrayDatos;
@@ -33,14 +33,12 @@ class lotes extends conexion {
     public function post($json){
         $_respuestas = new respuestas;
         $datos = json_decode($json, true);
-        if(!isset($datos['estado']) || !isset($datos['destino']) || !isset($datos['ruta']) || !isset($datos['tiempoEstimado']) || !isset($datos['idI'])){
+        if(!isset($datos['estado']) || !isset($datos['destino']) || !isset($datos['tiempoEstimado'])){
             return $_respuestas->error_400();
         }else{
             $this->estado = $datos['estado'];
             $this->destino = $datos['destino'];
-            $this->ruta = $datos['ruta'];
             $this->tiempoEstimado = $datos['tiempoEstimado'];
-            $this->idI = $datos['idI'];
             if(isset($datos['peso'])){ $this->peso = $datos['peso']; }
             $respuestaId = $this->altaLote();
             if($respuestaId){
@@ -56,9 +54,9 @@ class lotes extends conexion {
         
     }
     private function altaLote(){
-        $sentencia = "INSERT INTO lotes(Peso,Estado,Destino,Ruta,tiempoEstimado,idI)
+        $sentencia = "INSERT INTO lotes(Peso,Estado,Destino,tiempoEstimado)
         VALUES
-        ('".$this->peso."','". $this->estado."','". $this->destino."','". $this->ruta."','". $this->tiempoEstimado."','". $this->idI."')";
+        ('".$this->peso."','". $this->estado."','". $this->destino."','". $this->tiempoEstimado."')";
         $respuesta = parent::guardarId($sentencia);
         if($respuesta){
             return $respuesta;
@@ -70,15 +68,13 @@ class lotes extends conexion {
         public function put($json){
         $_respuestas = new respuestas;
         $datos = json_decode($json, true);
-        if(!isset($datos['idL']) || !isset($datos['estado']) || !isset($datos['destino']) || !isset($datos['ruta']) || !isset($datos['tiempoEstimado']) || !isset($datos['idI'])){
+        if(!isset($datos['idL']) || !isset($datos['estado']) || !isset($datos['destino']) || !isset($datos['tiempoEstimado'])){
             return $_respuestas->error_400();
         }else{
             $this->idL = $datos['idL'];
             $this->estado = $datos['estado'];
             $this->destino = $datos['destino'];
-            $this->ruta = $datos['ruta'];
             $this->tiempoEstimado = $datos['tiempoEstimado'];
-            $this->idI = $datos['idI'];
             if(isset($datos['peso'])){ $this->peso = $datos['peso']; }
             $respuestaFilas = $this->modificarLote();
             if($respuestaFilas){
@@ -96,9 +92,7 @@ class lotes extends conexion {
         $sentencia = "UPDATE lotes SET Estado = '" . $this->estado . "',
         Peso = '". $this->peso . "',
         Destino = '". $this->destino ."',
-        Ruta = '". $this->ruta ."',
-        tiempoEstimado = '". $this->tiempoEstimado ."',
-        idI = '". $this->idI . "' WHERE IDL = '" . $this->idL . "'";
+        tiempoEstimado = '". $this->tiempoEstimado ."' WHERE IDL = '" . $this->idL . "'";
         $respuesta = parent::guardar($sentencia);
         if($respuesta >= 1){
             return $respuesta;

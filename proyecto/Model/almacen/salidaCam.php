@@ -94,8 +94,10 @@ class salida extends conexion {
         }
     }
     private function eliminarHora(){
-        $sentencia = "DELETE FROM va_salida WHERE MatriculaC = '" . $this->matriculaC . "' AND FechaSalida = '" . $this->fSalida . "'";
-        $respuesta = parent::guardar($sentencia);
+        $sentencia1 = "UPDATE vehiculo SET Disponibilidad = 'Disponible' WHERE MatriculaV = '" . $this->matriculaC . "'";
+        parent::guardar($sentencia1);
+        $sentencia2 = "DELETE FROM va_salida WHERE MatriculaC = '" . $this->matriculaC . "' AND FechaSalida = '" . $this->fSalida . "'";
+        $respuesta = parent::guardar($sentencia2);
         if($respuesta >= 1){
             return $respuesta;
         }else{

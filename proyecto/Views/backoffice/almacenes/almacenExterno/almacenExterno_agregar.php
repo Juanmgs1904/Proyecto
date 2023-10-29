@@ -14,36 +14,37 @@ require("../../../../Model/session/session_administrador3.php");
 
 <body class="fondo">
     <div class="contenedor_form">
-        <h1>Ingresar Datos</h1>
+        <h1 data-section="header" data-value="ingresar">Ingresar Datos</h1>
         <form class="form" action="../../insertar.php" method="post">
 
             <?php
-            $conexion = new mysqli("localhost", "root", "", "proyecto");
-            $sentencia = "SELECT * FROM almacen WHERE id NOT IN (SELECT idE FROM AlmacenExterno) AND id NOT IN (SELECT idI FROM AlmacenInterno)";
+            $conexion = new mysqli("localhost", "root", "", "ocean");
+            $sentencia = "SELECT * FROM vwalmacen";
             $filas = $conexion->query($sentencia);
             ?>
-                <div class="form_info">
-                    <label>ID:</label>
-                    <select name="idE" required>
-                        <?php
-                        foreach ($filas->fetch_all(MYSQLI_ASSOC) as $fila) {
-                            echo '<option value="' . $fila['id'] . '">' . $fila['id'] . '</option>';
-                        }
-                        ?>
-                    </select>
-                </div>
+            <div class="form_info text">
+                <label>ID:</label>
+                <select name="idE" required>
+                    <?php
+                    foreach ($filas->fetch_all(MYSQLI_ASSOC) as $fila) {
+                        echo '<option value="' . $fila['id'] . '">' . $fila['id'] . '</option>';
+                    }
+                    ?>
+                </select>
+            </div>
 
-                <div class="form_info">
-                    <label>Empresa:</label>
-                    <input type="text" name="Empresa" required>
-                </div>
-                <input type="submit" value="Agregar" class="btn">
+            <div class="form_info text">
+                <label data-section="almacenes" data-value="empresa">Empresa:</label>
+                <input type="text" name="Empresa" required>
+            </div>
+            <input type="submit" value="Agregar" class="btn" data-section="boton" data-value="agregar">
         </form>
 
     </div>
     <div class="btn_volver">
-        <a href="almacenExterno_index.php" class="btn">Volver</a>
+        <a href="almacenExterno_index.php" class="btn" data-section="boton" data-value="volver">Volver</a>
     </div>
+    <script src="script.js"></script>
 </body>
 
 </html>

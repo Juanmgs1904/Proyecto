@@ -11,8 +11,9 @@ switch($_SERVER['REQUEST_METHOD']){
 
     //Mostrar
     case 'GET':
+            $idA = $_GET['idA'];
             //solicita datos al modelo
-            $respuesta = $_paquetesAC->listaPaquetesAC();
+            $respuesta = $_paquetesAC->listaPaquetesAC($idA);
 
             require('../../Routes/R_almacen.php');
     break;
@@ -20,4 +21,3 @@ switch($_SERVER['REQUEST_METHOD']){
         require ('../../Routes/R_almacen.php');
     break;
 }
-?>

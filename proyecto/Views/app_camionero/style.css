@@ -81,6 +81,26 @@
     transform: scale(1.2);
 }
 
+.flags{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 2rem 0;
+    gap: 2rem;
+}
+
+.flags__item {
+    width: 4rem;
+    transition: .5s;
+    height: 3.4rem;
+}
+
+.flags__item:hover {
+    transform: scale(1.1);
+    cursor: pointer;
+}
+
+
 /*menu desplegable*/
 .header__logo{
     display: flex;
@@ -111,7 +131,7 @@
     position: absolute;
     border-radius: 2rem;
     border: solid 2px #000;
-    margin-top: -23rem;
+    margin-top: -29rem;
     z-index: 600;
 }
 
@@ -140,7 +160,7 @@
 
 .menu-toggle:checked~.nav__lista {
     display: block;
-    margin-top: 23rem;
+    margin-top: 29rem;
     z-index: 2;
 }
 
@@ -187,22 +207,25 @@
     font-weight: 600;
 }
 /* Tablas */
+.titulo {
+    padding: 2rem;
+    background-color: var(--letra);
+    color: var(--fondoP);
+}
+
+.tabla__contenedor {
+    margin: 2rem auto;
+    text-align: center;
+    border: solid 2px #000;
+    font-size: 2rem;
+    box-shadow: 0px 0px 15px 6px rgb(0 0 0 / .50);
+}
 .grid_tabla {
     margin: 5rem auto;
     text-align: center;
     font-size: 2rem;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    color: var(--letra);
-    border: solid 2px #000;
-    box-shadow: 0px 0px 15px 6px rgb(0 0 0 / .50);
-}
-.grid_tablaR {
-    margin: 5rem auto;
-    text-align: center;
-    font-size: 2rem;
-    display: grid;
-    grid-template-columns: repeat(1, 1fr);
     color: var(--letra);
     border: solid 2px #000;
     box-shadow: 0px 0px 15px 6px rgb(0 0 0 / .50);
@@ -223,17 +246,37 @@
     text-align: center;
     font-size: 2rem;
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(5, 1fr);
     color: var(--letra);
     border: solid 2px #000;
     box-shadow: 0px 0px 15px 6px rgb(0 0 0 / .50);
 }
-
-.datosT {
+.grid_tablaLR {
+    margin: 5rem auto;
+    text-align: center;
+    font-size: 2rem;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    color: var(--letra);
+    border: solid 2px #000;
+    box-shadow: 0px 0px 15px 6px rgb(0 0 0 / .50);
+}
+.recorrido_grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    color: var(--letra);
+    background-color: #fff;
+}
+.datos {
     padding: 3rem;
     background-color: #FFF;
 }
-.datosT a {
+
+.datosR {
+    padding: 2rem;
+}
+
+.datos a {
     font-weight: 600;
     padding: 1rem;
     border: solid 2px #000;
@@ -242,8 +285,53 @@
     margin: .5rem;
 }
 
-.datosT a:hover {
+.datos a:hover {
     background-color: #000;
+    color: #FFF;
+}
+
+.pFila {
+    background-color: var(--grisC);
+    font-weight: 800;
+}
+
+.pFilaH {
+    background-color: var(--grisC);
+    font-weight: 800;
+}
+
+
+.pFilaV {
+    background-color: var(--grisC);
+    font-weight: 900;
+    display: none;
+}
+.contenedor_recorrido {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+}
+
+.datosT {
+    padding: 3rem;
+    background-color: #FFF;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.datosT form input, .datosT a{
+    font-weight: 600;
+    font-size: 2rem;
+    padding: 1rem;
+    border: solid 2px #000;
+    border-radius: 1rem;
+    transition: .5s;
+    margin: .5rem;
+}
+
+.datosT form input:hover, .datosT a:hover{
+    background-color: #000;
+    cursor: pointer;
     color: #FFF;
 }
 
@@ -274,13 +362,14 @@
 }
 .titulo {
     padding: 2rem;
-    border-bottom: solid 2px var(--fondoS);
-    background-color: var(--grisO);
+    border-bottom: solid 2px var(--grisO);
+    background-color: var(--fondoS);
+    color: var(--fondoP);
 }
 .form {
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: 3rem;
     border: solid 2px var(--fondoS);
     border-radius: 2rem;
     max-width: 60rem;
@@ -308,18 +397,38 @@ option{
     padding: 1rem;
     border-bottom: 2px solid var(--fondoS);    
 }
-.datos {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    align-items: center;
-    padding: 0 5rem;
+.datos_text {
+    display: flex;
+    flex-direction: column;
     gap: 2rem;
+    padding: 0 5rem;
 }
-.datos p{
+.datos_text textarea {
+    background-color: var(--fondoP);
+    border-radius: 2rem;
+    border: solid 3px #000;
+    padding: 1rem;
+}
+.datos p, .datos_text p{
     font-size: 2rem;
     font-weight: 600;
     text-align: center;
 }
+
+.text {
+    display: flex;
+    flex-direction: column;
+    margin: 2rem;
+}
+
+.text .input {
+    flex: 2;
+}
+
+.textV {
+    display: none;
+}
+
 
 .form__btn {
     width: 15rem;
@@ -337,6 +446,8 @@ option{
     border: 2px solid black ;
     padding: 10px 20px;
     border-radius: 5px;
+    width: auto;
+    text-align: center;
 }
 
 .btn {
@@ -388,7 +499,43 @@ option{
         display: block;
     }
 
-    .grid_tablaPR{
+    .grid_tablaPR, .grid_tablaLR{
         grid-template-columns: repeat(2, 1fr);
+    }
+
+    .contenedor_recorrido {
+        display: block;
+    }
+}
+
+@media (max-width: 900px){
+    h1{
+        font-size: 2rem;
+    }
+
+
+
+
+}
+
+@media (max-width: 500px){
+    .datosT{
+        padding: 3rem;
+    }
+
+    .datosT form input, .datosT a{
+        font-size: 1rem;
+    }
+
+    .datos{
+        padding: 0 2rem;
+    }
+
+    .textV{
+        display: block;
+    }
+
+    .datos{
+        display: none;
     }
 }

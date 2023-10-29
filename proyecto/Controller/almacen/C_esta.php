@@ -5,11 +5,11 @@ require_once "../../Model/almacen/esta.php";
 $_respuestas = new respuestas;
 $_esta = new esta;
 
-header('Content-Type: application/json');//indica que va a devolver un json
+header('Content-Type: application/json'); //indica que va a devolver un json
 
-switch($_SERVER['REQUEST_METHOD']){
+switch ($_SERVER['REQUEST_METHOD']) {
 
-    //Añadir
+        //Añadir
     case 'POST':
         //recibir datos
         $datosPost = file_get_contents('php://input');
@@ -18,17 +18,28 @@ switch($_SERVER['REQUEST_METHOD']){
         $datosArray = $_esta->post($datosPost);
 
         require('../../Routes/R_almacen.php');
-    break;
+        break;
 
-    //Mostrar
+        //Modificar
+    case 'PUT':
+        //recibir datos
+        $datosPost = file_get_contents('php://input');
+
+        //solicita datos al modelo
+        $datosArray = $_esta->put($datosPost);
+
+        require('../../Routes/R_almacen.php');
+        break;
+
+        //Mostrar
     case 'GET':
-            //solicita datos al modelo
-            $respuesta = $_esta->listaHoras();
+        //solicita datos al modelo
+        $respuesta = $_esta->listaHoras();
 
-            require('../../Routes/R_almacen.php');
-    break;
+        require('../../Routes/R_almacen.php');
+        break;
 
-    //Eliminar
+        //Eliminar
     case 'DELETE':
         //recibir datos
         $datosPost = file_get_contents('php://input');
@@ -38,10 +49,9 @@ switch($_SERVER['REQUEST_METHOD']){
 
         require('../../Routes/R_almacen.php');
 
-    break;
+        break;
 
     default:
         require('../../Routes/R_almacen.php');
-    break;
+        break;
 }
-?>

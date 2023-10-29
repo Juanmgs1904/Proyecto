@@ -1,4 +1,6 @@
 <?php
+$mostrar = $_GET['mostrar'];
+$idA = $_GET['idA'];
 $url = 'http://localhost/proyecto/controller/almacen/C_esta.php';
 require("../../../intermediario/getDataAPI.php");
 require("../../../Model/session/session_almacenInterno2.php");
@@ -13,7 +15,7 @@ if (isset($_GET['IDR'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tabla de Paquetes</title>
+    <title>Tabla de Almacenes del recorrido</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;900&family=Roboto:wght@400;700;900&display=swap" rel="stylesheet">
@@ -25,8 +27,8 @@ if (isset($_GET['IDR'])) {
     <header class="header">
         <div class="header__contenedor">
             <div class="header__home">
-                <a href="../index.php">
-                    <img src="../img/Logo_sistema.png" alt="Logo de max truck">
+                <?php echo '<a href="../index.php?idA=' . $idA . '">'; ?>
+                <img src="../img/Logo_sistema.png" alt="Logo de max truck">
                 </a>
             </div>
             <div class="header__titulo">
@@ -49,8 +51,10 @@ if (isset($_GET['IDR'])) {
         <div class="titulo">
             <h2>Almacenes en Recorrido</h2>
         </div>
-        <div class="almacenes_grid">
+        <div class="almacenes__grid">
             <div class="datos pFila">ID de los Almacenes</div>
+            <div class="datos pFila">Distancia</div>
+            <div class="datos pFila">OPCIONES</div>
             <?php
 
             foreach ($array as $fila) {
@@ -58,17 +62,43 @@ if (isset($_GET['IDR'])) {
                 if ($IDR == $_GET["IDR"]) {
             ?>
                     <div class="datos"><?php echo $fila['IDA'] . " "; ?></div>
-                    <?php
-                    $IDA = $fila['IDA'];
-                    ?>
+                    <div class="datos"><?php echo $fila['Distancia'] . " "; ?></div>
+                    <div class="datos">
+                        <?php
+                        $distancia = $fila['Distancia'];
+                        $IDA = $fila['IDA'];
+                        echo '<a href="modificar_almacen.php?idA=' . $idA . '&mostrar=' . $mostrar . '&IDR=' . $IDR . '&IDA=' . $IDA . '&distancia=' . $distancia . '">Modificar</a>';
+                        if ($mostrar == true) {
+                            echo '<a href="#" onclick="confirmDelete(\''  . $fila['IDR'] . '\', \'' . $fila['IDA'] . '\', \'' . $idA . '\', \'' . $mostrar . '\');">' . 'Eliminar</a>';
+                        ?>
+                            <script>
+                                function confirmDelete(IDR, IDA, idA, mostrar) {
+                                    var confirmation = confirm("¿Estás seguro de que deseas eliminar este Almacén del Recorrido?");
+                                    if (confirmation) {
+                                        // Si el usuario confirma, redirige a la página de eliminación
+                                        window.location.href = "../../../intermediario/deleteDataAPI.php?IDRA=" + IDR + "&IDA=" + IDA + "&idA=" + idA + "&mostrar=" + mostrar;
+                                    }
+                                }
+                            </script>
+                        <?php
+                        }
+                        ?>
+                    </div>
             <?php
                 }
             }
             ?>
         </div>
     </div>
-    <div class="btn_volver">
-        <a href="recorrido.php" class="btn">Volver</a>
+    <div class="botones">
+        <div class="btn_volver">
+            <?php echo '<a href="recorrido.php?idA=' . $idA . '" class="btn">'; ?>Volver</a>
+        </div>
+        <div class="btn_tabla">
+            <?php
+            echo '<a href="agregar_Almacen.php?idA=' . $idA . '&IDR=' . $ID . '&mostrar=' . $mostrar . '" class="btn">Agregar Almacén</a>';
+            ?>
+        </div>
     </div>
 </body>
 

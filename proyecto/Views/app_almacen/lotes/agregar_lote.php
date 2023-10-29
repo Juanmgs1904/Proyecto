@@ -20,32 +20,19 @@ require("../../../Model/session/session_almacen2.php");
     </div>
     <form action="../../../intermediario/postDataAPI.php" class="form" method="post">
         <h3 class="form__title">Ingrese datos</h3>
-        <input type="text" name="Destino" class="input" placeholder="Ingrese el Destino" required>
-        <input type="text" name="Ruta" class="input" placeholder="Ingrese la Ruta" required>
-        <?php
-        $url = 'http://localhost/proyecto/controller/almacen/C_almacenI.php';
-        require("../../../intermediario/getDataAPI.php");
-        ?>
-
-        <div class="info">
-            <p class="info__text"><b>Tiempo Estimado:</b></p>
-            <input type="datetime-local" name="tiempoEstimado" class="input" placeholder="Ingrese el Tiempo Estimado" required>
+        <div class="text">
+            <label><b>Destino:</b></label>
+            <input type="text" name="Destino" class="input" placeholder="Ingrese el Destino" required>
         </div>
-        <div class="info">
-            <p class="info__text"><b>ID del Almacen:</b></p>
-            <select name="idI">
-                <?php
-                foreach ($array as $fila) {
-                    echo '<option value="' . $fila['idI'] . '">' . $fila['idI'] . '</option>';
-                }
-                ?>
-            </select>
+        <div class="text">
+            <label><b>Tiempo Estimado:</b></label>
+            <input type="datetime-local" name="tiempoEstimado" class="input" placeholder="Ingrese la Fecha de Entrega" require>
         </div>
         <input type="submit" value="Agregar" class="boton_form">
     </form>
     <div class="btn_volver">
         <?php
-        echo '<a href="lotes.php?id=1" class="btn">Volver</a>';
+        echo '<a href="lotes.php?idA=1" class="btn">Volver</a>';
         ?>
     </div>
 </body>

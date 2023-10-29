@@ -4,9 +4,21 @@ class asignarLote extends conexion {
 
     private $IDL = "";
     private $Matricula = "";
+    private $fEntrega = "";
 
     public function listaLAC(){
-        $sentencia = "SELECT IDL, Matricula FROM lleva";
+        $sentencia = "SELECT * FROM vwlleva_interno";
+        $arrayDatos = parent::obtenerDatos($sentencia);
+        return $arrayDatos;
+    }
+
+    public function listaLACE() {
+        $sentencia = "SELECT * FROM vwlleva_externo";
+        $arrayDatos = parent::obtenerDatos($sentencia);
+        return $arrayDatos;
+    }
+    public function lotesDelCamion($matricula){
+        $sentencia = "SELECT IDL FROM lleva WHERE Matricula = '$matricula' AND fEntrega IS NULL";
         $arrayDatos = parent::obtenerDatos($sentencia);
         return $arrayDatos;
     }
@@ -22,7 +34,7 @@ class asignarLote extends conexion {
             if($respuestaId){
                 $respuesta = $_respuestas->respuesta;
                 $respuesta['resultado'] = array(
-                    "Se marcó la hora de llegada del camión" => $this->IDL
+                    "Se Asignó el Lote" => $this->IDL
                 );
                 return $respuesta;
             }else{
@@ -35,9 +47,7 @@ class asignarLote extends conexion {
         $sentencia = "INSERT INTO lleva(IDL,Matricula)
         VALUES
         ('".$this->IDL."','". $this->Matricula."')";
-        $sentencia2 = "UPDATE lotes SET estado = 'Asignado' WHERE IDL = ".$this->IDL."";
         $respuesta = parent::guardar($sentencia);
-        parent::guardar($sentencia2);
         if($respuesta){
             return $respuesta;
         }else{
@@ -57,7 +67,7 @@ class asignarLote extends conexion {
             if($respuestaFilas){
                 $respuesta = $_respuestas->respuesta;
                 $respuesta['resultado'] = array(
-                    "Se modificó la hora de llegada del camión" => $this->IDL
+                    "Se modificó el Lote" => $this->IDL
                 );
                 return $respuesta;
             }else{
@@ -86,7 +96,7 @@ class asignarLote extends conexion {
             if($respuestaFilas){
                 $respuesta = $_respuestas->respuesta;
                 $respuesta['resultado'] = array(
-                    "Se eliminó la llegada del camión" => $this->IDL
+                    "Se eliminó el Lote Asignado" => $this->IDL
                 );
                 return $respuesta;
             }else{
@@ -96,9 +106,7 @@ class asignarLote extends conexion {
     }
     private function eliminarLAC(){
         $sentencia = "DELETE FROM lleva WHERE IDL = '" . $this->IDL . "'";
-        $sentencia2 = "UPDATE lotes SET Estado = 'NoAsignado' WHERE IDL = ".$this->IDL."";
         $respuesta = parent::guardar($sentencia);
-        parent::guardar($sentencia2);
         if($respuesta >= 1){
             return $respuesta;
         }else{

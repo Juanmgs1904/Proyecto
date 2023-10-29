@@ -11,8 +11,9 @@ switch($_SERVER['REQUEST_METHOD']){
 
     //Mostrar
     case 'GET':
+            $IDR = $_GET['IDR'];
             //solicita datos al modelo
-            $respuesta = $_almacenI->listaAlmacenesI();
+            $respuesta = $_almacenI->listaAlmacenesI($IDR);
 
             require('../../Routes/R_almacen.php');
     break;

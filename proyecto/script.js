@@ -46,3 +46,38 @@ window.addEventListener('scroll', () => {
         currentIndex = (currentIndex + 1) % images.length;
         showImage(currentIndex);
     }, 5000); // 5000 milisegundos 
+
+
+    document.addEventListener("DOMContentLoaded", () => {
+        // Verifica si hay un idioma seleccionado en la variable de sesión
+        const selectedLanguage = sessionStorage.getItem('selectedLanguage');
+    
+        if(selectedLanguage){
+            // Aplica el idioma seleccionado
+            changeLanguage(selectedLanguage);
+        }
+    });
+
+    //cambio de idioma
+    const FlagsElement = document.getElementById("flags");
+
+    const textsToChange = document.querySelectorAll("[data-section]");
+
+    const changeLanguage = async language => {
+        const requestJson = await fetch(`languages/homepage/${language}.json`);
+        const texts = await requestJson.json();
+
+        for(const textToChange of textsToChange){
+            const section = textToChange.dataset.section;
+            const value = textToChange.dataset.value;
+
+            textToChange.innerHTML=texts[section][value];
+        }
+
+         // Guarda el idioma seleccionado en una variable de sesión
+        sessionStorage.setItem('selectedLanguage', language);
+    }
+
+    FlagsElement.addEventListener("click", (e) => {
+        changeLanguage(e.target.parentElement.dataset.language);//se obtiene el identificador para llamar al json
+    });

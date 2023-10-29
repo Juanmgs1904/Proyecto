@@ -31,25 +31,35 @@ require("../../../Model/session/session_administrador2.php");
 
                 <ul class="nav__lista">
                     <li><a href="#"><?php echo $_SESSION['mail']; ?></a></li>
-                    <a href="../../../index.php"><li class="cerrar">Cerrar Sesión</li></a>
+                    <div class="flags" id="flags">
+                        <div class="flags__item" data-language="es">
+                            <img src="../../../img/es.svg" alt="opción español">
+                        </div>
+                        <div class="flags__item" data-language="en">
+                            <img src="../../../img/en.svg" alt="opción inglés">
+                        </div>
+                    </div>
+
+                    <a href="../../../index.php"><li class="cerrar" li class="cerrar" data-section="header" data-value="logout">Cerrar Sesión</li></a>
                 </ul>
             </div>
         </div>
     </header>
     <div>
         <div class="usuarios__contenedor">
-            <h1>Almacenes</h1>
+            <h1 data-section="almacenes" data-value="titulo">Almacenes</h1>
             <div class="info">
-                <a href="almacen/almacen_index.php" class="btn">Gestionar Almacenes</a>
-                <a href="almacenInterno/almacenInterno_index.php" class="btn">Gestionar Almacenes de QuickCarry</a>
-                <a href="almacenExterno/almacenExterno_index.php" class="btn">Gestionar Almacenes de Empresas</a>
+                <a href="almacen/almacen_index.php" class="btn" data-section="almacenes" data-value="almacen">Gestionar Almacenes</a>
+                <a href="almacenInterno/almacenInterno_index.php" class="btn" data-section="almacenes" data-value="interno">Gestionar Almacenes de QuickCarry</a>
+                <a href="almacenExterno/almacenExterno_index.php" class="btn" data-section="almacenes" data-value="externo">Gestionar Almacenes de Empresas</a>
             </div>
         </div>
     </div>
 
     <div class="btn_tabla">
-        <a class="btn" href="../index.php">Volver</a>
+        <a class="btn" href="../index.php" data-section="boton" data-value="volver">Volver</a>
     </div>
+    <script src="script.js"></script>
 </body>
 
 </html>

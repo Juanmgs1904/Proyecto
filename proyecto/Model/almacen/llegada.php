@@ -6,8 +6,8 @@ class llegada extends conexion {
     private $idA = "";
     private $fLlegada = "";
 
-    public function listaHoras(){
-        $sentencia = "SELECT Matricula, IDA, FechaLlegada FROM va_a_llegada";
+    public function listaHoras($idA){
+        $sentencia = "SELECT Matricula, FechaLlegada FROM va_a_llegada WHERE IDA = $idA";
         $arrayDatos = parent::obtenerDatos($sentencia);
         return $arrayDatos;
     }
@@ -34,10 +34,12 @@ class llegada extends conexion {
         
     }
     private function altaHora(){
-        $sentencia = "INSERT INTO va_a_llegada(Matricula,IDA,FechaLlegada)
+        $sentencia1 = "UPDATE vehiculo SET Disponibilidad = 'Disponible' WHERE MatriculaV = '" . $this->matricula . "'";
+        $respuesta = parent::guardar($sentencia1);
+        $sentencia2 = "INSERT INTO va_a_llegada(Matricula,IDA,FechaLlegada)
         VALUES
         ('".$this->matricula."','". $this->idA."','". $this->fLlegada."')";
-        $respuesta = parent::guardar($sentencia);
+        $respuesta = parent::guardar($sentencia2);
         if($respuesta){
             return $respuesta;
         }else{
@@ -99,8 +101,10 @@ class llegada extends conexion {
         }
     }
     private function eliminarHora(){
-        $sentencia = "DELETE FROM va_a_llegada WHERE Matricula = '" . $this->matricula . "' AND IDA = '" . $this->idA . "' AND FechaLlegada = '" . $this->fLlegada . "'";
-        $respuesta = parent::guardar($sentencia);
+        $sentencia1 = "UPDATE vehiculo SET Disponibilidad = 'En ruta' WHERE MatriculaV = '" . $this->matricula . "'";
+        $respuesta = parent::guardar($sentencia1);
+        $sentencia2 = "DELETE FROM va_a_llegada WHERE Matricula = '" . $this->matricula . "' AND IDA = '" . $this->idA . "' AND FechaLlegada = '" . $this->fLlegada . "'";
+        $respuesta = parent::guardar($sentencia2);
         if($respuesta >= 1){
             return $respuesta;
         }else{

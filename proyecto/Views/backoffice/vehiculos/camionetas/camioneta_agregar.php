@@ -11,15 +11,15 @@ require ("../../../../Model/session/session_administrador3.php");
 </head>
 <body class="fondo">
     <div class="contenedor_form">
-        <h1>Ingresar Datos</h1>
+        <h1 data-section="header" data-value="ingresar">Ingresar Datos</h1>
         <form class="form" action="../../insertar.php" method="post">
         <?php
-            $conexion = new mysqli("localhost", "root", "", "proyecto");
-            $sentencia = "SELECT * FROM vehiculo WHERE MatriculaV NOT IN (SELECT MatriculaC FROM camioneta) AND MatriculaV NOT IN (SELECT Matricula FROM camion)";
+            $conexion = new mysqli("localhost", "root", "", "ocean");
+            $sentencia = "SELECT * FROM vwvehiculo";
             $filas = $conexion->query($sentencia);
             ?>
-                <div class="form_info">
-                    <label>ID:</label>
+                <div class="form_info text">
+                    <label data-section="camioneta" data-value="matricula">Matricula:</label>
                     <select name="MatriculaC" required>
                         <?php
                         foreach ($filas->fetch_all(MYSQLI_ASSOC) as $fila) {
@@ -28,11 +28,12 @@ require ("../../../../Model/session/session_administrador3.php");
                         ?>
                     </select>
                 </div>
-            <input type="submit" value="Agregar" class="btn">
+            <input type="submit" value="Agregar" class="btn" data-section="boton" data-value="agregar">
         </form>
     </div>
     <div class="btn_tabla">
-        <a href="camioneta_index.php" class="btn">Volver</a>
+        <a href="camioneta_index.php" class="btn" data-section="boton" data-value="volver">Volver</a>
     </div>
+    <script src="script.js"></script>
 </body>
 </html>

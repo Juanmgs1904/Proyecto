@@ -71,6 +71,16 @@ a {
 .header__home:hover {
     transform: scale(1.2);
 }
+.flags__item {
+    width: 4rem;
+    margin: 3rem;
+    transition: .5s;
+}
+
+.flags__item:hover {
+    transform: scale(1.1);
+    cursor: pointer;
+}
 
 /* Contacto */
 .form {
@@ -142,7 +152,7 @@ a {
 
 @media (max-width:850px) {
     h1{
-        font-size: 3rem;
+        font-size: 2rem;
     }
 
     .form{
@@ -158,4 +168,58 @@ a {
         width: 100%;
     }
     
+}
+
+/*Footer*/
+.footer {
+    background-color: #FFF;
+}
+
+.footer h2 {
+    margin: 1rem;
+}
+
+.footer h3 {
+    margin: 1rem;
+    font-size: 2rem;
+}
+
+.contact {
+    width: 99.9%;
+    display: flex;
+}
+
+.flags {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.flags__item {
+    width: 4rem;
+    margin: 2rem;
+    transition: .5s;
+}
+
+.flags__item:hover {
+    transform: scale(1.1);
+    cursor: pointer;
+}
+
+.info {
+    width: 80%;
+    margin: 0 auto;
+    color: var(--fondoP);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.logo-system {
+    width: 25%;
+}
+
+.logo_info {
+    padding-top: 2rem;
+    display: flex;
 }

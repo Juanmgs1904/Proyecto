@@ -196,6 +196,11 @@ a {
     height: 70%;
 }
 
+.imagen {
+    display: flex;
+    height: 70%;
+}
+
 .imagenes img {
     width: calc(100% / 3);
 }
@@ -339,6 +344,17 @@ option{
     width: 30rem;
 }
 
+.text {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+}
+
+.text .input {
+    flex: 2;
+}
+
+
 @media (max-width: 800px){
     .opciones__grid{
         grid-template-columns: repeat(1, 1fr);
@@ -351,12 +367,13 @@ option{
     .pFilaVC {
         display: block;
     }
-}
+    .form{
+        width: 80%;
+    }
 
-
-@media (max-width: 500px){
     h1{
         font-size: 2rem;
     }
 
 }
+

@@ -1,7 +1,7 @@
 <?php
 require("../../Model/session/session_administrador.php");
-
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -25,7 +25,7 @@ require("../../Model/session/session_administrador.php");
                 </a>
             </div>
             <div class="header__titulo">
-                <h1>Bienvenido</h1>
+                <h1 data-section="header" data-value="bienvenido">Bienvenido</h1>
             </div>
             <div class="header__logo">
                 <input type="checkbox" id="menuD" class="menu-toggle">
@@ -33,34 +33,49 @@ require("../../Model/session/session_administrador.php");
 
                 <ul class="nav__lista">
                     <li><a href="#"><?php echo $_SESSION['mail']; ?></a></li>
-                    <a href="../../index.php"><li class="cerrar">Cerrar Sesión</li></a>
+
+                    <div class="flags" id="flags">
+                        <div class="flags__item" data-language="es">
+                            <img src="../../img/es.svg" alt="opción español">
+                        </div>
+                        <div class="flags__item" data-language="en">
+                            <img src="../../img/en.svg" alt="opción inglés">
+                        </div>
+                    </div>
+
+                    <a href="../../index.php">
+                        <li class="cerrar" data-section="header" data-value="logout">Cerrar Sesión</li>
+                    </a>
                 </ul>
             </div>
         </div>
     </header>
     <main class="opciones">
         <div class="opciones_titulo">
-            <h2 class="text-center">Seleccionar</h2>
+            <h2 class="text-center" data-section="seleccionar" data-value="title">Seleccionar</h2>
             <hr>
         </div>
         <div class="opciones__grid">
-            <a href="usuarios/usuarios.php" class="opcion">
+            <a href="usuarios/usuarios.php" class="opcion" data-section="seleccionar" data-value="op1">
                 Personas
             </a><!--Opción-->
-            <a href="paquete/paquete_index.php" class="opcion">
+            <a href="paquete/paquete_index.php" class="opcion" data-section="seleccionar" data-value="op2">
                 Paquetes
             </a><!--Opción-->
-            <a href="vehiculos/vehiculos.php" class="opcion">
+            <a href="vehiculos/vehiculos.php" class="opcion" data-section="seleccionar" data-value="op3">
                 Vehículos
             </a><!--Opción-->
-            <a href="lotes/lote_index.php" class="opcion">
+            <a href="lotes/lote_index.php" class="opcion" data-section="seleccionar" data-value="op4">
                 Lotes
             </a><!--Opción-->
-            <a href="almacenes/almacen.php" class="opcion">
+            <a href="almacenes/almacen.php" class="opcion" data-section="seleccionar" data-value="op5">
                 Almacenes
             </a><!--Opción-->
         </div><!--Fin Listado Opciones-->
     </main>
+
+    <script src="script.js"></script>
+                    
 </body>
 
 </html>

@@ -1,4 +1,5 @@
 <?php
+$idA = $_GET['idA'];
 $url = 'http://localhost/proyecto/controller/almacen/C_asignarLote.php';
 require("../../../../intermediario/getDataAPI.php");
 require("../../../../Model/session/session_almacen3.php");
@@ -22,7 +23,7 @@ require("../../../../Model/session/session_almacen3.php");
 <header class="header">
         <div class="header__contenedor">
             <div class="header__home">
-                <a href="../../index.php">
+                <?php echo '<a href="../../index.php?idA='.$idA.'">'; ?>
                     <img src="../../img/Logo_sistema.png" alt="Logo de max truck">
                 </a>
             </div>
@@ -44,7 +45,7 @@ require("../../../../Model/session/session_almacen3.php");
         <div class="titulo">
             <h2>Camiones</h2>
         </div>
-        <div class="PAC_grid">
+        <div class="LEC_grid">
             <div class="datos pFila">MATRÍCULA</div>
             <div class="datos pFila">OPCIÓN</div>
             <?php
@@ -65,7 +66,7 @@ require("../../../../Model/session/session_almacen3.php");
                     ?>
                     <div class="datos">
                         <?php
-                        echo '<a href="lotesAC.php?matricula=' . $fila['Matricula'] . '">Ver Lotes</a>';
+                        echo '<a href="lotesAC.php?matricula=' . $fila['Matricula'] . '&idA='.$idA.'">Ver Lotes</a>';
                         ?>
                     </div>
             <?php
@@ -75,7 +76,7 @@ require("../../../../Model/session/session_almacen3.php");
         </div>
     </div>
     <div class="btn_volver">
-        <a href="../asignarLote.php" class="btn">Volver</a>
+        <?php echo '<a href="../asignarLote.php?idA='.$idA.'" class="btn">'; ?>Volver</a>
     </div>
 </body>
 

@@ -1,4 +1,5 @@
 <?php
+$matricula = $_GET['matricula'];
 if (isset($_GET['id'])) {
     $codigo = $_GET['id'];
 }
@@ -21,15 +22,15 @@ require("../../Model/session/session_camioneta.php");
 </head>
 
 <body class="formulario">
-<header class="header">
+    <header class="header">
         <div class="header__contenedor">
             <div class="header__home">
-                <a href="indexCamioneta.php">
-                    <img src="img/Logo_sistema.png" alt="Logo de max truck">
+                <?php echo '<a href="indexCamioneta.php?matricula=' . $matricula . '">'; ?>
+                <img src="img/Logo_sistema.png" alt="Logo de max truck">
                 </a>
             </div>
             <div class="header__titulo">
-                <h1>Remito del Paquete</h1>
+                <h1 data-section="header" data-value="remitoP">Remito del Paquete</h1>
             </div>
             <div class="header__logo">
                 <input type="checkbox" id="menuD" class="menu-toggle">
@@ -37,47 +38,52 @@ require("../../Model/session/session_camioneta.php");
 
                 <ul class="nav__lista">
                     <li><a href="#"><?php echo $_SESSION['mail']; ?></a></li>
-                    <a href="../../index.php"><li class="cerrar">Cerrar Sesión</li></a>
+                    <div class="flags" id="flags">
+                        <div class="flags__item" data-language="es">
+                            <img src="../../img/es.svg" alt="opción español">
+                        </div>
+                        <div class="flags__item" data-language="en">
+                            <img src="../../img/en.svg" alt="opción inglés">
+                        </div>
+                    </div>
+
+                    <a href="../../index.php">
+                        <li class="cerrar" data-section="header" data-value="logout">Cerrar Sesión</li>
+                    </a>
                 </ul>
             </div>
         </div>
     </header>
     <div class="grid_tablaPR __contenedor">
-        <div class="datosT pFilaH">CÓDIGO</div>
-        <div class="datosT pFilaH">FECHA DE RECIBO</div>
-        <div class="datosT pFilaH">FECHA DE ENTREGA</div>
-        <div class="datosT pFilaH">Destinatario</div>
-        <div class="datosT pFilaH">Destino</div>
-        <div class="datosT pFilaH">OPCIONES</div>
+        <div class="datosT pFilaH" data-section="paquete" data-value="codigo">Codigo</div>
+        <div class="datosT pFilaH" data-section="paquete" data-value="fRecibo">FECHA DE RECIBO</div>
+        <div class="datosT pFilaH" data-section="paquete" data-value="fEntrega">FECHA DE ENTREGA</div>
+        <div class="datosT pFilaH" data-section="paquete" data-value="destinatario">Destinatario</div>
+        <div class="datosT pFilaH" data-section="paquete" data-value="destino">Destino</div>
         <?php
         foreach ($array as $fila) {
             $codigo = $fila['codigo'];
             if ($codigo == $_GET["id"]) {
         ?>
-                <div class="datosT pFilaV">Codigo</div>
+                <div class="datosT pFilaV" data-section="paquete" data-value="codigo">Codigo</div>
                 <div class="datosT"><?php echo $fila['codigo'] . " "; ?></div>
-                <div class="datosT pFilaV">fRecibo</div>
+                <div class="datosT pFilaV" data-section="paquete" data-value="fRecibo">fRecibo</div>
                 <div class="datosT"><?php echo $fila['fRecibo'] . " "; ?></div>
-                <div class="datosT pFilaV">fEntrega</div>
+                <div class="datosT pFilaV" data-section="paquete" data-value="fEntrega">fEntrega</div>
                 <div class="datosT"><?php echo $fila['fEntrega'] . " "; ?></div>
-                <div class="datosT pFilaV">Destinatario</div>
+                <div class="datosT pFilaV" data-section="paquete" data-value="destinatario">Destinatario</div>
                 <div class="datosT"><?php echo $fila['Destinatario'] . " "; ?></div>
-                <div class="datosT pFilaV">Destino</div>
+                <div class="datosT pFilaV" data-section="paquete" data-value="destino">Destino</div>
                 <div class="datosT"><?php echo $fila['Destino'] . " "; ?></div>
-                <div class="datosT pFilaV">OPCIONES</div>
-                <div class="datosT">
-                    <?php
-                    echo '<a href="paqueteEntregado.php?codigo=' . $codigo . '">' . 'Entregado' . ' </a>';
-                    ?>
-                </div>
         <?php
             }
         }
         ?>
     </div>
     <div class="btn_volver">
-        <a href="tabla_camionetas.php" class="btn">Volver</a>
+        <?php echo '<a href="paquetesC.php?matricula=' . $matricula . '" class="btn" data-section="boton" data-value="volver">'; ?>Volver</a>
     </div>
+    <script src="script.js"></script>
 </body>
 
 </html>

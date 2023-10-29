@@ -34,10 +34,12 @@ class salida extends conexion {
         
     }
     private function altaHora(){
-        $sentencia = "INSERT INTO va_a_salida(Matricula,IDA,FechaSalida)
+        $sentencia1 = "UPDATE vehiculo SET Disponibilidad = 'En ruta' WHERE MatriculaV = '" . $this->matricula . "'";
+        $respuesta = parent::guardar($sentencia1);
+        $sentencia2 = "INSERT INTO va_a_salida(Matricula,IDA,FechaSalida)
         VALUES
         ('".$this->matricula."','". $this->idA."','". $this->fSalida."')";
-        $respuesta = parent::guardar($sentencia);
+        $respuesta = parent::guardar($sentencia2);
         if($respuesta){
             return $respuesta;
         }else{
@@ -98,8 +100,10 @@ class salida extends conexion {
         }
     }
     private function eliminarHora(){
-        $sentencia = "DELETE FROM va_a_salida WHERE Matricula = '" . $this->matricula . "' AND IDA = '" . $this->idA . "' AND FechaSalida = '" . $this->fSalida . "'";
-        $respuesta = parent::guardar($sentencia);
+        $sentencia1 = "UPDATE vehiculo SET Disponibilidad = 'Disponible' WHERE MatriculaV = '" . $this->matricula . "'";
+        $respuesta = parent::guardar($sentencia1);
+        $sentencia2 = "DELETE FROM va_a_salida WHERE Matricula = '" . $this->matricula . "' AND IDA = '" . $this->idA . "' AND FechaSalida = '" . $this->fSalida . "'";
+        $respuesta = parent::guardar($sentencia2);
         if($respuesta >= 1){
             return $respuesta;
         }else{

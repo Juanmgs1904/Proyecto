@@ -1,5 +1,7 @@
 <?php
-$url = 'http://localhost/proyecto/controller/almacen/C_camionetas.php';
+$idA = $_GET['idA'];
+$ruta = false;
+$url = 'http://localhost/proyecto/controller/almacen/C_va.php?ruta='.$ruta.'&idA='.$idA.'';
 require("../../../intermediario/getDataAPI.php");
 require("../../../Model/session/session_almacenInterno2.php");
 ?>
@@ -20,10 +22,10 @@ require("../../../Model/session/session_almacenInterno2.php");
     <div class="title">
         <h1>Marcar Hora de Salida</h1>
     </div>
-    <form action="../../../intermediario/postDataAPI.php" class="form" method="post">
+    <?php echo '<form action="../../../intermediario/postDataAPI.php?idA='.$idA.'" class="form" method="post">'; ?>
         <h3 class="form__title">Ingrese datos</h3>
-        <div class="datos">
-            <p>Matricula:</p>
+        <div class="text">
+            <label><b>Matricula:</b></label>
             <select name="MatriculaC">
                 <?php
                 foreach ($array as $fila) {
@@ -32,18 +34,18 @@ require("../../../Model/session/session_almacenInterno2.php");
                 ?>
             </select>
         </div>
-        <div class="datos">
-            <p>Hora de Salida:</p>
+        <div class="text">
+            <label><b>Hora de Salida:</b></label>
             <input type="datetime-local" name="fechaSalida" class="input" placeholder="Ingrese hora" required>
         </div>
         <input type="submit" value="Marcar" class="boton_form">
     </form>
     <div class="botones">
         <div class="btn_volver">
-            <a href="almacenInterno.php" class="btn">Volver</a>
+            <?php echo '<a href="almacenInterno.php?idA='.$idA.'" class="btn">'; ?>Volver</a>
         </div>
         <div class="btn_tabla">
-            <a href="tablas/tabla_salidaCam.php" class="btn">Ver Tabla</a>
+            <?php echo '<a href="tablas/tabla_salidaCam.php?idA='.$idA.'" class="btn">'; ?>Ver Tabla</a>
         </div>
     </div>
 </body>

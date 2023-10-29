@@ -1,6 +1,7 @@
 <?php
-if (isset($_POST['enviar'])) {
-    session_start();
+session_start();
+if (isset($_GET['lang'])) {
+    $_SESSION['selectedLanguage'] = $_GET['lang'];
 }
 
 ?>
@@ -32,10 +33,10 @@ if (isset($_POST['enviar'])) {
     </header>
     <main class="login">
         <form action="../../intermediario/auth.php" method="POST" class="form">
-            <h3 class="text-center">Iniciar Sesión</h3>
-            <input type="text" name="mail" placeholder="Usuario" required>
-            <input type="password" name="contraseña" placeholder="Contraseña" required>
-            <button type="submit" name="enviar" class="btn">Ingresar</button>
+            <h3 class="text-center" data-section="login" data-value="titleL">Iniciar Sesión</h3>
+            <input type="text" name="mail" data-section="login" data-value="usuario" placeholder="Usuario" required>
+            <input type="password" name="contraseña" data-section="login" data-value="contra" placeholder="Contraseña" required>
+            <button type="submit" name="enviar" data-section="login" data-value="btn" class="btn">Ingresar</button>
         </form>
         <div class="mensaje">
             <script>
@@ -51,7 +52,7 @@ if (isset($_POST['enviar'])) {
                 if (responseMsg !== '') {
                     showMessage(responseMsg);
                 }
-                
+
 
                 function showMessage(message) {
                     var alertDiv = document.createElement('div');
@@ -67,6 +68,26 @@ if (isset($_POST['enviar'])) {
             </script>
         </div>
     </main>
+    <footer class="footer">
+        <div class="contact">
+            <div class="info">
+                <div class="logo_info">
+                    <img src="img/Logo_sistema.png" alt="logo" class="logo-system">
+                    <h2 class="h-info">Max Truck</h2>
+                </div>
+                <h3>&#9400Quick Carry</h3>
+            </div>
+            <div class="flags" id="flags">
+                <div class="flags__item" data-language="es" onclick="changeLanguage('es')">
+                    <img src="../../img/es.svg" alt="opción español">
+                </div>
+                <div class="flags__item" data-language="en" onclick="changeLanguage('en')">
+                    <img src="../../img/en.svg" alt="opción inglés">
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="script.js"></script>
 </body>
 
 </html>

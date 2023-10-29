@@ -31,26 +31,36 @@ require("../../../Model/session/session_administrador2.php");
 
                 <ul class="nav__lista">
                     <li><a href="#"><?php echo $_SESSION['mail']; ?></a></li>
-                    <a href="../../../index.php"><li class="cerrar">Cerrar Sesión</li></a>
+                    <div class="flags" id="flags">
+                        <div class="flags__item" data-language="es">
+                            <img src="../../../img/es.svg" alt="opción español">
+                        </div>
+                        <div class="flags__item" data-language="en">
+                            <img src="../../../img/en.svg" alt="opción inglés">
+                        </div>
+                    </div>
+
+                    <a href="../../../index.php"><li class="cerrar" li class="cerrar" data-section="header" data-value="logout">Cerrar Sesión</li></a>
                 </ul>
             </div>
         </div>
     </header>
     <div>
         <div class="usuarios__contenedor">
-            <h1>Personas</h1>
+            <h1 data-section="personas" data-value="titulo">Personas</h1>
             <div class="info">
-                <a href="personas/personas_index.php" class="btn">Gestionar Personas</a>
-                <a href="camionero/camionero_index.php" class="btn">Gestionar Camioneros</a>
-                <a href="personal/personal_index.php" class="btn">Gestionar Personal</a>
-                <a href="usuario/usuario_index.php" class="btn">Gestionar Usuarios</a>
+                <a href="personas/personas_index.php" class="btn" data-section="personas" data-value="personas">Gestionar Personas</a>
+                <a href="camionero/camionero_index.php" class="btn" data-section="personas" data-value="camioneros">Gestionar Camioneros</a>
+                <a href="personal/personal_index.php" class="btn" data-section="personas" data-value="personal">Gestionar Personal</a>
+                <a href="usuario/usuario_index.php" class="btn" data-section="personas" data-value="usuarios">Gestionar Usuarios</a>
             </div>
         </div>
     </div>
 
     <div class="btn_tabla">
-        <a class="btn" href="../index.php">Volver</a>
+        <a class="btn" href="../index.php" data-section="boton" data-value="volver">Volver</a>
     </div>
+    <script src="script.js"></script>
 </body>
 
 </html>

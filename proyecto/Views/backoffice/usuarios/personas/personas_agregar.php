@@ -12,29 +12,30 @@ require ("../../../../Model/session/session_administrador3.php");
 </head>
 <body class="fondo">
     <div class="contenedor_form">
-        <h1>Ingresar Datos</h1>
+        <h1 data-section="header" data-value="ingresar">Ingresar Datos</h1>
         <form class="form" action="../../insertar.php" method="post">
-            <div class="form_info">
+            <div class="form_info text">
                 <label>CI:</label>
                 <input type="number" name="ci" required>  
             </div>
-            <div class="form_info">
-                <label>Nombre:</label> 
+            <div class="form_info text">
+                <label data-section="persona" data-value="nombre">Nombre:</label> 
                 <input type="text" name="nombre" required>  
             </div>
-            <div class="form_info">
-                <label>Teléfono:</label> 
+            <div class="form_info text">
+                <label data-section="persona" data-value="telefono">Teléfono:</label> 
                 <input type="text" name="tel" required>
             </div>
-            <div class="form_info">
-                <label>Dirección:</label>
+            <div class="form_info text">
+                <label data-section="persona" data-value="direccion">Dirección:</label>
                 <input type="text" name="dir">
             </div>    
-            <input type="submit" value="Agregar" class="btn">
+            <input type="submit" value="Agregar" class="btn" class="btn" data-section="boton" data-value="agregar">
         </form>
     </div>
     <div class="btn_volver">
-        <a href="personas_index.php" class="btn">Volver</a>
+        <a href="personas_index.php" class="btn" class="btn" data-section="boton" data-value="volver">Volver</a>
     </div>
+    <script src="script.js"></script>
 </body>
 </html>

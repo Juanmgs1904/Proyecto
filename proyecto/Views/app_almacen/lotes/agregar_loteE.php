@@ -1,4 +1,5 @@
 <?php
+$empresa = $_GET['empresa'];
 require("../../../Model/session/session_almacen2.php");
 ?>
 <!DOCTYPE html>
@@ -18,26 +19,18 @@ require("../../../Model/session/session_almacen2.php");
     <div class="title">
         <h1>Agregar Lote al Almacén</h1>
     </div>
-    <form action="../../../intermediario/postDataAPI.php" class="form" method="post">
+    <?php echo '<form action="../../../intermediario/postDataAPI.php?empresa='.$empresa.'" class="form" method="post">'; ?>
         <h3 class="form__title">Ingrese datos</h3>
-        <input type="hidden" name="DestinoE" value="<?= 'Montevideo' ?>">
-        <?php
-        $url = 'http://localhost/proyecto/controller/almacen/C_almacenI.php';
-        require("../../../intermediario/getDataAPI.php");
-        ?>
-
-        <div class="info">
-            <p class="info__text"><b>Tiempo Estimado:</b></p>
-            <input type="datetime-local" name="tiempoEstimado" class="input" placeholder="Ingrese el Tiempo Estimado" required>
-            <input type="hidden" name="idI" value="<?='1'?>">
-            <input type="hidden" name="almacenExterno" value="<?= '1'?>">
+        <div class="text">
+            <label><b>Tiempo Estimado:</b></label>
+            <input type="datetime-local" name="tiempoEstimadoE" class="input" placeholder="Ingrese la Fecha de Entrega" require>
         </div>
-        </div>
+            <input type="hidden" name="almacenExterno" value="<?= '1' ?>">
         <input type="submit" value="Agregar" class="boton_form">
     </form>
     <div class="btn_volver">
         <?php
-        echo '<a href="lotesE.php" class="btn">Volver</a>';
+        echo '<a href="lotesE.php?empresa='.$empresa.'" class="btn">Volver</a>';
         ?>
     </div>
 </body>

@@ -156,12 +156,47 @@ a {
     color: var(--fondoP);
 }
 
+.tablas__contenedor {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 4rem;
+}
+
 .tabla__contenedor {
     margin: 2rem auto;
     text-align: center;
     border: solid 2px #000;
     font-size: 2rem;
     box-shadow: 0px 0px 15px 6px rgb(0 0 0 / .50);
+}
+
+.tabla__flecha {
+    margin: 0;
+    margin: 3rem 0;
+    background-color: #FFF;
+}
+
+.tabla__flecha h2 {
+    font-size: 3rem;
+}
+
+.flecha {
+    width: 7rem;
+    transition: .5s;
+}
+
+.flecha:hover {
+    transform: scale(1.1);
+}
+
+.flechaR {
+    width: 7rem;
+    transition: .5s;
+    transform: rotate(180deg);
+}
+
+.flechaR:hover {
+    transform: scale(1.1) rotate(180deg);
 }
 
 .grid {
@@ -178,10 +213,19 @@ a {
 
 .PAC_grid {
     display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    color: var(--letra);
+}
+.LEC_grid {
+    display: grid;
     grid-template-columns: repeat(2, 1fr);
     color: var(--letra);
 }
-
+.grid_llegada {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    color: var(--letra);
+}
 .datos {
     padding: 3rem;
     background-color: #FFF;
@@ -189,7 +233,13 @@ a {
     align-items: center;
     justify-content: center;
 }
-
+.datosF {
+    padding: 3rem;
+    background-color: #FFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 .datos a {
     font-weight: 600;
     padding: 1rem;
@@ -241,10 +291,9 @@ a {
 
 
 @media (max-width: 900px){
-    .grid{
+    .grid, .grid_llegada, .gridCam{
         grid-template-columns: repeat(2, 1fr);
     }
-
     .datos{
         flex-direction: column;
         
@@ -256,6 +305,9 @@ a {
     
     .pFilaV {
         display: block;
+    }
+    h1{
+        font-size: 2rem;
     }
 }
 

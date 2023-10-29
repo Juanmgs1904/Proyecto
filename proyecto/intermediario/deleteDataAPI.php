@@ -16,11 +16,12 @@ if(isset($_GET['id'])){
     if(curl_errno($ch)){
         echo curl_error($ch);
     }else{
-       header("location: http://localhost/proyecto/Views/app_almacen/lotes/lotes.php?id=1");
+       header("location: http://localhost/proyecto/Views/app_almacen/lotes/lotes.php?idA=1");
     }
 }
 if(isset($_GET['idE'])){
     $id = $_GET['idE'];
+    $empresa = $_GET['empresa'];
 
     $datos = [
         'idL' => $id
@@ -34,7 +35,7 @@ if(isset($_GET['idE'])){
     if(curl_errno($ch)){
         echo curl_error($ch);
     }else{
-       header("location: http://localhost/proyecto/Views/app_almacen/lotes/lotesE.php");
+       header("location: http://localhost/proyecto/Views/app_almacen/lotes/lotesE.php?empresa=$empresa");
     }
 }
 
@@ -42,6 +43,8 @@ if(isset($_GET['idE'])){
 //paquete a camioneta
 if(isset($_GET['codigoC'])){
     $codigo = $_GET['codigoC'];
+    $idA = $_GET['idA'];
+    $matricula = $_GET['matricula'];
 
     $datos = [
         'codigo' => $codigo
@@ -56,7 +59,7 @@ if(isset($_GET['codigoC'])){
     if(curl_errno($ch)){
         echo curl_error($ch);
     }else{
-       header("location: http://localhost/proyecto/Views/app_almacen/almacen/tablas/tabla_asignarPAC.php");
+       header("location: http://localhost/proyecto/Views/app_almacen/almacen/tablas/paquetesAC.php?idA=$idA&matriculaC=$matricula");
     }
 }
 
@@ -64,6 +67,7 @@ if(isset($_GET['codigoC'])){
 if(isset($_GET['IDL']) && isset($_GET['matricula'])){
     $IDL = $_GET['IDL'];
     $matricula = $_GET['matricula'];
+    $idA = $_GET['idA'];
 
     $datos = [
         'IDL' => $IDL
@@ -78,7 +82,28 @@ if(isset($_GET['IDL']) && isset($_GET['matricula'])){
     if(curl_errno($ch)){
         echo curl_error($ch);
     }else{
-       header("location: http://localhost/proyecto/Views/app_almacen/almacen/tablas/lotesAC.php?matricula=$matricula");
+       header("location: http://localhost/proyecto/Views/app_almacen/almacen/tablas/lotesAC.php?matricula=$matricula&idA=$idA");
+    }
+}
+if(isset($_GET['IDLE']) && isset($_GET['matriculaE'])){
+    $IDL = $_GET['IDLE'];
+    $matricula = $_GET['matriculaE'];
+    $empresa = $_GET['empresa'];
+
+    $datos = [
+        'IDL' => $IDL
+    ];
+
+    $json = json_encode($datos);
+    curl_setopt($ch,CURLOPT_CUSTOMREQUEST,"DELETE");
+    curl_setopt($ch,CURLOPT_URL,"http://localhost/proyecto/controller/almacen/C_asignarLote.php");
+    curl_setopt($ch,CURLOPT_POSTFIELDS, $json);
+    curl_setopt($ch,CURLOPT_RETURNTRANSFER, true);
+    curl_exec($ch);
+    if(curl_errno($ch)){
+        echo curl_error($ch);
+    }else{
+       header("location: http://localhost/proyecto/Views/app_almacen/almacen/tablas/lotesACE.php?matricula=$matricula&empresa=$empresa");
     }
 }
 
@@ -86,6 +111,7 @@ if(isset($_GET['IDL']) && isset($_GET['matricula'])){
 if(isset($_GET['codigoL'])){
     $codigo = $_GET['codigoL'];
     $IDL = $_GET['IDL'];
+    $idA = $_GET['idA'];
 
     $datos = [
         'codigo' => $codigo
@@ -100,7 +126,28 @@ if(isset($_GET['codigoL'])){
     if(curl_errno($ch)){
         echo curl_error($ch);
     }else{
-       header("location: http://localhost/proyecto/Views/app_almacen/almacen/tablas/paquetesAL.php?IDL=$IDL");
+       header("location: http://localhost/proyecto/Views/app_almacen/almacen/tablas/paquetesAL.php?IDL=$IDL&idA=$idA");
+    }
+}
+if(isset($_GET['codigoLE'])){
+    $codigo = $_GET['codigoLE'];
+    $IDL = $_GET['IDL'];
+    $empresa = $_GET['empresa'];
+
+    $datos = [
+        'codigo' => $codigo
+    ];
+    
+    $json = json_encode($datos);
+    curl_setopt($ch,CURLOPT_CUSTOMREQUEST,"DELETE");
+    curl_setopt($ch,CURLOPT_URL,"http://localhost/proyecto/controller/almacen/C_asignarPALE.php");
+    curl_setopt($ch,CURLOPT_POSTFIELDS, $json);
+    curl_setopt($ch,CURLOPT_RETURNTRANSFER, true);
+    curl_exec($ch);
+    if(curl_errno($ch)){
+        echo curl_error($ch);
+    }else{
+       header("location: http://localhost/proyecto/Views/app_almacen/almacen/tablas/paquetesALE.php?IDL=$IDL&empresa=$empresa");
     }
 }
 
@@ -108,6 +155,7 @@ if(isset($_GET['codigoL'])){
 //paquete
 if(isset($_GET['codigo'])){
     $codigo = $_GET['codigo'];
+    $idA = $_GET['idA'];
 
     $datos = [
         'codigo' => $codigo
@@ -121,11 +169,12 @@ if(isset($_GET['codigo'])){
     if(curl_errno($ch)){
         echo curl_error($ch);
     }else{
-       header("location: http://localhost/proyecto/Views/app_almacen/paquete/paquetes.php");
+       header("location: http://localhost/proyecto/Views/app_almacen/paquete/paquetes.php?idA=$idA");
     }
 }
 if(isset($_GET['codigoE'])){
     $codigo = $_GET['codigoE'];
+    $empresa = $_GET['empresa'];
 
     $datos = [
         'codigo' => $codigo
@@ -139,7 +188,7 @@ if(isset($_GET['codigoE'])){
     if(curl_errno($ch)){
         echo curl_error($ch);
     }else{
-       header("location: http://localhost/proyecto/Views/app_almacen/paquete/paquetesE.php");
+       header("location: http://localhost/proyecto/Views/app_almacen/paquete/paquetesE.php?empresa=$empresa");
     }
 }
 
@@ -163,7 +212,7 @@ if(isset($_GET['matricula']) && isset($_GET['IDA']) && isset($_GET['fechaLlegada
     if(curl_errno($ch)){
         echo curl_error($ch);
     }else{
-       header("location: http://localhost/proyecto/Views/app_almacen/almacen/tablas/tabla_llegada.php");
+       header("location: http://localhost/proyecto/Views/app_almacen/almacen/tablas/tabla_llegada.php?idA=$IDA");
     }
 }
 
@@ -187,7 +236,7 @@ if(isset($_GET['matriculaS'])  && isset($_GET['IDA']) && isset($_GET['fechaSalid
     if(curl_errno($ch)){
         echo curl_error($ch);
     }else{
-       header("location: http://localhost/proyecto/Views/app_almacen/almacen/tablas/tabla_salida.php");
+       header("location: http://localhost/proyecto/Views/app_almacen/almacen/tablas/tabla_salida.php?idA=$IDA");
     }
 }
 
@@ -195,6 +244,7 @@ if(isset($_GET['matriculaS'])  && isset($_GET['IDA']) && isset($_GET['fechaSalid
 if(isset($_GET['matriculaC']) && isset($_GET['fechaLlegada'])){
     $matriculaC = $_GET['matriculaC'];
     $FechaLlegada = $_GET['fechaLlegada'];
+    $idA = $_GET['idA'];
 
     $datos = [
         'matriculaC' => $matriculaC,
@@ -209,7 +259,7 @@ if(isset($_GET['matriculaC']) && isset($_GET['fechaLlegada'])){
     if(curl_errno($ch)){
         echo curl_error($ch);
     }else{
-       header("location: http://localhost/proyecto/Views/app_almacen/almacen/tablas/tabla_llegadaCam.php");
+       header("location: http://localhost/proyecto/Views/app_almacen/almacen/tablas/tabla_llegadaCam.php?idA=$idA");
     }
 }
 
@@ -218,6 +268,7 @@ if(isset($_GET['matriculaC']) && isset($_GET['fechaLlegada'])){
 if(isset($_GET['matriculaSC']) && isset($_GET['fechaSalida'])){
     $matriculaC = $_GET['matriculaSC'];
     $fechaSalida = $_GET['fechaSalida'];
+    $idA = $_GET['idA'];
 
     $datos = [
         'matriculaC' => $matriculaC,
@@ -232,39 +283,37 @@ if(isset($_GET['matriculaSC']) && isset($_GET['fechaSalida'])){
     if(curl_errno($ch)){
         echo curl_error($ch);
     }else{
-       header("location: http://localhost/proyecto/Views/app_almacen/almacen/tablas/tabla_salidaCam.php");
+       header("location: http://localhost/proyecto/Views/app_almacen/almacen/tablas/tabla_salidaCam.php?idA=$idA");
     }
 }
 
-
-//rutas
-if(isset($_GET['IDR']) && isset($_GET['nroRuta'])){
+//recorrido
+if(isset($_GET['IDR'])){
     $IDR = $_GET['IDR'];
-    $nroRuta = $_GET['nroRuta'];
+    $idA = $_GET['idA'];
 
     $datos = [
-        'IDR' => $IDR,
-        'nroRuta' => $nroRuta
+        'IDR' => $IDR
     ];
     $json = json_encode($datos);
     curl_setopt($ch,CURLOPT_CUSTOMREQUEST,"DELETE");
-    curl_setopt($ch,CURLOPT_URL,"http://localhost/proyecto/controller/almacen/C_nrorecorrido.php");
+    curl_setopt($ch,CURLOPT_URL,"http://localhost/proyecto/controller/almacen/C_recorrido.php");
     curl_setopt($ch,CURLOPT_POSTFIELDS, $json);
     curl_setopt($ch,CURLOPT_RETURNTRANSFER, true);
     curl_exec($ch);
     if(curl_errno($ch)){
         echo curl_error($ch);
     }else{
-       header("location: http://localhost/proyecto/Views/app_almacen/recorrido/rutas.php?IDR=$IDR");
+       header("location: http://localhost/proyecto/Views/app_almacen/recorrido/recorrido.php?idA=$idA");
     }
 }
 
-
-
 //esta
-if(isset($_GET['IDR']) && isset($_GET['IDA'])){
-    $IDR = $_GET['IDR'];
+if(isset($_GET['IDRA']) && isset($_GET['IDA'])){
+    $IDR = $_GET['IDRA'];
     $IDA = $_GET['IDA'];
+    $idA = $_GET['idA'];
+    $mostrar = $_GET['mostrar'];
 
     $datos = [
         'IDR' => $IDR,
@@ -279,32 +328,29 @@ if(isset($_GET['IDR']) && isset($_GET['IDA'])){
     if(curl_errno($ch)){
         echo curl_error($ch);
     }else{
-       header("location: http://localhost/proyecto/Views/app_almacen/almacen/recorrido/recorrido.php");
+       header("location: http://localhost/proyecto/Views/app_almacen/recorrido/almacenes.php?idA=$idA&IDR=$IDR&mostrar=$mostrar");
     }
 }
 
-//sigue
-if(isset($_GET['MatriculaSig']) && isset($_GET['IDR'])){
-    $MatriculaSig = $_GET['MatriculaSig'];
-    $IDR = $_GET['IDR'];
+
+//va_hacia
+if(isset($_GET['IDLAR'])){
+    $IDL = $_GET['IDLAR'];
 
     $datos = [
-        'Matricula' => $MatriculaSig
+        'IDL' => $IDL
     ];
     $json = json_encode($datos);
     curl_setopt($ch,CURLOPT_CUSTOMREQUEST,"DELETE");
-    curl_setopt($ch,CURLOPT_URL,"http://localhost/proyecto/controller/almacen/C_sigue.php");
+    curl_setopt($ch,CURLOPT_URL,"http://localhost/proyecto/controller/almacen/C_vaHacia.php");
     curl_setopt($ch,CURLOPT_POSTFIELDS, $json);
     curl_setopt($ch,CURLOPT_RETURNTRANSFER, true);
     curl_exec($ch);
     if(curl_errno($ch)){
         echo curl_error($ch);
     }else{
-       header("location: http://localhost/proyecto/Views/app_almacen/almacen/tablas/camionesR.php?IDR=$IDR");
+       header("location: http://localhost/proyecto/Views/app_almacen/lotes/tabla_asignarLAR.php");
     }
 }
-
-
-
 
 curl_close($ch);

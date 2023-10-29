@@ -5,9 +5,22 @@ class va extends conexion {
     private $matriculaC = "";
     private $idI = "";
 
-    public function listaHoras(){
-        $sentencia = "SELECT MatriculaC, idI FROM va";
-        $arrayDatos = parent::obtenerDatos($sentencia);
+    public function listaCamionetas($idA){
+        $sentencia1 = "SELECT MatriculaC FROM vwBuenEstadoCamioneta";
+        $sentencia2 = "SELECT MatriculaC, idI FROM va WHERE idI = $idA AND MatriculaC IN ($sentencia1)";
+        $arrayDatos = parent::obtenerDatos($sentencia2);
+        return $arrayDatos;
+    }
+    public function camionetasRuta($idA){
+        $sentencia1 = "SELECT MatriculaC FROM vwCamionetaEnRuta";
+        $sentencia2 = "SELECT MatriculaC FROM va WHERE idI = $idA AND MatriculaC IN ($sentencia1)";
+        $arrayDatos = parent::obtenerDatos($sentencia2);
+        return $arrayDatos;
+    }
+    public function camionetasDisponibles($idA){
+        $sentencia1 = "SELECT MatriculaC FROM vwBuenEstadoCamioneta";
+        $sentencia2 = "SELECT MatriculaC FROM va WHERE idI = $idA AND MatriculaC IN ($sentencia1)";
+        $arrayDatos = parent::obtenerDatos($sentencia2);
         return $arrayDatos;
     }
     public function post($json){

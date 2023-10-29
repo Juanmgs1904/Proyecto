@@ -10,9 +10,10 @@ class paquetesE extends conexion
     private $fEntrega = "";
     private $Destinatario = "";
     private $Destino = "";
-    public function listaPaquetes()
+    private $empresa = "";
+    public function listaPaquetes($empresa)
     {
-        $sentencia = "SELECT * FROM paquetes WHERE Estado = 'enAlmacenExterno'";
+        $sentencia = "SELECT * FROM paquetes WHERE Estado = 'enAlmacenExterno' AND Empresa = '$empresa'";
         $arrayDatos = parent::obtenerDatos($sentencia);
         return $arrayDatos;
     }
@@ -27,7 +28,7 @@ class paquetesE extends conexion
     {
         $_respuestas = new respuestas;
         $datos = json_decode($json, true);
-        if (!isset($datos['Estado']) ||  !isset($datos['fRecibo']) || !isset($datos['Peso']) ||  !isset($datos['Destinatario']) || !isset($datos['Destino'])) {
+        if (!isset($datos['Estado']) ||  !isset($datos['fRecibo']) || !isset($datos['Peso']) ||  !isset($datos['Destinatario']) || !isset($datos['Destino']) || !isset($datos['Empresa'])) {
             return $_respuestas->error_400();
         } else {
             $this->estado = $datos['Estado'];
@@ -35,6 +36,7 @@ class paquetesE extends conexion
             $this->peso = $datos['Peso'];
             $this->Destinatario = $datos['Destinatario'];
             $this->Destino = $datos['Destino'];
+            $this->empresa = $datos['Empresa'];
             if (isset($datos['fEntrega'])) {
                 $this->fEntrega = $datos['fEntrega'];
             }
@@ -52,9 +54,9 @@ class paquetesE extends conexion
     }
     private function altaPaquete()
     {
-        $sentencia = "INSERT INTO paquetes(Peso,Estado,fRecibo,fEntrega,Destinatario,Destino)
+        $sentencia = "INSERT INTO paquetes(Peso,Estado,fRecibo,fEntrega,Destinatario,Destino,Empresa)
         VALUES
-        ('" . $this->peso . "','" . $this->estado . "','" . $this->fRecibo . "','" . $this->fEntrega . "','" . $this->Destinatario . "','" . $this->Destino . "')";
+        ('" . $this->peso . "','" . $this->estado . "','" . $this->fRecibo . "','" . $this->fEntrega . "','" . $this->Destinatario . "','" . $this->Destino . "','" . $this->empresa . "')";
         $respuesta = parent::guardarId($sentencia);
         if ($respuesta) {
             return $respuesta;
@@ -67,7 +69,7 @@ class paquetesE extends conexion
     {
         $_respuestas = new respuestas;
         $datos = json_decode($json, true);
-        if (!isset($datos['codigo']) || !isset($datos['Estado']) || !isset($datos['fRecibo']) || !isset($datos['Peso']) || !isset($datos['Destinatario']) || !isset($datos['Destino'])) {
+        if (!isset($datos['codigo']) || !isset($datos['Estado']) || !isset($datos['fRecibo']) || !isset($datos['Peso']) || !isset($datos['Destinatario']) || !isset($datos['Destino']) || !isset($datos['Empresa'])) {
             return $_respuestas->error_400();
         } else {
             $this->codigo = $datos['codigo'];
@@ -76,6 +78,7 @@ class paquetesE extends conexion
             $this->peso = $datos['Peso'];
             $this->Destinatario = $datos['Destinatario'];
             $this->Destino = $datos['Destino'];
+            $this->empresa = $datos['Empresa'];
             if (isset($datos['fEntrega'])) {
                 $this->fEntrega = $datos['fEntrega'];
             }
@@ -95,7 +98,7 @@ class paquetesE extends conexion
     {
         $sentencia = "UPDATE paquetes SET Peso = '" . $this->peso . "', Estado = '" . $this->estado . "',
         fRecibo = '" . $this->fRecibo . "', fEntrega = '" . $this->fEntrega . "',
-        Destinatario = '" . $this->Destinatario . "', Destino = '" . $this->Destino . "'WHERE codigo = '" . $this->codigo . "'";
+        Destinatario = '" . $this->Destinatario . "', Destino = '" . $this->Destino . "', Empresa = '" . $this->empresa . "'WHERE codigo = '" . $this->codigo . "'";
         $respuesta = parent::guardar($sentencia);
         if ($respuesta >= 1) {
             return $respuesta;

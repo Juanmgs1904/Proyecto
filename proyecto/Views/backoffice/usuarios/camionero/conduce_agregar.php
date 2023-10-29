@@ -13,14 +13,14 @@ require("../../../../Model/session/session_administrador3.php");
 
 <body class="fondo">
     <div class="contenedor_form">
-        <h1>Ingresar Datos</h1>
+        <h1 data-section="header" data-value="ingresar">Ingresar Datos</h1>
         <form class="form" action="../../insertar.php" method="post">
             <?php
-            $conexion = new mysqli("localhost", "root", "", "proyecto");
-            $sentencia = "SELECT CIC FROM camionero WHERE CIC NOT IN (SELECT CIC FROM conduce)";
+            $conexion = new mysqli("localhost", "root", "", "ocean");
+            $sentencia = "SELECT CIC FROM vwcamionero";
             $filas = $conexion->query($sentencia);
             ?>
-            <div class="form_info">
+            <div class="form_info text">
                 <label>CI:</label>
                 <select name="CIC" required>
                     <?php
@@ -30,12 +30,13 @@ require("../../../../Model/session/session_administrador3.php");
                     ?>
                 </select>
             </div> 
+
             <?php
-            $sentencia = "SELECT MatriculaV FROM vehiculo WHERE MatriculaV NOT IN (SELECT MatriculaC FROM camioneta)";
+            $sentencia = "SELECT MatriculaV FROM vehiculo";
             $filas = $conexion->query($sentencia);
             ?>
-                <div class="form_info">
-                    <label>Matricula:</label>
+                <div class="form_info text">
+                    <label data-section="vehiculo" data-value="matricula">Matricula:</label>
                     <select name="matriculaV" required>
                         <?php
                         foreach ($filas->fetch_all(MYSQLI_ASSOC) as $fila) {
@@ -44,13 +45,14 @@ require("../../../../Model/session/session_administrador3.php");
                         ?>
                     </select>
                 </div>
-            <input type="submit" value="Agregar" class="btn">
-        <a href="conduce_index.php" class="btn">Ver Camioneros Asignados</a>
+            <input type="submit" value="Agregar" class="btn" data-section="boton" data-value="agregar">
+        <a href="conduce_index.php" class="btn" data-section="camionero" data-value="op">Ver Camioneros Asignados</a>
         </form>
     </div>
     <div class="btn_volver">
-        <a href="camionero_index.php" class="btn">Volver</a>
+        <a href="camionero_index.php" class="btn" data-section="boton" data-value="volver">Volver</a>
     </div>
+    <script src="script.js"></script>
 </body>
 
 </html>

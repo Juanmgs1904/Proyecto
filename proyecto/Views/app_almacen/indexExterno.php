@@ -1,7 +1,6 @@
 <?php
+$empresa = $_GET['empresa'];
 require("../../Model/session/session_almacenExterno.php");
-
-
 ?>
 
 <!DOCTYPE html>
@@ -18,11 +17,11 @@ require("../../Model/session/session_almacenExterno.php");
 </head>
 
 <body>
-<header class="header">
+    <header class="header">
         <div class="header__contenedor">
             <div class="header__home">
-                <a href="indexExterno.php">
-                    <img src="img/Logo_sistema.png" alt="Logo de max truck">
+                <?php echo '<a href="indexExterno.php?empresa=' . $empresa . '">'; ?>
+                <img src="img/Logo_sistema.png" alt="Logo de max truck">
                 </a>
             </div>
             <div class="header__titulo">
@@ -34,31 +33,33 @@ require("../../Model/session/session_almacenExterno.php");
 
                 <ul class="nav__lista">
                     <li><a href="#"><?php echo $_SESSION['mail']; ?></a></li>
-                    <a href="../../index.php"><li class="cerrar">Cerrar Sesión</li></a>
+                    <a href="../../index.php">
+                        <li class="cerrar">Cerrar Sesión</li>
+                    </a>
                 </ul>
             </div>
         </div>
     </header>
     <main>
         <div class="opciones">
-            
-        <div class="opcion">
-                <a href="lotes/lotesE.php" class="BTN">Ingresar</a>
+
+            <div class="opcion opcionE">
+                <?php echo '<a href="lotes/lotesE.php?empresa=' . $empresa . '" class="BTN">'; ?>Ingresar</a>
                 <div class="infoOp">
                     <h2>Lotes</h2>
                     <img src="img/lotes.svg" alt="Imagen lotes">
-                    
                 </div>
-                
+
             </div><!--Opción-->
-            <div class="opcion">
+            <div class="opcion opcionE">
                 <div class="infoOp">
                     <img src="img/paquetes.svg" alt="Imagen paquetes">
                     <h2>Paquetes</h2>
-                </div><a href="paquete/paquetesE.php" class="BTN">Ingresar</a>
+                </div>
+                <?php echo '<a href="paquete/paquetesE.php?empresa='.$empresa.'" class="BTN">'; ?>Ingresar</a>
             </div><!--Opción-->
-            <div class="opcion">
-                <a href="almacen/almacenExterno.php" class="BTN">Ingresar</a> 
+            <div class="opcion opcionE">
+                <?php echo '<a href="almacen/almacenExterno.php?empresa='.$empresa.'" class="BTN">'; ?>Ingresar</a>
                 <div class="infoOp">
                     <h2>Almacén</h2>
                     <img src="img/almacen.svg" alt="Imagen almacén">

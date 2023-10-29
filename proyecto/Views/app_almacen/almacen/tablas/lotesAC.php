@@ -1,5 +1,7 @@
 <?php
-$url = 'http://localhost/proyecto/controller/almacen/C_asignarLote.php';
+$idA = $_GET['idA'];
+$matricula = $_GET['matricula'];
+$url = 'http://localhost/proyecto/controller/almacen/C_asignarLote.php?matricula='.$matricula.'';
 require("../../../../intermediario/getDataAPI.php");
 require("../../../../Model/session/session_almacen3.php");
 ?>
@@ -22,7 +24,7 @@ require("../../../../Model/session/session_almacen3.php");
 <header class="header">
         <div class="header__contenedor">
             <div class="header__home">
-                <a href="../../index.php">
+                <?php echo '<a href="../../index.php?idA='.$idA.'">'; ?>
                     <img src="../../img/Logo_sistema.png" alt="Logo de max truck">
                 </a>
             </div>
@@ -44,13 +46,12 @@ require("../../../../Model/session/session_almacen3.php");
         <div class="titulo">
             <h2>Lotes asignados</h2>
         </div>
-        <div class="PAC_grid">
+        <div class="LEC_grid">
             <div class="datos pFila">ID del Lote</div>
             <div class="datos pFila">OPCIÓN</div>
             <?php
 
             foreach ($array as $fila) {
-                $matricula = $fila['Matricula'];
                 if ($matricula == $_GET["matricula"]) {
             ?>
                     <div class="datos"><?php echo $fila['IDL'] . " "; ?></div>
@@ -59,14 +60,14 @@ require("../../../../Model/session/session_almacen3.php");
                     ?>
                     <div class="datos">
                         <?php         
-                        echo '<a href="#" onclick="confirmDelete(\''  . $fila['IDL'] . '\', \'' . $_GET["matricula"] . '\');">' . '<div class="option">Eliminar</div>'  . ' </a>';
+                        echo '<a href="#" onclick="confirmDelete(\''  . $fila['IDL'] . '\', \'' . $matricula . '\', \'' . $idA . '\');">' . '<div class="option">Eliminar</div>'  . ' </a>';
                         ?>
                         <script>
-                            function confirmDelete(IDL, matricula) {
+                            function confirmDelete(IDL, matricula, idA) {
                                 var confirmation = confirm("¿Estás seguro de que deseas eliminar este Lote del Camión?");
                                 if (confirmation) {
                                     // Si el usuario confirma, redirige a la página de eliminación
-                                    window.location.href = "../../../../intermediario/deleteDataAPI.php?IDL=" + IDL + "&matricula=" + matricula;
+                                    window.location.href = "../../../../intermediario/deleteDataAPI.php?IDL=" + IDL + "&matricula=" + matricula + "&idA=" + idA;
                                 }
                             }
                         </script>
@@ -79,7 +80,7 @@ require("../../../../Model/session/session_almacen3.php");
         </div>
     </div>
     <div class="btn_volver">
-        <a href="tabla_asignarLAC.php" class="btn">Volver</a>
+        <?php echo '<a href="tabla_asignarLAC.php?idA='.$idA.'" class="btn">'; ?>Volver</a>
     </div>
 </body>
 

@@ -1,4 +1,5 @@
 <?php
+$empresa = $_GET['empresa'];
 require("../../../Model/session/session_almacen2.php");
 ?>
 <!DOCTYPE html>
@@ -18,33 +19,29 @@ require("../../../Model/session/session_almacen2.php");
     <div class="title">
         <h1>Agregar Paquete al Almacén</h1>
     </div>
-    <form action="../../../intermediario/postDataAPI.php" class="form" method="post">
+    <?php echo '<form action="../../../intermediario/postDataAPI.php?empresa='.$empresa.'" class="form" method="post">'; ?>
         <h3 class="form__title">Ingrese datos</h3>
         <div class="text">
             <label><b>Peso:</b></label>
-            <input type="text" name="peso" class="input" placeholder="Ingrese el Peso" required>
-        </div>
-        <div class="text">
-            <label><b>Fecha de Recibo:</b></label>
-            <input type="datetime-local" name="fRecibo" class="input" placeholder="Ingrese la Fecha de recibo" required>
+            <input type="text" name="pesoE" class="input" placeholder="Ingrese el Peso" required>
         </div>
         <div class="text">
             <label><b>Fecha de Entrega:</b></label>
-            <input type="date" name="fEntrega" class="input" placeholder="Ingrese la Fecha de Entrega" require>
+            <input type="date" name="fEntregaE" class="input" placeholder="Ingrese la Fecha de Entrega" require>
         </div>
         <div class="text">
             <label><b>Destinatario:</b></label>
-            <input type="text" name="Destinatario" class="input" placeholder="Destinatario" required>
+            <input type="text" name="DestinatarioE" class="input" placeholder="Destinatario" required>
         </div>
         <div class="text">
             <label><b>Destino:</b></label>
-            <input type="text" name="Destino" class="input" placeholder="Destino">
+            <input type="text" name="DestinoE" class="input" placeholder="Destino">
         </div>
         <input type="submit" value="Agregar" class="boton_form">
     </form>
     <div class="btn_volver">
         <?php
-        echo '<a href="paquetesE.php" class="btn">' . "Volver" . ' </a>';
+        echo '<a href="paquetesE.php?empresa='.$empresa.'" class="btn">' . "Volver" . ' </a>';
         ?>
 
     </div>

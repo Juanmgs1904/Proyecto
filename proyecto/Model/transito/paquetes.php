@@ -15,9 +15,9 @@ class paquetes extends conexion
         
     }
 
-    public function mostrarPaquete($id)
+    public function mostrarPaquete($codigo)
     {
-        $sentencia = "SELECT * FROM paquetes WHERE codigo = '$id'";
+        $sentencia = "SELECT * FROM paquetes WHERE codigo = '$codigo'";
         $arrayDatos = parent::obtenerDatos($sentencia);
         return $arrayDatos;
     }
