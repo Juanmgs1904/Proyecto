@@ -1,0 +1,64 @@
+{
+    "header" : {
+        "bienvenido" : "Welcome",
+        "lotesC" : "Truck Lots",
+        "recorrido" : "Tour",
+        "paquetesC" : "Van Packages",
+        "aviso" : "Delay Notice",
+        "logout" : "Log out",
+        "remitoP" : "Package Remittance",
+        "remitoL" : "Lot Remittance",
+        "ingresar" : "Enter Data"
+    },
+
+    "seleccionar" : {
+        "title" : "Options",
+        "op1" : "View Lots",
+        "op2" : "View Tours",
+        "op3" : "Delay Notice",
+        "op4" : "View Packages",
+        "op5" : "Delivery Notice"
+    },
+
+    "opcion" : {
+        "motivo" : "Reason"
+    },
+
+    "recorrido" : {
+        "titulo" : "Destination Warehouses",
+        "almacen" : "Warehouses",
+        "ubicacion" : "Location",
+        "distancia" : "Distance",
+        "direccion" : "Address"
+    },
+
+    "boton" : {
+        "volver" : "Return",
+        "aviso" : "Notify Delay",
+        "ver" : "See Remitto",
+        "entregado" : "Delivered"
+    },
+
+    "paquete" : {
+        "codigo" : "Code",
+        "peso" : "Weight",
+        "estado" : "State",
+        "opciones" : "OPTION",
+        "fRecibo" : "Date of Receipt",
+        "fEntrega" : "Date of delivery",
+        "fechaRecibo" : "Receipt Date",
+        "fechaEntrega" : "Deliver Date",
+        "destinatario" : "Addressee",
+        "destino" : "Destination"
+    },
+
+    "lote" : {
+        "id" : "Lot ID",
+        "peso" : "Weight",
+        "estado" : "State",
+        "opciones" : "OPTION",
+        "almacenExterno" : "External Warehouse",
+        "tiempoEstimado" : "Estimated Time",
+        "destino" : "Destination"
+    }
+}

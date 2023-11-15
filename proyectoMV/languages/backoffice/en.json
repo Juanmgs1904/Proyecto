@@ -1,0 +1,166 @@
+{
+    "header" : {
+        "bienvenido" : "Welcome",
+        "paquetes" : "Package Management",
+        "paquetesE" : "Packages Delivered",
+        "lotes" : "Batch Management",
+        "loteE" : "Lots Delivered",
+        "ingresar" : "Enter Data",
+        "logout" : "Log out",
+        "camion" : "Truck Management",
+        "camioneta" : "Vans Management",
+        "vehiculo" : "Vehicles Management"
+    },
+
+    "seleccionar" : {
+        "title" : "Select",
+        "op1" : "PEOPLE",
+        "op2" : "PACKAGES",
+        "op3" : "VEHICLES",
+        "op4" : "LOTS",
+        "op5" : "WAREHOUSES"
+    },
+
+    "boton" : {
+        "volver" : "Return",
+        "agregarPaquete" : "Add Package",
+        "agregar" : "Add",
+        "modificar" : "Modify",
+        "paqueteEntregado" : "Packages Delivered",
+        "lotesEntregado" : "Lots Delivered",
+        "agregarlote" : "Add Batch",
+        "agregarCamion" : "Add Truck",
+        "agregarCamioneta" : "Add Van",
+        "agregarVehiculo" : "Add Vehicle",
+        "agregarAlmacen" : "Add Warehouse",
+        "agregarPersona" : "Add People",
+        "agregarCamionero" : "Add Trucker",
+        "asignarV" : "Assign Vehicle",
+        "asignarVa" : "Assign Warehouse",
+        "agregarUsuario" : "Add User",
+        "agregarPersonal" : "Add Staff",
+        "asignarA" : "Assign Storage"
+    },
+
+    "paquete" : {
+        "codigo" : "Code",
+        "peso" : "Weight",
+        "estado" : "State",
+        "opciones" : "OPTION",
+        "fRecibo" : "ReceiptD",
+        "fEntrega" : "DeliverD",
+        "fechaRecibo" : "Receipt Date",
+        "fechaEntrega" : "Deliver Date",
+        "destinatario" : "Addressee",
+        "departamento" : "Department",
+        "destino" : "Destination"
+    },
+
+    "lote" : {
+        "peso" : "Weight",
+        "estado" : "State",
+        "opciones" : "OPTION",
+        "si" : "YES",
+        "almacenExterno" : "External Warehouse",
+        "noAsignado" : "Not Assigned",
+        "asignado" : "Assigned",
+        "entregado" : "Delivered",
+        "tiempoEstimado" : "Estimated Time",
+        "destino" : "Destination"
+    },
+
+    "vehiculos" : {
+        "titulo" : "Vehicles",
+        "vehiculo" : "Manage Vehicles",
+        "camion" : "Manage Trucks",
+        "camioneta" : "Manage Vans"
+    },
+    
+    "vehiculo" : {
+        "matricula" : "Vehicles Plate",
+        "estado" : "State",
+        "disponibilidad" : "Availability",
+        "disponible" : "Available",
+        "enRuta": "on Route",
+        "mal": "Bad condition",
+        "buen" : "Good condition"
+    },
+
+    "camion" : {
+        "peso" : "Weight",
+        "matricula" : "Truck Plate",
+        "alto" : "High",
+        "ancho" : "Broad",
+        "largo" : "Long",
+        "tipo" : "Type"
+    },
+
+    "camioneta" : {
+        "matricula" : "Van Plate",
+        "op": "View Assigned Vans"
+    },
+
+    "va" : {
+        "titulo" : "Warehouse Vans"
+    },
+
+    "almacenes" : {
+        "titulo" : "Warehouses",
+        "almacen" : "Manage Warehouses",
+        "interno" : "Manage QuickCarry Warehouses",
+        "externo" : "Manage Company Warehouses",
+        "ubicacion" : "Location",
+        "direccion" : "Direction",
+        "ruta" : "Route",
+        "empresa" : "Company"
+    },
+
+    "personas" : {
+        "titulo" : "People",
+        "personas" : "Manage People",
+        "camioneros" : "Manage Truckers",
+        "personal" : "Manage Staff",
+        "usuarios" : "Manage Users"
+    },
+
+    "persona" : {
+        "nombre" : "Name",
+        "telefono" : "Phone",
+        "direccion" : "Address"
+    },
+
+    "camionero" : {
+        "fecha" : "License Expiration Date",
+        "turno" : "Turn",
+        "op" : "See Trucker",
+        "mañana" : "in the morning",
+        "tarde" : "Afternoon",
+        "noche" : "night",
+        "titulo" : "Truck Drivers"
+
+    },
+
+    "usuario" : {
+        "mail" : "Mail",
+        "contraseña" : "Password",
+        "estado" : "Status",
+        "rol" : "Role",
+        "activo" : "Active",
+        "inactivo" : "Inactive",
+        "admin" : "Administrator",
+        "choferCamion" : "Truck Driver",
+        "choferCamioneta" : "Van Driver",
+        "interno" : "Internal Warehouse",
+        "externo" : "External Warehouse"
+    },
+
+    "personal" : {
+        "fecha" : "Date of Birth",
+        "cargo" : "Charge",
+        "op1" : "View Personal",
+        "op2" : "View Assigned Personnel",
+        "id" : "Warehouse ID",
+        "titulo" : "Warehouse Personnel"
+    }
+
+}

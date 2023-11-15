@@ -1,0 +1,187 @@
+{
+    "header" : {
+        "title" : "Welcome",
+        "logout" : "Log out"
+    },
+
+    "opciones" : {
+        "lotes" : "Lots",
+        "paquetes" : "Packages",
+        "recorrido" : "Route",
+        "almacen" : "Warehouse",
+        "btn" : "Get into"
+    },
+
+    "lotesC" : {
+        "title" : "WAREHOUSE LOTS",
+        "estado" : "Status",
+        "peso" : "Weight",
+        "opciones" : "OPTIONS",
+        "verR" : "See Remitto",
+        "eliminar" : "Delete",
+        "btnV" : "Return",
+        "btnAL" : "Add Lot",
+        "btnAsiL" : "Assign Route"
+    },
+    "agregarLC" : {
+        "title" : "ADD LOT TO WAREHOUSE",
+        "text" : "Enter data",
+        "destino" : "Destination",
+        "tiempoEstimado" : "Estimated time",
+        "btn" : "ADD",
+        "btnV" : "Return"
+    },
+    "loteC" : {
+        "title" : "Welcome",
+        "text" : "MANAGE LOT",
+        "destino" : "Destination",
+        "tiempoEstimado" : "Estimated time",
+        "opciones" : "OPTIONS",
+        "modificar" : "Modify",
+        "btnV" : "Return"
+    },
+    "modificarLC" : {
+        "title" : "MODIFY WAREHOUSE LOT",
+        "text" : "Enter data",
+        "destino" : "Destination",
+        "tiempoEstimado" : "Estimated time",
+        "btn" : "MODIFY",
+        "btnV" : "Return"
+    },
+    "asignarLC" : {
+        "title" : "ASSIGN LOT TO ROUTE",
+        "text" : "Enter data",
+        "idL" : "Lot ID",
+        "idR" : "Route ID",
+        "idA" : "Warehouse",
+        "btn" : "ASSIGN",
+        "btnV" : "Return",
+        "btnT" : "See table"
+    },
+    "lotesAR" : {
+        "text" : "Lots Assigned to Tours",
+        "opciones" : "OPTIONS",
+        "eliminar" : "Delete",
+        "btnV" : "Return"
+    },
+    "paquetesC" : {
+        "text" : "WAREHOUSE PACKAGES",
+        "codigo" : "Code",
+        "estado" : "STATUS",
+        "peso" : "Weight",
+        "opciones" : "OPTIONS",
+        "remito" : "See Remitto",
+        "eliminar" : "Delete",
+        "btnV" : "Return",
+        "btnA" : "Add Package"
+    },
+    "paqueteC" : {
+        "text" : "MANAGE PACKAGE",
+        "codigo" : "Code",
+        "fechaR" : "DATE OF RECEIPT",
+        "fechaE" : "DATE OF DELIVERY",
+        "destinatario" : "Addressee",
+        "destino" : "Destination",
+        "departamento" : "Department",
+        "btnV" : "Return"
+    },
+    "recorrido" : {
+        "text" : "Route",
+        "idR" : "Route ID",
+        "opcion" :"OPTION",
+        "eliminar" : "Delete",
+        "verA" : "See Warehouses",
+        "btnV" : "Return",
+        "btnAR" : "Add Route"
+    },
+    "almacenesR" : {
+        "text" : "Warehouses on Route",
+        "idA" : "Warehouse ID",
+        "distancia" : "Distance",
+        "opciones" : "OPTIONS",
+        "modificar" : "Modify",
+        "eliminar" : "Delete",
+        "btnV" : "Return",
+        "btnAA" : "Add Warehouse"
+    },
+    "agregarAR" : {
+        "title" : "ADD WAREHOUSE TO THE TOUR",
+        "text" : "Enter data",
+        "idR" : "Route ID",
+        "idA" : "Warehouse ID",
+        "distancia" : "Distance",
+        "btn" : "ADD",
+        "btnV" : "Return"
+    },
+    "modificarAR" : {
+        "title" : "MODIFY ROUTE DISTANCE",
+        "text" : "Enter data",
+        "idR" : "Route ID",
+        "idA" : "Warehouse ID",
+        "distancia" : "Distance",
+        "btn" : "MODIFY",
+        "btnV" : "Return"
+    },
+    "almacenI" : {
+        "op1" : "ASSIGN PACKAGES TO LOTS",
+        "op2" : "ASSIGN LOTS TO TRUCKS",
+        "op3" : "TRUCK AVAILABILITY",
+        "op4" : "ASSIGN PACKAGES TO TRUCKS",
+        "op5" : "SET TRUCK ARRIVAL TIME",
+        "op6" : "SET TRUCK DEPARTURE TIME"
+    },
+    "asignarPL" : {
+        "title" : "ASSIGN PACKAGES TO LOTS",
+        "btn" : "ASSIGN PACKAGE"
+    },
+    "tablaAPL" : {
+        "lotes" : "LOTS",
+        "btnP" : "See Packages"
+    },
+    "paquetesAL" : {
+        "text" : "Assigned packages"
+    },
+    "asignarLAC" : {
+        "title" : "ASSIGN LOTS TO TRUCKS",
+        "matricula" : "Car license plate",
+        "btn" : "ASSIGN LOT"
+    },
+    "tablaALC" : {
+        "text" : "Trucks",
+        "btnL" : "See Lots",
+        "lotesA" : "Assigned Lots"
+    },
+    "disponibilidad" : {
+        "cD" : "TRUCKS AVAILABLE",
+        "cR" : "TRUCKS ON THE ROAD"
+    },
+    "asignarPCam" : {
+        "title" : "ASSIGN PACKAGE TO TRUCK"
+    },
+    "tablaPC" : {
+        "text" : "Vans"
+    },
+    "horaL" : {
+        "horaL" : "Van arrival time",
+        "btn" : "TICK"
+    },
+    "horaS" : {
+        "horaS" : "Van departure time"
+    },
+    "tablaLCam" : {
+        "text" : "TRUCK ARRIVALS",
+        "fecha" : "DATE"
+    },
+    "tablaSCam" : {
+        "text" : "TRUCK DEPARTURES"
+    },
+    "modificarP" : {
+        "title" : "MODIFY WAREHOUSE PACKAGE"
+    },
+    "agregarP" : {
+        "title" : "ADD PACKAGE TO WAREHOUSE",
+        "phPeso" : "Enter the weight",
+        "phDestinatario" : "Addressee",
+        "phDestino" : "Destination"
+    }
+}

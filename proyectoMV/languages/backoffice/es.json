@@ -1,0 +1,167 @@
+
+{
+    "header" : {
+        "bienvenido" : "Bienvenido",
+        "paquetes" : "Gestión de Paquetes",
+        "paquetesE" : "Paquetes Entregados",
+        "lotes" : "Gestión de Lotes",
+        "loteE" : "Lotes Entregados",
+        "ingresar" : "Ingresar Datos",
+        "logout" : "Cerrar Sesión",
+        "camion" : "Gestión de Camiones",
+        "camioneta" : "Gestión de Camionetas",
+        "vehiculo" : "Gestión de Vehiculos"
+    },
+    
+    "seleccionar" : {
+        "title" : "Seleccionar",
+        "op1" : "PERSONAS",
+        "op2" : "PAQUETES",
+        "op3" : "VEHICULOS",
+        "op4" : "LOTES",
+        "op5" : "ALMACENES"
+    },
+    
+    "boton" : {
+        "volver" : "Volver",
+        "agregarPaquete" : "Agregar Paquete",
+        "agregar" : "Agregar",
+        "modificar" : "Modificar",
+        "paqueteEntregado" : "Paquetes Entregados",
+        "lotesEntregado" : "Lotes Entregados",
+        "agregarlote" : "Agregar lote",
+        "agregarCamion" : "Agregar Camion",
+        "agregarCamioneta" : "Agregar Camioneta",
+        "agregarVehiculo" : "Agregar Vehículo",
+        "agregarAlmacen" : "Agregar Almacen",
+        "agregarPersona" : "Agregar Persona",
+        "agregarCamionero" : "Agregar Camionero",
+        "asignarV" : "Asignar Vehículo",
+        "asignarVa" : "Asignar Almacén",
+        "agregarUsuario" : "Agregar Usuario",
+        "agregarPersonal" : "Agregar Personal",
+        "asignarA" : "Asignar Alamcén"
+    },
+
+    "paquete" : {
+        "codigo" : "Codigo",
+        "peso" : "Peso",
+        "estado" : "Estado",
+        "opciones" : "OPCIONES",
+        "fRecibo" : "fRecibo",
+        "fEntrega" : "fEntrega",
+        "fechaRecibo" : "Fecha Recibo",
+        "fechaEntrega" : "Fecha Entrega",
+        "destinatario" : "Destinatario",
+        "departamento" : "Departamento",
+        "destino" : "Destino"
+    },
+
+    "lote" : {
+        "peso" : "Peso",
+        "estado" : "Estado",
+        "opciones" : "OPCIONES",
+        "si" : "si",
+        "almacenExterno" : "Alamcen Externo",
+        "tiempoEstimado" : "Tiempo Estimado",
+        "noAsignado" : "No Asignado",
+        "asignado" : "Asignado",
+        "entregado" : "Entregado",
+        "destino" : "Destino"
+    },
+
+    "vehiculos" : {
+        "titulo" : "Vehículos",
+        "vehiculo" : "Gestionar Vehiculos",
+        "camion" : "Gestionar Camiones",
+        "camioneta" : "Gestionar Camionetas"
+    },
+    
+    "vehiculo" : {
+        "matricula" : "Matricula",
+        "estado" : "Estado",
+        "disponibilidad" : "Disponibilidad",
+        "disponible" : "Disponible",
+        "enRuta" : "en Ruta",
+        "mal" : "Mal Estado",
+        "buen" : "Buen Estado"
+    },
+
+    "camion" : {
+        "peso" : "Peso",
+        "matricula" : "Matricula",
+        "alto" : "Alto",
+        "ancho" : "Ancho",
+        "largo" : "Largo",
+        "tipo" : "Tipo"
+    },
+
+    "camioneta" : {
+        "matricula" : "Matricula",
+        "op": "Ver Camionetas Asignadas"
+    },
+
+    "almacenes" : {
+        "titulo" : "Almacenes",
+        "almacen" : "Gestionar Almacenes",
+        "interno" : "Gestionar Almacenes de QuickCarry",
+        "externo" : "Gestionar Almacenes de Empresas",
+        "ubicacion" : "Ubicacion",
+        "direccion" : "Dirección",
+        "ruta" : "Ruta",
+        "empresa" : "Empresa"
+    },
+
+    
+    "va" : {
+        "titulo" : "Camionetas de un Almacén"
+    },
+
+    "personas" : {
+        "titulo" : "Personas",
+        "personas" : "Gestionar Personas",
+        "camioneros" : "Gestionar Camioneros",
+        "personal" : "Gestionar Personal",
+        "usuarios" : "Gestionar Usuarios"
+    },
+
+    "persona" : {
+        "nombre" : "Nombre",
+        "telefono" : "Teléfono",
+        "direccion" : "Dirección"
+    },
+
+    "camionero" : {
+        "fecha" : "Fecha Vencimiento de Licencia",
+        "turno" : "Turno",
+        "op" : "Ver Camionero",
+        "mañana" : "Mañana",
+        "tarde" : "Tarde",
+        "noche" : "Noche",
+        "titulo" : "Camioneros de un Camion"
+    },
+
+    "usuario" : {
+        "mail" : "Mail",
+        "contraseña" : "Contraseña",
+        "estado" : "Estado",
+        "rol" : "Rol",
+        "activo" : "Activo",
+        "inactivo" : "Inactivo",
+        "admin" : "Administrador",
+        "choferCamion" : "Chofer Camion",
+        "choferCamioneta" : "Chofer Camioneta",
+        "interno" : "Almacén Interno",
+        "externo" : "Almacén Externo"
+    },
+
+    "personal" : {
+        "fecha" : "Fecha de Nacimiento",
+        "cargo" : "Cargo",
+        "op1" : "Ver Personal",
+        "op2" : "Ver Personal Asignados",
+        "id" : "ID del Alamcén",
+        "titulo" : "Personal de un Almacén"
+    }
+    
+}

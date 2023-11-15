@@ -1,0 +1,82 @@
+
+{
+    "nav" : {
+        "op1" : "Inicio",
+        "op2" : "Sobre Nosotros",
+        "op3" : "Contacto",
+        "op4" : "Seguimiento",
+        "op5" : "Iniciar Sesión"
+    },
+
+    "servicios" : {
+        "title" : "Servicios",
+        "ser1" : "Almacenes",
+        "ser2" : "Armado de Lotes",
+        "ser3" : "Transporte y Distribución",
+        "ser4" : "Comercio en todo el país"
+    },
+
+    "sobreNosotros" : {
+        "title" : "Sobre Nosotros",
+        "text" : "Somos Quick Carry, empresa de logistica ubicada en Uruguay, con almacenes posicionados por todo el país, teniendo nuestra central principal en Montevideo. Ademas de contar con un alto nivel tecnologico, nuestros sistemas también poseen un alto nivel de seguridad igual que nuestros camiones. Quieres transporta cualquier cosa a otro punto del país, pues con nosotros tus envios llegaran seguros y en fecha."
+    },
+
+    "elegirnos" : {
+        "title" : "¿Por qué Elegirnos?",
+        "elT1" : "VELOCIDAD DE ENTREGA",
+        "el1" : "Optimiza el recorrido y el tiempo de reparto",
+        "elT2" : "ALMACENES POR TODO EL PAÍS",
+        "el2" : "Permite entregar productos en cualquier parte del país",
+        "elT3" : "MÁS SEGURO",
+        "el3" : "Evita las entregas fallidas. Trackeo y control de las entregas",
+        "elT4" : "MÁS RENTABLE",
+        "el4" : "Mejora la satisfacción de los clientes y genera más ventas"
+    },
+
+    "contactanos" : {
+        "title" : "Contáctanos",
+        "nombre" : "Nombre",
+        "apellido" : "Apellido",
+        "asunto" : "Asunto",
+        "mensaje" : "Ingresa tu Mensaje",
+        "btn" : "Enviar"
+    },
+
+    "seguimiento" : {
+        "title" : "Seguimiento",
+        "subtitle" : "Ve Donde Está tu Paquete",
+        "codigo" : "Ingrese el Código del Paquete",
+        "btn" : "Buscar",
+
+        "titleT" : "Información del Paquete",
+        "titleP" : "DATOS DE TU PAQUETE",
+        "codigoP" : "Codigo",
+        "pesoP" : "Peso",
+        "fechaRP" : "Fecha de Recibo",
+        "fechaEP" : "Fecha de Entrega",
+        "destinatarioP" : "Destinatario",
+        "destinoP" : "Destino",
+        "titleL" : "LOTE DE PAQUETE",
+        "IDLL" : "IDL",
+        "destinoL" : "Destino",
+        "tiempoL" : "Tiempo Estimado",
+        "titleC" : "CAMIÓN DEL PAQUETE",
+        "matriculaC" : "Matrícula",
+        "fechaEC" : "Fecha de Entrega",
+        "titleCH" : "CHOFER DE LOS CAMIONES",
+        "nombre" : "Nombre",
+        "demora" : "Demora",
+        "fechaD" : "Fecha de Demora",
+        "titleCam" : "CAMIONETA DEL PAQUETE",
+        "fechaE" : "Fecha de Entrega",
+        "titleCHCam" : "CHOFER DE LA CAMIONETA",
+        "error" : "No hay ningún Paquete con ese código"
+    },
+
+    "login" : {
+        "titleL" : "Iniciar Sesión",
+        "usuario" : "Usuario",
+        "contra" : "Contraseña",
+        "btn" : "Ingresar"
+    }
+}

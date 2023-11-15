@@ -1,0 +1,9 @@
+{
+    "conexion":{
+        "server" : "192.168.5.50",
+        "user" : "agustin.gimenez",
+        "password" : "56866521",
+        "database" : "ocean"
+    }
+    
+}

@@ -1,0 +1,427 @@
+:root {
+    --fondoS: #FFECB3;
+    --fondo: #FFC107;
+    --letraS: #FF5722;
+    --grisC: #BDBDBD;
+    --grisO: #757575;
+    --letra: #212121;
+
+    --fuentePrincipal: 'Roboto', sans-serif;
+    --fuenteSecundaria: 'Lato', sans-serif;
+}
+
+html {
+    font-size: 62.5%;
+    /* 1rem = 10px*/
+    min-height: 100%;
+    position: relative;
+}
+
+body {
+    font-family: var(--fuentePrincipal);
+    font-size: 1.6rem;
+    line-height: 1.5;
+    margin: 0 0 20rem 0;
+    height: 100%;
+}
+
+.text-center {
+    text-align: center;
+}
+
+img {
+    width: 100%;
+    display: block;
+    height: auto;
+}
+
+h1 {
+    font-size: 5rem;
+}
+
+h2 {
+    font-size: 4rem;
+}
+
+h3 {
+    font-size: 3rem;
+}
+
+h1,
+h2,
+h3 {
+    font-weight: 900;
+    font-family: var(--fuenteSecundaria);
+    margin: 0;
+}
+
+a {
+    text-decoration: none;
+    color: #000;
+}
+
+[class$="__contenedor"] {
+    max-width: 120rem;
+    margin: 0 auto;
+    width: 90%;
+}
+
+/* Header */
+.header {
+    background-color: var(--fondoS);
+    color: var(--letra);
+    border-bottom: solid 2px var(--letra);
+    padding: 2rem;
+}
+
+.header__contenedor {
+    display: flex;
+    justify-content: space-between;
+    height: 10rem;
+    align-items: center;
+}
+
+.header__contenedor .home {
+    width: 12rem;
+}
+
+.header__contenedor img {
+    width: 10rem;
+    transition: .5s;
+}
+
+.header__contenedor img:hover {
+    transform: scale(1.1);
+}
+
+.header__contenedor a {
+    font-size: 2rem;
+}
+
+/* Main */
+.fondo {
+    background-color: var(--letra);
+}
+
+.text {
+    color: #FFF;
+    border-bottom: solid 2px #FFF;
+    padding: 1rem;
+    margin-top: 2rem;
+}
+
+.form {
+    width: 60rem;
+    margin: 10rem auto 10rem auto;
+    padding: 5rem;
+    border: solid 2px var(--letra);
+    border-radius: 2rem;
+    background-color: var(--letra);
+}
+
+.form__contenedor {
+    display: flex;
+    margin: 0 auto 5rem auto;
+}
+
+.form__contenedor img {
+    width: 5rem;
+    height: 5rem;
+    margin-right: 1rem;
+}
+
+.form__contenedor input {
+    width: 100%;
+    border-radius: 1rem;
+    font-size: 2rem;
+    padding: 1rem;
+    border: solid 2px var(--fondoS);
+    color: var(--fondoS);
+    background-color: var(--letra);
+}
+
+::placeholder {
+    color: var(--fondoS);
+}
+
+.btn {
+    width: 90%;
+    margin: 0 auto;
+}
+
+.btn input {
+    width: 100%;
+    font-weight: 700;
+    font-size: 2rem;
+    padding: 1rem;
+    border: solid 2px var(--letra);
+    border-radius: 1rem;
+    background-color: var(--fondoS);
+    color: var(--letra);
+    transition: .5s;
+}
+
+.btn .button {
+    width: 100%;
+    font-weight: 700;
+    font-size: 2rem;
+    padding: 1rem;
+    border: solid 2px var(--letra);
+    border-radius: 1rem;
+    background-color: var(--fondoS);
+    color: var(--letra);
+    transition: .5s;
+}
+
+.btn input:hover {
+    cursor: pointer;
+    background-color: #E1D4AD;
+}
+
+.btn .button:hover {
+    cursor: pointer;
+    background-color: #E1D4AD;
+}
+
+/*tablas*/
+.fondo {
+    background-color: var(--letra);
+}
+
+.titulo {
+    padding: 2rem;
+    background-color: var(--letra);
+    color: var(--fondoS);
+}
+
+.tabla__contenedor {
+    margin: 5rem auto;
+    text-align: center;
+    border: solid 2px #000;
+    font-size: 2rem;
+    box-shadow: 0px 0px 15px 6px rgb(0 0 0 / .50);
+}
+
+.paquetes_grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    color: var(--letra);
+    background-color: #fff;
+}
+
+.lotes_grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    color: var(--letra);
+    background-color: #fff;
+}
+
+.choferes_grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    color: var(--letra);
+    background-color: #fff;
+}
+
+.camiones_grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    color: var(--letra);
+    background-color: #fff;
+}
+
+.datos {
+    padding: 3rem;
+    background-color: #FFF;
+}
+
+.datosR {
+    padding: 2rem;
+}
+
+.datos a {
+    font-weight: 600;
+    padding: 1rem;
+    border: solid 2px #000;
+    border-radius: 1rem;
+    transition: .5s;
+    margin: .5rem;
+}
+
+.datos a:hover {
+    background-color: #000;
+    color: #FFF;
+}
+
+.pFila {
+    background-color: var(--grisC);
+    font-weight: 800;
+}
+
+.pFilaH {
+    background-color: var(--grisC);
+    font-weight: 800;
+}
+
+
+.pFilaV {
+    background-color: var(--grisC);
+    font-weight: 900;
+    display: none;
+}
+
+.respuesta_error {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10rem;
+    color: #FFF;
+}
+
+.respuesta_error img {
+    width: 15rem;
+}
+
+.barra {
+    width: 120rem;
+    margin: 5rem auto;
+}
+
+.barraC {
+    display: none;
+}
+
+/*Footer*/
+footer {
+    margin-top: 5rem;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+.footer {
+    background-color: var(--fondoS);
+}
+
+.footer h2 {
+    margin: 1rem;
+}
+
+.footer h3 {
+    font-size: 2rem;
+    margin: 1rem;
+}
+
+.contact {
+    width: 99.9%;
+    display: flex;
+}
+
+.flags {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.flags__item {
+    width: 4rem;
+    margin: 2rem;
+    transition: .5s;
+}
+
+.flags__item:hover {
+    transform: scale(1.1);
+    cursor: pointer;
+}
+
+.info {
+    width: 80%;
+    margin: 0 auto;
+    color: var(--fondoP);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.logo-system {
+    width: 25%;
+}
+
+.logo_info {
+    padding-top: 2rem;
+    display: flex;
+}
+
+
+@media (max-width: 950px) {
+
+    .pFilaH {
+        display: none;
+    }
+    
+    
+    .pFilaV {
+        display: block;
+    }
+
+    .paquetes_grid, .lotes_grid, .choferes_grid, .camiones_grid{
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+    
+    .form__contenedor input{
+        font-size: 1.5rem;
+    }
+
+    .barra {
+        display: none;
+    }
+
+    .barraC {
+        margin: 5rem auto;
+        display: block;
+    }
+
+    .logo-system {
+        width: 15%;
+    }
+}
+
+@media (max-width: 1250px) {
+
+.barra{
+    width: 80rem;
+}
+
+h1 {
+    font-size: 3rem;
+}
+
+}
+
+
+@media (max-width: 1250px) {
+.form{
+    padding: 2rem;
+    width: 90%;
+}
+    
+    }
+
+
+@media (max-width: 700px) {    
+    h1 {
+        font-size: 2rem;
+    }
+    
+    .info{
+        width: 95%;
+    }
+    .barra {
+        display: none;
+    }
+}

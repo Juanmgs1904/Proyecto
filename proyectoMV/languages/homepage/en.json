@@ -1,0 +1,81 @@
+{
+    "nav" : {
+        "op1" : "Home",
+        "op2" : "About Us",
+        "op3" : "Contact",
+        "op4" : "Tracking",
+        "op5" : "Login"
+    },
+
+    "servicios" : {
+        "title" : "Services",
+        "ser1" : "Warehouses",
+        "ser2" : "Assembly of Lots",
+        "ser3" : "Transportation and Distribution",
+        "ser4" : "Trade throughout the country"
+    },
+
+    "sobreNosotros" : {
+        "title" : "About Us",
+        "text" : "We are Quick Carry, a logistics company located in Uruguay, with warehouses located throughout the country, with our main headquarters in Montevideo. In addition to having a high technological level, our systems also have a high level of security just like our trucks. You want to transport anything to another part of the country, because with us your shipments will arrive safely and on time."
+    },
+
+    "elegirnos" : {
+        "title" : "Why choose us?",
+        "elT1" : "DELIVERY SPEED",
+        "el1" : "Optimize the route and delivery time",
+        "elT2" : "WAREHOUSES ALL OVER THE COUNTRY",
+        "el2" : "Allows products to be delivered anywhere in the country",
+        "elT3" : "SAFER",
+        "el3" : "Avoid failed deliveries. Tracking and control of deliveries",
+        "elT4" : "MORE PROFITABLE",
+        "el4" : "Improve customer satisfaction and generate more sales"
+    },
+
+    "contactanos" : {
+        "title" : "Contact us",
+        "nombre" : "Name",
+        "apellido" : "Surname",
+        "asunto" : "Affair",
+        "mensaje" : "Enter your message",
+        "btn" : "Submit"
+    },
+
+    "seguimiento" : {
+        "title" : "Tracking",
+        "subtitle" : "See where your package is",
+        "codigo" : "Enter Package Code",
+        "btn" : "Look for",
+
+        "titleT" : "Package information",
+        "titleP" : "DATA OF YOUR PACKAGE",
+        "codigoP" : "Code",
+        "pesoP" : "Weight",
+        "fechaRP" : "Date of receipt",
+        "fechaEP" : "Date of delivery",
+        "destinatarioP" : "Addressee",
+        "destinoP" : "Destination",
+        "titleL" : "PACKAGE LOT",
+        "IDLL" : "IDL",
+        "destinoL" : "Destination",
+        "tiempoL" : "Estimated time",
+        "titleC" : "PACKAGE TRUCK",
+        "matriculaC" : "Car license plate",
+        "fechaEC" : "Date of delivery",
+        "titleCH" : "TRUCK DRIVER",
+        "nombre" : "Name",
+        "demora" : "Delay",
+        "fechaD" : "Delay Date",
+        "titleCam" : "PACKAGE TRUCK",
+        "fechaE" : "Date of delivery",
+        "titleCHCam" : "VAN DRIVER",
+        "error" : "There is no Package with that code"
+    },
+
+    "login" : {
+        "titleL" : "Login",
+        "usuario" : "User",
+        "contra" : "Password",
+        "btn" : "Login"
+    }
+}

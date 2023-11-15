@@ -1,0 +1,144 @@
+
+{
+    "header" : {
+        "bienvenido" : "Bienvenido",
+        "lotesC" : "Lotes del Camion",
+        "paquetesC" : "Paquetes de la Camioneta",
+        "recorrido" : "Recorrido",
+        "aviso" : "Aviso Demora",
+        "logout" : "Cerrar Sesión",
+        "ingresar" : "Ingresar Datos",
+        "remitoP" : "Remito del Paquete",
+        "remitoL" : "Remito del Lote"
+    },
+
+    "seleccionar" : {
+        "title" : "Opciones",
+        "op1" : "Ver Lotes",
+        "op2" : "Ver Recorridos",
+        "op3" : "Aviso Demora",
+        "op4" : "Ver Paquetes",
+        "op5" : "Aviso Entrega"
+    },
+
+    "opcion" : {
+        "motivo" : "Motivo"
+    },
+
+    "recorrido" : {
+        "titulo" : "Almacenes de Destino",
+        "almacen" : "Almacenes",
+        "ubicacion" : "Ubicación",
+        "distancia" : "Distancia",
+        "direccion" : "Dirección"
+    },
+
+    "boton" : {
+        "volver" : "Volver",
+        "aviso" : "Avisar Demora",
+        "ver" : "Ver Remito",
+        "entregado" : "Entregado"
+    },
+
+    "paquete" : {
+        "codigo" : "Codigo",
+        "peso" : "Peso",
+        "estado" : "Estado",
+        "opciones" : "OPCIONES",
+        "fRecibo" : "Fecha de Recibo",
+        "fEntrega" : "Fecha de Entrega",
+        "fechaRecibo" : "Fecha Recibo",
+        "fechaEntrega" : "Fecha Entrega",
+        "destinatario" : "Destinatario",
+        "destino" : "Destino"
+    },
+
+    "lote" : {
+        "id" : "ID del Lote",
+        "peso" : "Peso",
+        "estado" : "Estado",
+        "opciones" : "OPCIONES",
+        "si" : "si",
+        "almacenExterno" : "Alamcen Externo",
+        "tiempoEstimado" : "Tiempo Estimado",
+        "destino" : "Destino"
+    },
+
+    "vehiculos" : {
+        "titulo" : "Vehículos",
+        "vehiculo" : "Gestionar Vehiculos",
+        "camion" : "Gestionar Camiones",
+        "camioneta" : "Gestionar Camionetas"
+    },
+    
+    "vehiculo" : {
+        "matricula" : "Matricula",
+        "estado" : "Estado",
+        "disponibilidad" : "Disponibilidad",
+        "disponible" : "Disponible",
+        "enRuta" : "en Ruta",
+        "Mal" : "Mal Estado",
+        "Buen" : "Buen Estado"
+    },
+
+    "camion" : {
+        "peso" : "Peso",
+        "matricula" : "Matricula",
+        "alto" : "Alto",
+        "ancho" : "Ancho",
+        "largo" : "Largo",
+        "tipo" : "Tipo"
+    },
+
+    "camioneta" : {
+        "matricula" : "Matricula"
+    },
+
+    "almacenes" : {
+        "titulo" : "Almacenes",
+        "almacen" : "Gestionar Almacenes",
+        "interno" : "Gestionar Almacenes de QuickCarry",
+        "externo" : "Gestionar Almacenes de Empresas",
+        "ubicacion" : "Ubicacion",
+        "ruta" : "Ruta",
+        "empresa" : "Empresa"
+    },
+
+    "personas" : {
+        "titulo" : "Personas",
+        "personas" : "Gestionar Personas",
+        "camioneros" : "Gestionar Camioneros",
+        "personal" : "Gestionar Personal",
+        "usuarios" : "Gestionar Usuarios"
+    },
+
+    "persona" : {
+        "nombre" : "Nombre",
+        "telefono" : "Teléfono",
+        "direccion" : "Dirección"
+    },
+
+    "camionero" : {
+        "fecha" : "Fecha Vencimiento de Licencia",
+        "turno" : "Turno",
+        "op" : "Ver Camionero",
+        "mañana" : "Mañana",
+        "tarde" : "Tarde",
+        "noche" : "Noche",
+        "titulo" : "Camioneros de un Camion"
+    },
+
+    "usuario" : {
+        "mail" : "Mail",
+        "contraseña" : "Contraseña",
+        "estado" : "Estado",
+        "rol" : "Rol",
+        "activo" : "Activo",
+        "inactivo" : "Inactivo",
+        "admin" : "Administrador",
+        "choferCamion" : "Chofer Camion",
+        "choferCamioneta" : "Chofer Camioneta",
+        "interno" : "Almacén Interno",
+        "externo" : "Almacén Externo"
+    }
+}
