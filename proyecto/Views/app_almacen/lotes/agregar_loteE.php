@@ -17,22 +17,23 @@ require("../../../Model/session/session_almacen2.php");
 
 <body>
     <div class="title">
-        <h1>Agregar Lote al Almacén</h1>
+        <h1 data-section="agregarLC" data-value="title">Agregar Lote al Almacén</h1>
     </div>
     <?php echo '<form action="../../../intermediario/postDataAPI.php?empresa='.$empresa.'" class="form" method="post">'; ?>
-        <h3 class="form__title">Ingrese datos</h3>
+        <h3 class="form__title" data-section="agregarLC" data-value="text">Ingrese datos</h3>
         <div class="text">
-            <label><b>Tiempo Estimado:</b></label>
+            <label><b data-section="agregarLC" data-value="tiempoEstimado">Tiempo Estimado:</b></label>
             <input type="datetime-local" name="tiempoEstimadoE" class="input" placeholder="Ingrese la Fecha de Entrega" require>
         </div>
             <input type="hidden" name="almacenExterno" value="<?= '1' ?>">
-        <input type="submit" value="Agregar" class="boton_form">
+            <button type="submit" class="boton_form"><b data-section="agregarLC" data-value="btn">Agregar</b></button>
     </form>
     <div class="btn_volver">
         <?php
-        echo '<a href="lotesE.php?empresa='.$empresa.'" class="btn">Volver</a>';
+        echo '<a href="lotesE.php?empresa='.$empresa.'" class="btn" data-section="agregarLC" data-value="btnV">Volver</a>';
         ?>
     </div>
+    <script src="script.js"></script>
 </body>
 
 </html>

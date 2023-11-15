@@ -14,6 +14,7 @@ require ("../../../../Model/session/session_administrador3.php");
     <?php
     $ci = $_GET['ci'];
     $nombre = $_GET['nombre'];
+    $Mail = $_GET['Mail'];
     $telefono = $_GET['telefono'];
     $direccion = $_GET['direccion'];
     ?>
@@ -27,6 +28,10 @@ require ("../../../../Model/session/session_administrador3.php");
             <div class="form_info text">
                 <label data-section="persona" data-value="nombre">Nombre:</label>
                 <input type="text" name="nombre" value="<?=$nombre?>" required>
+            </div>
+            <div class="form_info text">
+                <label>Mail:</label>
+                <input type="email" name="Mail" value="<?=$Mail?>" required>
             </div>
             <div class="form_info text">
                 <label data-section="persona" data-value="telefono">Teléfono</label>

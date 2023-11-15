@@ -11,8 +11,9 @@ switch ($_SERVER['REQUEST_METHOD']) {
 
     //Mostrar
     case 'GET':
+        $empresa = $_GET['empresa'];
         //solicita datos al modelo
-        $respuesta = $_lotesACE->listaLotesACE();
+        $respuesta = $_lotesACE->listaLotesACE($empresa);
         require('../../Routes/R_almacen.php');
     break;
     default:

@@ -51,7 +51,6 @@ require("../../../../Model/session/session_administrador3.php");
                     <div class="datos pFila">CI</div>
                     <div class="datos pFila" data-section="paquete" data-value="opciones">OPCIONES</div>
                     <?php
-
                     $conexion = new mysqli("localhost", "root", "", "ocean");
                     $sentencia = "SELECT * FROM conduce";
                     $filas = $conexion->query($sentencia);
@@ -65,9 +64,12 @@ require("../../../../Model/session/session_administrador3.php");
                             ?>
                             <div class="datos">
                                 <?php
-                                echo '<a href="#" onclick="confirmDelete(\''  . $fila['CIC'] . '\');">' . '<img src="../../img/eliminar.svg" alt="Imagen eliminar">' . ' </a>';
+                                echo '<a href="#" onclick="confirmDelete(\'' . $fila['CIC'] . '\');">' . '<img src="../../img/eliminar.svg" alt="Imagen eliminar">' . ' </a>';
                                 ?>
+
                                 <script>
+                                    const selectedLanguage = sessionStorage.getItem('selectedLanguage');
+
                                     const messages = {
                                         es: {
                                             confirmacion_eliminar: "¿Estás seguro de que deseas eliminar al camionero de este camión?"
@@ -76,15 +78,17 @@ require("../../../../Model/session/session_administrador3.php");
                                             confirmacion_eliminar: "Are you sure you want to eliminate the trucker from this truck?"
                                         }
                                     };
-//no funca
+                                    const defaultLanguage = 'es'; // Establece el lenguaje por defecto aquí
                                     function confirmDelete(CIC) {
-                                        var confirmation = confirm(messages[selectedLanguage].confirmacion_eliminar);
+                                        const language = selectedLanguage || defaultLanguage; // Usa el lenguaje seleccionado o el por defecto
+                                        var confirmation = confirm(messages[language].confirmacion_eliminar);
                                         if (confirmation) {
                                             // Si el usuario confirma, redirige a la página de eliminación
                                             window.location.href = "../../eliminar.php?CIC=" + CIC;
                                         }
                                     }
                                 </script>
+
                             </div>
                     <?php
                         }

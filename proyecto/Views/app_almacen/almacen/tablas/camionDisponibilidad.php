@@ -1,7 +1,7 @@
 <?php
 $idA = $_GET['idA'];
 $ruta = false;
-$url = 'http://localhost/proyecto/controller/almacen/C_camiones.php?idA=' . $idA . '&ruta=' . $ruta . '';
+$url = 'localhost/proyecto/Controller/almacen/C_camiones.php?idA=' . $idA . '&ruta=' . $ruta . '';
 require("../../../../intermediario/getDataAPI.php");
 require("../../../../Model/session/session_almacen3.php");
 ?>
@@ -37,8 +37,16 @@ require("../../../../Model/session/session_almacen3.php");
 
                 <ul class="nav__lista">
                     <li><a href="#"><?php echo $_SESSION['mail']; ?></a></li>
+                    <div class="flags" id="flags">
+                            <div class="flags__item" data-language="es">
+                                <img src="../../../../img/es.svg" alt="opción español">
+                            </div>
+                            <div class="flags__item" data-language="en">
+                                <img src="../../../../img/en.svg" alt="opción inglés">
+                            </div>
+                        </div>
                     <a href="../../../../index.php">
-                        <li class="cerrar">Cerrar Sesión</li>
+                        <li class="cerrar" data-section="header" data-value="logout">Cerrar Sesión</li>
                     </a>
                 </ul>
             </div>
@@ -47,11 +55,11 @@ require("../../../../Model/session/session_almacen3.php");
     <div class="tablas__contenedor">
         <div class="tabla__contenedor tabla__flecha">
             <div class="titulo">
-                <h2>CAMIONES DISPONIBLES</h2>
+                <h2 data-section="disponibilidad" data-value="cD">CAMIONES DISPONIBLES</h2>
             </div>
             <div class="LEC_grid">
-                <div class="datosF pFila">MATRÍCULA</div>
-                <div class="datosF pFila">OPCIÓN</div>
+                <div class="datosF pFila" data-section="asignarLAC" data-value="matricula">MATRÍCULA</div>
+                <div class="datosF pFila" data-section="recorrido" data-value="opcion">OPCIÓN</div>
                 <?php
                 foreach ($array as $fila) {
                 ?>
@@ -71,16 +79,16 @@ require("../../../../Model/session/session_almacen3.php");
         </div>
         <?php
         $ruta = true;
-        $url = 'http://localhost/proyecto/controller/almacen/C_camiones.php?idA=' . $idA . '&ruta=' . $ruta . '';
+        $url = 'localhost/proyecto/Controller/almacen/C_camiones.php?idA=' . $idA . '&ruta=' . $ruta . '';
         require("../../../../intermediario/getDataAPI.php");
         ?>
         <div class="tabla__contenedor tabla__flecha">
             <div class="titulo">
-                <h2>CAMIONES EN RUTA</h2>
+                <h2 data-section="disponibilidad" data-value="cR">CAMIONES EN RUTA</h2>
             </div>
             <div class="LEC_grid">
-                <div class="datosF pFila">OPCIÓN</div>
-                <div class="datosF pFila">MATRÍCULA</div>
+                <div class="datosF pFila" data-section="recorrido" data-value="opcion">OPCIÓN</div>
+                <div class="datosF pFila" data-section="asignarLAC" data-value="matricula">MATRÍCULA</div>
                 <?php
                 foreach ($array as $fila) {
                 ?>
@@ -100,8 +108,9 @@ require("../../../../Model/session/session_almacen3.php");
         </div>
     </div>
     <div class="btn_volver">
-        <?php echo '<a href="../almacenInterno.php?idA=' . $idA . '" class="btn">'; ?>Volver</a>
+        <?php echo '<a href="../almacenInterno.php?idA=' . $idA . '" class="btn" data-section="lotesC" data-value="btnV">'; ?>Volver</a>
     </div>
+    <script src="script.js"></script>
 </body>
 
 </html>

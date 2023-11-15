@@ -70,15 +70,18 @@ require("../../../../Model/session/session_administrador3.php");
 
                             const messages = {
                                 es: {
-                                    confirmacion_eliminar: "¿Estás seguro de que deseas eliminar este paquete?"
+                                    confirmacion_eliminar: "¿Estás seguro de que deseas eliminar esta camioneta?"
                                 },
                                 en: {
-                                    confirmacion_eliminar: "Are you sure you want to delete this package?"
+                                    confirmacion_eliminar: "Are you sure you want to delete this van?"
                                 }
                             };
 
+                            const defaultLanguage = 'es'; // Establece el lenguaje por defecto aquí
+
                             function confirmDelete(MatriculaC) {
-                                var confirmation = confirm(messages[selectedLanguage].confirmacion_eliminar);
+                                const language = selectedLanguage || defaultLanguage; // Usa el lenguaje seleccionado o el por defecto
+                                var confirmation = confirm(messages[language].confirmacion_eliminar);
                                 if (confirmation) {
                                     // Si el usuario confirma, redirige a la página de eliminación
                                     window.location.href = "../../eliminar.php?MatriculaC=" + MatriculaC;
@@ -98,6 +101,10 @@ require("../../../../Model/session/session_administrador3.php");
         <a href="camioneta_agregar.php" class="btn" data-section="boton" data-value="agregarCamioneta">Agregar Camioneta</a>
 
     </div>
+    
+    <div class="btn_tabla">
+            <a class="btn" href="va_agregar.php" data-section="boton" data-value="asignarVa">Asignar Almacén</a>
+        </div>
     <script src="script.js"></script>
 </body>
 

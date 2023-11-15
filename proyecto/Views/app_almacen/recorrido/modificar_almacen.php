@@ -23,29 +23,30 @@ require("../../../Model/session/session_almacen2.php");
     $mostrar = $_GET['mostrar'];
     ?>
     <div class="title">
-        <h1>Modificar Distancia del Recorrido</h1>
+        <h1 data-section="modificarAR" data-value="title">Modificar Distancia del Recorrido</h1>
     </div>
     <?php echo '<form action="../../../intermediario/putDataAPI.php?idA=' . $idA . '&mostrar=' . $mostrar . '" class="form" method="POST">'; ?>
-    <h3 class="form__title">Ingrese datos</h3>
+    <h3 class="form__title" data-section="modificarAR" data-value="text">Ingrese datos</h3>
     <div class="text">
-        <label><b>ID del Recorrido:</b></label>
+        <label><b data-section="modificarAR" data-value="idR">ID del Recorrido:</b></label>
         <input type="text" name="IDR" class="input" value="<?= $IDR ?>" readonly>
     </div>
     <div class="text">
-        <label><b>ID del Almacén:</b></label>
+        <label><b data-section="modificarAR" data-value="idA">ID del Almacén:</b></label>
         <input type="text" name="IDA" class="input" value="<?= $IDA ?>" readonly>
     </div>
     <div class="text">
-        <label><b>Distancia:</b></label>
+        <label><b data-section="modificarAR" data-value="distancia">Distancia:</b></label>
         <input type="time" name="distancia" class="input" value="<?= $distancia ?>" required>
     </div>
-    <input type="submit" value="Modificar" class="boton_form">
+    <input type="submit" value="Modificar" class="boton_form" data-section="modificarAR" data-value="btn">
     </form>
     <div class="btn_volver">
         <?php
-        echo '<a href="almacenes.php?idA=' . $idA . '&IDR=' . $IDR . '&mostrar=' . $mostrar . '" class="btn">' . "Volver" . ' </a>';
+        echo '<a href="almacenes.php?idA=' . $idA . '&IDR=' . $IDR . '&mostrar=' . $mostrar . '" class="btn" data-section="modificarAR" data-value="btnV">' . "Volver" . ' </a>';
         ?>
     </div>
+    <script src="script.js"></script>
 </body>
 
 </html>

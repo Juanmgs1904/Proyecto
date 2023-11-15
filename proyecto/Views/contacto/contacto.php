@@ -34,7 +34,7 @@ if (isset($_GET['lang'])) {
         </div>
     </header>
     <section class="contacto">
-        <form action="https://formsubmit.co/brunocarras28@gmail.com" method="POST" class="form">
+        <form action="https://formsubmit.co/QuickCarryOficial@gmail.com" method="POST" class="form">
             <div class="nom_c">
                 <input type="text" name="nombre" data-section="contactanos" data-value="nombre" placeholder="Nombre">
                 <input type="text" name="apellido" data-section="contactanos" data-value="apellido" placeholder="Apellido">
@@ -44,17 +44,7 @@ if (isset($_GET['lang'])) {
             <textarea name="mensaje" cols="30" rows="10" data-section="contactanos" data-value="mensaje" placeholder="Ingresa tu mensaje" required></textarea>
             <button type="submit" class="btn" data-section="contactanos" data-value="btn">Enviar</button>
 
-            <!-- mandar a una dirección específica -->
-            <input type="hidden" name="_next" value="http://localhost/proyecto/Views/contacto/contacto.php">
-            <!-- quitar captcha -->
-            <input type="hidden" name="_captcha" value="false">
-
             <script>
-                document.querySelector(".form").addEventListener("submit", function(event) {
-                    event.preventDefault();
-                    showMessage("El mensaje se envió correctamente");
-                    this.submit(); // Envía el formulario después de mostrar el mensaje
-                });
 
 
                 function showMessage(message) {

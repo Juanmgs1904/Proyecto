@@ -17,40 +17,41 @@ $mostrar = $_GET['mostrar'];
 </head>
 <body>
     <div class="title">
-        <h1>Agregar Almacén al Recorrido</h1>
+        <h1 data-section="agregarAR" data-value="title">Agregar Almacén al Recorrido</h1>
     </div>
     <?php echo '<form action="../../../intermediario/postDataAPI.php?idA='.$idA.'&mostrar='.$mostrar.'" class="form" method="post">'; ?>
-        <h3 class="form__title">Ingrese datos</h3>
+        <h3 class="form__title" data-section="agregarAR" data-value="text">Ingrese datos</h3>
 
         <div class="text">
-            <h3>ID del Recorrido:</h3>
+            <h3 data-section="agregarAR" data-value="idR">ID del Recorrido:</h3>
             <input type="number" name="IDR" class="input" value="<?= $IDR ?>" readonly>
         </div>
 
         <?php
-        $url = 'http://localhost/proyecto/controller/almacen/C_almacenI.php?IDR='.$IDR.'';
+        $url = 'localhost/proyecto/Controller/almacen/C_almacenI.php?IDR='.$IDR.'';
         require("../../../intermediario/getDataAPI.php");
 ?>
         <div class="text">
-            <h3>ID del Almacen:</h3>
+            <h3 data-section="asignarLC" data-value="idA">Almacén: </h3>
             <select name="IDA">
                 <?php
                 foreach ($array as $fila) {
-                    echo '<option value="' . $fila['idI'] . '">' . $fila['idI'] . '</option>';
+                    echo '<option value="' . $fila['idI'] . '">' . $fila['ubicacion'] . '</option>';
                 }
                 ?>
             </select>
         </div>
         <div class="text">
-            <h3>Distancia</h3>
+            <h3 data-section="agregarAR" data-value="distancia">Distancia</h3>
             <input type="time" class="input" name="distancia">
         </div>
-        <input type="submit" value="Agregar" class="boton_form">
+        <input data-section="agregarAR" data-value="btn" type="submit" value="Agregar" class="boton_form">
     </form>
     <div class="btn_volver">
         <?php
-        echo '<a href="almacenes.php?IDR=' . $IDR . '&idA='.$idA.'&mostrar='.$mostrar.'" class="btn">' . "Volver" . ' </a>';
+        echo '<a href="almacenes.php?IDR=' . $IDR . '&idA='.$idA.'&mostrar='.$mostrar.'" class="btn" data-section="agregarAR" data-value="btnV">' . "Volver" . ' </a>';
         ?>
     </div>
+    <script src="script.js"></script>
 </body>
 </html>

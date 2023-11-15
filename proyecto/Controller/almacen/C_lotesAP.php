@@ -11,9 +11,8 @@ switch($_SERVER['REQUEST_METHOD']){
 
     //Mostrar
     case 'GET':
-            $idA = $_GET['idA'];
             //solicita datos al modelo
-            $respuesta = $_lotesAP->listaLotesAP($idA);
+            $respuesta = $_lotesAP->listaLotesAP();
 
             require('../../Routes/R_almacen.php');
     break;

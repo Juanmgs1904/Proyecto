@@ -1,20 +1,22 @@
 <?php
-require ("../../../../Model/session/session_administrador3.php");
+require("../../../../Model/session/session_administrador3.php");
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agregar Personal</title>
     <link rel="stylesheet" href="../../style.css">
 </head>
+
 <body class="fondo">
     <div class="contenedor_form">
         <h1 data-section="header" data-value="ingresar">Ingresar Datos</h1>
         <form class="form" action="../../insertar.php" method="post">
-        <?php
+            <?php
             $conexion = new mysqli("localhost", "root", "", "ocean");
             $sentencia = "SELECT * FROM vwpersonas";
             $filas = $conexion->query($sentencia);
@@ -45,4 +47,5 @@ require ("../../../../Model/session/session_administrador3.php");
     </div>
     <script src="script.js"></script>
 </body>
+
 </html>

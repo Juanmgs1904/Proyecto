@@ -15,8 +15,8 @@ require("../../../../Model/session/session_administrador3.php");
 <body class="fondo">
     <?php
     $ciC = $_GET['ciC'];
-    $fechaVL = $_GET['fechaVL'];
-    $turno = $_GET['turno'];
+    $FechaVL = $_GET['FechaVL'];
+    $Turno = $_GET['Turno'];
     ?>
     <div class="contenedor_form">
         <h1 data-section="header" data-value="ingresar">Ingresar Datos</h1>
@@ -27,14 +27,14 @@ require("../../../../Model/session/session_administrador3.php");
             </div>
             <div class="form_info text">
                 <label class="fechaV" data-section="camionero" data-value="fecha">Fecha Vencimiento Licencia</label>
-                <input type="date" name="fechaVL" value="<?= $fechaVL ?>" required>
+                <input type="date" name="FechaVL" value="<?= $FechaVL ?>" required>
             </div>
 
             <div class="form_info text">
                 <label data-section="camionero" data-value="turno">Turno:</label>
-                <select name="turno" required>
+                <select name="Turno" required>
                     <?php
-                    echo '<option value="' . $turno . '">' . $turno . '</option>';
+                    echo '<option value="' . $Turno . '">' . $Turno . '</option>';
                     ?>
                     <option value="mañana" data-section="camionero" data-value="mañana">Mañana</option>
                     <option value="tarde" data-section="camionero" data-value="tarde">Tarde</option>

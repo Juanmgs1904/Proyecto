@@ -22,8 +22,8 @@ require("../../../../Model/session/session_administrador3.php");
             <div class="form_info text">
                 <label data-section="vehiculo" data-value="estado">Estado:</label>
                 <select name="Estado">
-                    <option value="buenEstado" data-section="vehiculo" data-value="mal">En buen estado</option>
-                    <option value="malEstado" data-section="vehiculo" data-value="buen">En mal estado</option>
+                    <option value="buenEstado" data-section="vehiculo" data-value="buen">En buen estado</option>
+                    <option value="malEstado" data-section="vehiculo" data-value="mal">En mal estado</option>
                 </select>
             </div>
             <div class="form_info text">

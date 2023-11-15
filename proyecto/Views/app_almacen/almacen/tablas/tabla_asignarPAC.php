@@ -1,7 +1,6 @@
 <?php
 $idA = $_GET['idA'];
-$ruta = false;
-$url = 'http://localhost/proyecto/controller/almacen/C_va.php?idA='.$idA.'&ruta='.$ruta.'';
+$url = 'localhost/proyecto/Controller/almacen/C_transporta.php?idA='.$idA.'';
 require("../../../../intermediario/getDataAPI.php");
 require("../../../../Model/session/session_almacenInterno3.php");
 ?>
@@ -37,18 +36,26 @@ require("../../../../Model/session/session_almacenInterno3.php");
 
                 <ul class="nav__lista">
                     <li><a href="#"><?php echo $_SESSION['mail']; ?></a></li>
-                    <a href="../../../../index.php"><li class="cerrar">Cerrar Sesión</li></a>
+                    <div class="flags" id="flags">
+                        <div class="flags__item" data-language="es">
+                            <img src="../../../../img/es.svg" alt="opción español">
+                        </div>
+                        <div class="flags__item" data-language="en">
+                            <img src="../../../../img/en.svg" alt="opción inglés">
+                        </div>
+                    </div>
+                    <a href="../../../../index.php"><li class="cerrar" data-section="header" data-value="logout">Cerrar Sesión</li></a>
                 </ul>
             </div>
         </div>
     </header>
     <div class="tabla__contenedor">
         <div class="titulo">
-            <h2>Camionetas</h2>
+            <h2 data-section="tablaPC" data-value="text">Camionetas</h2>
         </div>
         <div class="LEC_grid">
-            <div class="datos pFila">MATRÍCULA</div>
-            <div class="datos pFila">OPCIÓN</div>
+            <div class="datos pFila" data-section="asignarLAC" data-value="matricula">MATRÍCULA</div>
+            <div class="datos pFila" data-section="recorrido" data-value="opcion">OPCIÓN</div>
             <?php
             $matriculasMostradas = array(); // Un array para hacer un seguimiento de las matrículas mostradas
 
@@ -67,7 +74,7 @@ require("../../../../Model/session/session_almacenInterno3.php");
                     ?>
                     <div class="datos">
                         <?php
-                        echo '<a href="paquetesAC.php?matriculaC=' . $fila['MatriculaC'] . '&idA='.$idA.'">Ver Paquetes</a>';
+                        echo '<a href="paquetesAC.php?matriculaC=' . $fila['MatriculaC'] . '&idA='.$idA.'" data-section="tablaAPL" data-value="btnP">Ver Paquetes</a>';
                         ?>
                     </div>
             <?php
@@ -77,8 +84,9 @@ require("../../../../Model/session/session_almacenInterno3.php");
         </div>
     </div>
     <div class="btn_volver">
-    <?php echo '<a href="../asignarPaqueteAC.php?idA='.$idA.'" class="btn">'; ?>Volver</a>
+    <?php echo '<a href="../asignarPaqueteAC.php?idA='.$idA.'" class="btn" data-section="lotesC" data-value="btnV">'; ?>Volver</a>
     </div>
+    <script src="script.js"></script>
 </body>
 
 </html>

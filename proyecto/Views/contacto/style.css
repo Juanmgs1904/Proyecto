@@ -154,6 +154,13 @@ a {
     h1{
         font-size: 2rem;
     }
+    .header__logo, .header__home {
+        width: 6rem;
+    }
+
+    .contacto {
+        margin: 4rem 0;
+    }
 
     .form{
         margin: 1rem auto;

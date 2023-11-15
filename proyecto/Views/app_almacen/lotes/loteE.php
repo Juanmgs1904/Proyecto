@@ -3,7 +3,7 @@ $empresa = $_GET['empresa'];
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
 }
-$url = "http://localhost/proyecto/controller/almacen/C_lotes.php?id=$id";
+$url = "localhost/proyecto/Controller/almacen/C_lotes.php?id=$id";
 require_once "../../../intermediario/getDataAPI.php";
 
 require("../../../Model/session/session_almacen2.php");
@@ -31,7 +31,7 @@ require("../../../Model/session/session_almacen2.php");
                 </a>
             </div>
             <div class="header__titulo">
-                <h1>Bienvenido</h1>
+                <h1 data-section="header" data-value="title">Bienvenido</h1>
             </div>
             <div class="header__logo">
                 <input type="checkbox" id="menuD" class="menu-toggle">
@@ -39,26 +39,34 @@ require("../../../Model/session/session_almacen2.php");
 
                 <ul class="nav__lista">
                     <li><a href="#"><?php echo $_SESSION['mail']; ?></a></li>
-                    <a href="../../../index.php"><li class="cerrar">Cerrar Sesión</li></a>
+                    <div class="flags" id="flags">
+                        <div class="flags__item" data-language="es">
+                            <img src="../../../img/es.svg" alt="opción español">
+                        </div>
+                        <div class="flags__item" data-language="en">
+                            <img src="../../../img/en.svg" alt="opción inglés">
+                        </div>
+                    </div>
+                    <a href="../../../index.php"><li class="cerrar" data-section="header" data-value="logout">Cerrar Sesión</li></a>
                 </ul>
             </div>
         </div>
     </header>
     <div class="tabla__contenedor">
         <div class="titulo">
-            <h2>GESTIONAR LOTE</h2>
+            <h2 data-section="loteC" data-value="text">GESTIONAR LOTE</h2>
         </div>
         <div class="loteE_grid">
             <div class="datos pFilaH">IDL</div>
-            <div class="datos pFilaH">Destino</div>
-            <div class="datos pFilaH">tiempoEstimado</div>
+            <div class="datos pFilaH" data-section="loteC" data-value="destino">Destino</div>
+            <div class="datos pFilaH" data-section="loteC" data-value="tiempoEstimado">tiempoEstimado</div>
             <?php
             foreach ($array as $fila) {
             ?> <div class="datos pFilaV">ID</div>
                 <div class="datos"><?php echo $fila['IDL'] . " "; ?></div>
-                <div class="datos pFilaV">Destino</div>
+                <div class="datos pFilaV" data-section="loteC" data-value="destino">Destino</div>
                 <div class="datos"><?php echo $fila['Destino'] . " "; ?></div>
-                <div class="datos pFilaV">Tiempo Estimado</div>
+                <div class="datos pFilaV" data-section="loteC" data-value="tiempoEstimado">Tiempo Estimado</div>
                 <div class="datos"><?php echo $fila['tiempoEstimado'] . " "; ?></div>
             <?php
             }
@@ -68,10 +76,11 @@ require("../../../Model/session/session_almacen2.php");
     <div>
         <div class="btn_volver">
             <?php
-            echo '<a href="lotesE.php?empresa='.$empresa.'" class="btn">Volver</a>';
+            echo '<a href="lotesE.php?empresa='.$empresa.'" class="btn" data-section="loteC" data-value="btnV">Volver</a>';
             ?>
         </div>
     </div>
+    <script src="script.js"></script>
 </body>
 
 </html>

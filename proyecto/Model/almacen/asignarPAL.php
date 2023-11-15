@@ -6,7 +6,7 @@ class asignarPAL extends conexion {
     private $IDL = "";
 
     public function listaPAL(){
-        $sentencia = "SELECT codigo, IDL FROM vwPaquetesContiene";
+        $sentencia = "SELECT codigo, IDL FROM vwpaquetescontiene";
         $arrayDatos = parent::obtenerDatos($sentencia);
         return $arrayDatos;
     }
@@ -76,10 +76,11 @@ class asignarPAL extends conexion {
     public function delete($json){
         $_respuestas = new respuestas;
         $datos = json_decode($json, true);
-        if(!isset($datos['codigo'])){
+        if(!isset($datos['codigo']) || !isset($datos['IDL'])){
             return $_respuestas->error_400();
         }else{
             $this->codigo = $datos['codigo'];
+            $this->IDL = $datos['IDL'];
             $respuestaFilas = $this->eliminarPAL();
             if($respuestaFilas){
                 $respuesta = $_respuestas->respuesta;
@@ -93,7 +94,7 @@ class asignarPAL extends conexion {
         }
     }
     private function eliminarPAL(){
-        $sentencia = "DELETE FROM contiene WHERE codigo = '" . $this->codigo . "'";
+        $sentencia = "DELETE FROM contiene WHERE codigo = '" . $this->codigo . "' AND IDL = '" . $this->IDL . "'";
         $respuesta = parent::guardar($sentencia);
         if($respuesta >= 1){
             return $respuesta;

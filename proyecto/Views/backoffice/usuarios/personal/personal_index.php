@@ -88,8 +88,12 @@ require("../../../../Model/session/session_administrador3.php");
                                     }
                                 };
 
+                                
+                            const defaultLanguage = 'es'; // Establece el lenguaje por defecto aquí
+
                                 function confirmDelete(CIP) {
-                                    var confirmation = confirm(messages[selectedLanguage].confirmacion_eliminar);
+                                        const language = selectedLanguage || defaultLanguage; // Usa el lenguaje seleccionado o el por defecto
+                                    var confirmation = confirm(messages[language].confirmacion_eliminar);
                                     if (confirmation) {
                                         // Si el usuario confirma, redirige a la página de eliminación
                                         window.location.href = "../../eliminar.php?ciP=" + CIP;

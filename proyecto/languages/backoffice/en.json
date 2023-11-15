@@ -36,6 +36,7 @@
         "agregarPersona" : "Add People",
         "agregarCamionero" : "Add Trucker",
         "asignarV" : "Assign Vehicle",
+        "asignarVa" : "Assign Warehouse",
         "agregarUsuario" : "Add User",
         "agregarPersonal" : "Add Staff",
         "asignarA" : "Assign Storage"
@@ -51,6 +52,7 @@
         "fechaRecibo" : "Receipt Date",
         "fechaEntrega" : "Deliver Date",
         "destinatario" : "Addressee",
+        "departamento" : "Department",
         "destino" : "Destination"
     },
 
@@ -60,6 +62,9 @@
         "opciones" : "OPTION",
         "si" : "YES",
         "almacenExterno" : "External Warehouse",
+        "noAsignado" : "Not Assigned",
+        "asignado" : "Assigned",
+        "entregado" : "Delivered",
         "tiempoEstimado" : "Estimated Time",
         "destino" : "Destination"
     },
@@ -91,7 +96,12 @@
     },
 
     "camioneta" : {
-        "matricula" : "Van Plate"
+        "matricula" : "Van Plate",
+        "op": "View Assigned Vans"
+    },
+
+    "va" : {
+        "titulo" : "Warehouse Vans"
     },
 
     "almacenes" : {
@@ -100,6 +110,7 @@
         "interno" : "Manage QuickCarry Warehouses",
         "externo" : "Manage Company Warehouses",
         "ubicacion" : "Location",
+        "direccion" : "Direction",
         "ruta" : "Route",
         "empresa" : "Company"
     },

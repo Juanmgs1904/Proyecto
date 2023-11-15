@@ -287,8 +287,13 @@ a {
     margin: 5rem auto;
 }
 
+.barraC {
+    display: none;
+}
+
 /*Footer*/
 footer {
+    margin-top: 5rem;
     position: absolute;
     bottom: 0;
     width: 100%;
@@ -346,4 +351,77 @@ footer {
 .logo_info {
     padding-top: 2rem;
     display: flex;
+}
+
+
+@media (max-width: 950px) {
+
+    .pFilaH {
+        display: none;
+    }
+    
+    
+    .pFilaV {
+        display: block;
+    }
+
+    .paquetes_grid, .lotes_grid, .choferes_grid, .camiones_grid{
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+    
+    .form__contenedor input{
+        font-size: 1.5rem;
+    }
+
+    .barra {
+        display: none;
+    }
+
+    .barraC {
+        margin: 5rem auto;
+        display: block;
+    }
+
+    .logo-system {
+        width: 15%;
+    }
+}
+
+@media (max-width: 1250px) {
+
+.barra{
+    width: 80rem;
+}
+
+h1 {
+    font-size: 3rem;
+}
+
+}
+
+
+@media (max-width: 1250px) {
+.form{
+    padding: 2rem;
+    width: 90%;
+}
+    
+    }
+
+
+@media (max-width: 700px) {    
+    h1 {
+        font-size: 2rem;
+    }
+    
+    .info{
+        width: 95%;
+    }
+    .barra {
+        display: none;
+    }
 }

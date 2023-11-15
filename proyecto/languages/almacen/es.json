@@ -1,0 +1,186 @@
+{
+    "header" : {
+        "title" : "Bienvenido",
+        "logout" : "Cerrar Sesión"
+    },
+
+    "opciones" : {
+        "lotes" : "Lotes",
+        "paquetes" : "Paquetes",
+        "recorrido" : "Recorrido",
+        "almacen" : "Almacén",
+        "btn" : "Ingresar"
+    },
+
+    "lotesC" : {
+        "title" : "LOTES DEL ALMACÉN",
+        "estado" : "Estado",
+        "peso" : "Peso",
+        "opciones" : "OPCIONES",
+        "verR" : "Ver Remito",
+        "eliminar" : "Eliminar",
+        "btnV" : "Volver",
+        "btnAL" : "Agregar Lote",
+        "btnAsiL" : "Asignar Recorrido"
+    },
+    "agregarLC" : {
+        "title" : "AGREGAR LOTE AL ALMACÉN",
+        "text" : "Ingrese datos",
+        "destino" : "Destino",
+        "tiempoEstimado" : "Tiempo Estimado",
+        "btn" : "AGREGAR",
+        "btnV" : "Volver"
+    },
+    "loteC" : {
+        "text" : "GESTIONAR LOTE",
+        "destino" : "Destino",
+        "tiempoEstimado" : "Tiempo Estimado",
+        "opciones" : "OPCIONES",
+        "modificar" : "Modificar",
+        "btnV" : "Volver"
+    },
+    "modificarLC" : {
+        "title" : "MODIFICAR LOTE DEL ALMACÉN",
+        "text" : "Ingrese datos",
+        "destino" : "Destino",
+        "tiempoEstimado" : "Tiempo Estimado",
+        "btn" : "MODIFICAR",
+        "btnV" : "Volver"
+    },
+    "asignarLC" : {
+        "title" : "ASIGNAR LOTE A RECORRIDO",
+        "text" : "Ingrese datos",
+        "idL" : "ID del Lote",
+        "idR" : "ID del Recorrido",
+        "idA" : "Almacén",
+        "btn" : "ASIGNAR",
+        "btnV" : "Volver",
+        "btnT" : "Ver Tabla"
+    },
+    "lotesAR" : {
+        "text" : "Lotes Asignados a Recorridos",
+        "opciones" : "OPCIONES",
+        "eliminar" : "Eliminar",
+        "btnV" : "Volver"
+    },
+    "paquetesC" : {
+        "text" : "PAQUETES DEL ALMACÉN",
+        "codigo" : "Codigo",
+        "estado" : "ESTADO",
+        "peso" : "Peso",
+        "opciones" : "OPCIONES",
+        "remito" : "Ver Remito",
+        "eliminar" : "Eliminar",
+        "btnV" : "Volver",
+        "btnA" : "Agregar Paquete"
+    },
+    "paqueteC" : {
+        "text" : "GESTIONAR PAQUETE",
+        "codigo" : "Codigo",
+        "fechaR" : "FECHA DE RECIBO",
+        "fechaE" : "FECHA DE ENTREGA",
+        "destinatario" : "Destinatario",
+        "destino" : "Destino",
+        "departamento" : "Departamento",
+        "btnV" : "Volver"
+    },
+    "recorrido" : {
+        "text" : "Recorrido",
+        "idR" : "ID del Recorrido",
+        "opcion" :"OPCIÓN",
+        "eliminar" : "Eliminar",
+        "verA" : "Ver Almacenes",
+        "btnV" : "Volver",
+        "btnAR" : "Agregar Recorrido"
+    },
+    "almacenesR" : {
+        "text" : "Almacenes en Recorrido",
+        "idA" : "ID de los Almacenes",
+        "distancia" : "Distancia",
+        "opciones" : "OPCIONES",
+        "modificar" : "Modificar",
+        "eliminar" : "Eliminar",
+        "btnV" : "Volver",
+        "btnAA" : "Agregar Almacén"
+    },
+    "agregarAR" : {
+        "title" : "AGREGAR ALMACÉN AL RECORRIDO",
+        "text" : "Ingrese datos",
+        "idR" : "ID del Recorrido",
+        "idA" : "ID del Almacén",
+        "distancia" : "Distancia",
+        "btn" : "AGREGAR",
+        "btnV" : "Volver"
+    },
+    "modificarAR" : {
+        "title" : "MODIFICAR DISTANCIA DEL RECORRIDO",
+        "text" : "Ingrese datos",
+        "idR" : "ID del Recorrido",
+        "idA" : "ID del Almacén",
+        "distancia" : "Distancia",
+        "btn" : "MODIFICAR",
+        "btnV" : "Volver"
+    },
+    "almacenI" : {
+        "op1" : "ASIGNAR PAQUETES A LOTES",
+        "op2" : "ASIGNAR LOTES A CAMIONES",
+        "op3" : "DISPONIBILIDAD DE LOS CAMIONES",
+        "op4" : "ASIGNAR PAQUETES A CAMIONETAS",
+        "op5" : "MARCAR HORA DE LLEGADA DE CAMIONETAS",
+        "op6" : "MARCAR HORA DE SALIDA DE CAMIONETAS"
+    },
+    "asignarPL" : {
+        "title" : "ASIGNAR PAQUETES A LOTES",
+        "btn" : "ASIGNAR PAQUETE"
+    },
+    "tablaAPL" : {
+        "lotes" : "LOTES",
+        "btnP" : "Ver Paquetes"
+    },
+    "paquetesAL" : {
+        "text" : "Paquetes asignados"
+    },
+    "asignarLAC" : {
+        "title" : "ASIGNAR LOTES A CAMIONES",
+        "matricula" : "Matrícula",
+        "btn" : "ASIGNAR LOTE"
+    },
+    "tablaALC" : {
+        "text" : "Camiones",
+        "btnL" : "Ver Lotes",
+        "lotesA" : "Lotes asignados"
+    },
+    "disponibilidad" : {
+        "cD" : "CAMIONES DISPONIBLES",
+        "cR" : "CAMIONES EN RUTA"
+    },
+    "asignarPCam" : {
+        "title" : "ASIGNAR PAQUETE A CAMIONETA"
+    },
+    "tablaPC" : {
+        "text" : "Camionetas"
+    },
+    "horaL" : {
+        "horaL" : "Hora de llegada",
+        "btn" : "MARCAR"
+    },
+    "horaS" : {
+        "horaS" : "Hora de salida"
+    },
+    "tablaLCam" : {
+        "text" : "LLEGADAS DE CAMIONETAS",
+        "fecha" : "FECHA"
+    },
+    "tablaSCam" : {
+        "text" : "SALIDAS DE CAMIONETAS"
+    },
+    "modificarP" : {
+        "title" : "MODIFICAR PAQUETE DEL ALMACÉN"
+    },
+    "agregarP" : {
+        "title" : "AGREGAR PAQUETE AL ALMACÉN",
+        "phPeso" : "Ingrese el peso",
+        "phDestinatario" : "Destinatario",
+        "phDestino" : "Destino"
+    }
+}

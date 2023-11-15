@@ -46,10 +46,11 @@ require("../../../../Model/session/session_administrador3.php");
     </header>
     <div class="info_tabla">
         <div class="tabla">
-            <div class="grid5">
+            <div class="grid6">
 
                 <div class="datos pFilaH">CI</div>
                 <div class="datos pFilaH" data-section="persona" data-value="nombre">NOMBRE</div>
+                <div class="datos pFilaH">Mail</div>
                 <div class="datos pFilaH" data-section="persona" data-value="telefono">TELÉFONO</div>
                 <div class="datos pFilaH" data-section="persona" data-value="direccion">DIRECCIÓN</div>
                 <div class="datos pFilaH" data-section="paquete" data-value="opciones">OPCIONES</div>
@@ -63,22 +64,31 @@ require("../../../../Model/session/session_administrador3.php");
 
                     <div class="datos pFilaV">CI</div>
                     <div class="datos"><?php echo $fila['CI'] . " "; ?></div>
+
                     <div class="datos pFilaV" data-section="persona" data-value="nombre">Nombre</div>
                     <div class="datos"><?php echo $fila['Nombre'] . " "; ?></div>
+
+                    <div class="datos pFilaV">Mail</div>
+                    <div class="datos"><?php echo $fila['Mail'] . " "; ?></div>
+
                     <div class="datos pFilaV" data-section="persona" data-value="telefono">Telefono</div>
                     <div class="datos"><?php echo $fila['Telefono'] . " "; ?></div>
+
                     <div class="datos pFilaV" data-section="persona" data-value="direccion">Direccion</div>
                     <div class="datos"><?php echo $fila['Direccion'] . " "; ?></div>
+
                     <div class="datos pFilaV" data-section="paquete" data-value="opciones">OPCIONES</div>
                     <div class="datosL">
                         <?php
                         echo '<a href="personas_modificar.php?ci=' . $fila['CI'] .
-                            '&nombre=' . $fila['Nombre'] . '&telefono=' . $fila['Telefono'] . '&direccion=' . $fila['Direccion'] . '">' . '<img src="../../img/modificar.svg" alt="Imagen modificar">' . ' </a>';
+                            '&nombre=' . $fila['Nombre'] . '&Mail=' . $fila['Mail'] .'&telefono=' . $fila['Telefono'] . '&direccion=' . $fila['Direccion'] . '">' . '<img src="../../img/modificar.svg" alt="Imagen modificar">' . ' </a>';
                         ?>
                         <?php
                         echo '<a href="#" onclick="confirmDelete(' . $fila['CI'] . ', \'' . $fila['Nombre'] . '\');">' . '<img src="../../img/eliminar.svg" alt="Imagen eliminar">' . ' </a>';
                         ?>
                         <script>
+                            const selectedLanguage = sessionStorage.getItem('selectedLanguage');
+
                             const messages = {
                                 es: {
                                     confirmacion_eliminar: "¿Estás seguro de que deseas eliminar a {0}?"
@@ -88,15 +98,18 @@ require("../../../../Model/session/session_administrador3.php");
                                 }
                             };
 
-
+                            const defaultLanguage = 'es'; // Establece el lenguaje por defecto aquí
+                            
                             function confirmDelete(CI, Nombre) {
-                                var confirmation = confirm(messages[selectedLanguage].confirmacion_eliminar.replace('{0}', Nombre));
+                                        const language = selectedLanguage || defaultLanguage; // Usa el lenguaje seleccionado o el por defecto
+                                var confirmation = confirm(messages[language].confirmacion_eliminar.replace('{0}', Nombre));
                                 if (confirmation) {
                                     // Si el usuario confirma, redirige a la página de eliminación
                                     window.location.href = "../../eliminar.php?ci=" + CI;
                                 }
                             }
                         </script>
+
                     </div>
 
                 <?php

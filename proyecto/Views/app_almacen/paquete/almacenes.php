@@ -1,6 +1,6 @@
 <?php
 require("../../../Model/session/session_almacen2.php");
-$url = 'http://localhost/proyecto/controller/almacen/C_almacenI.php';
+$url = 'localhost/proyecto/Controller/almacen/C_almacenI.php';
 require("../../../intermediario/getDataAPI.php");
 
 ?>

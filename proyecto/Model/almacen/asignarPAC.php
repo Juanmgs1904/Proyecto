@@ -6,7 +6,7 @@ class asignarPAC extends conexion {
     private $MatriculaC = "";
 
     public function listaPAC(){
-        $sentencia = "SELECT codigo, MatriculaC FROM vwPaquetecamioneta";
+        $sentencia = "SELECT codigo, MatriculaC FROM vwpaquetecamioneta";
         $arrayDatos = parent::obtenerDatos($sentencia);
         return $arrayDatos;
     }

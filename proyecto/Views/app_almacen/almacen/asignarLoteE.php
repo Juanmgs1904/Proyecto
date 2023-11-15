@@ -2,7 +2,7 @@
 $empresa = $_GET['empresa'];
 $ruta = false;
 $externo = true;
-$url = 'http://localhost/proyecto/controller/almacen/C_camiones.php?ruta='.$ruta.'&externo='.$externo.'';
+$url = 'localhost/proyecto/Controller/almacen/C_camiones.php?ruta='.$ruta.'&externo='.$externo.'';
 require("../../../intermediario/getDataAPI.php");
 
 require("../../../Model/session/session_almacen2.php");
@@ -20,12 +20,12 @@ require("../../../Model/session/session_almacen2.php");
 
 <body>
     <div class="title">
-        <h1>Asignar Lotes a Camiones</h1>
+        <h1 data-section="asignarLAC" data-value="title">Asignar Lotes a Camiones</h1>
     </div>
     <?php echo '<form action="../../../intermediario/postDataAPI.php?empresa='.$empresa.'" method="post" class="form">'; ?>
-        <h3 class="form__title">Ingrese datos</h3>
+        <h3 class="form__title" data-section="modificarAR" data-value="text">Ingrese datos</h3>
         <div class="text">
-            <label><b>Matricula:</b></label>
+            <label><b data-section="asignarLAC" data-value="matricula">Matricula:</b></label>
             <select name="MatriculaE">
                 <?php
                 foreach ($array as $fila) {
@@ -35,11 +35,11 @@ require("../../../Model/session/session_almacen2.php");
             </select>
         </div>
         <?php
-        $url = 'http://localhost/proyecto/controller/almacen/C_lotesACE.php';
+        $url = 'localhost/proyecto/Controller/almacen/C_lotesACE.php?empresa='.$empresa.'';
         require("../../../intermediario/getDataAPI.php");
         ?>
         <div class="text">
-            <label><b>ID del Lote:</b></label>
+            <label><b data-section="asignarLC" data-value="idL">ID del Lote:</b></label>
             <select name="IDLE">
                 <?php
                 foreach ($array as $fila) {
@@ -48,18 +48,18 @@ require("../../../Model/session/session_almacen2.php");
                 ?>
             </select>
         </div>
-        <input type="submit" value="Asignar Lote" class="boton_form">
+        <input data-section="asignarLAC" data-value="btn" type="submit" value="Asignar Lote" class="boton_form">
     </form>
 
     <div class="botones">
         <div class="btn_volver">
-            <?php echo '<a href="almacenExterno.php?empresa='.$empresa.'" class="btn">'; ?>Volver</a>
+            <?php echo '<a href="almacenExterno.php?empresa='.$empresa.'" class="btn" data-section="lotesC" data-value="btnV">'; ?>Volver</a>
         </div>
         <div class="btn_tabla">
-            <?php echo '<a href="tablas/tabla_asignarLACE.php?empresa='.$empresa.'" class="btn">'; ?>Ver Tabla</a>  
+            <?php echo '<a href="tablas/tabla_asignarLACE.php?empresa='.$empresa.'" class="btn" data-section="asignarLC" data-value="btnT">'; ?>Ver Tabla</a>  
         </div>
     </div>
-
+    <script src="script.js"></script>
 </body>
 
 </html>

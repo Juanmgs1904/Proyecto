@@ -8,7 +8,8 @@ class lotesE extends conexion {
     private $enAlmacenExterno = "";
 
     public function listaLotesE($empresa){
-        $sentencia = "SELECT * FROM lotes WHERE enAlmacenExterno = 1 AND Empresa = '$empresa' AND Estado != 'entregado'";
+        $sentencia1 = "SELECT IDL FROM lleva";
+        $sentencia = "SELECT * FROM lotes WHERE enAlmacenExterno = 1 AND Empresa = '$empresa' AND IDL NOT IN ($sentencia1)";
         $arrayDatos = parent::obtenerDatos($sentencia);
         return $arrayDatos;
     }

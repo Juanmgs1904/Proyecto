@@ -23,6 +23,10 @@ require ("../../../../Model/session/session_administrador3.php");
                 <input type="text" name="nombre" required>  
             </div>
             <div class="form_info text">
+                <label>Mail:</label> 
+                <input type="email" name="Mail" required>  
+            </div>
+            <div class="form_info text">
                 <label data-section="persona" data-value="telefono">Teléfono:</label> 
                 <input type="text" name="tel" required>
             </div>

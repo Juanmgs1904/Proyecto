@@ -1,7 +1,7 @@
 <?php
 require("../../../Model/session/session_almacen2.php");
 $lotes = true;
-$url = "http://localhost/proyecto/controller/almacen/C_vaHacia.php?lotes=$lotes";
+$url = "localhost/proyecto/Controller/almacen/C_vaHacia.php?lotes=$lotes";
 require("../../../intermediario/getDataAPI.php");
 ?>
 <!DOCTYPE html>
@@ -19,12 +19,12 @@ require("../../../intermediario/getDataAPI.php");
 
 <body>
     <div class="title">
-        <h1>Asignar Lote a Recorrido</h1>
+        <h1 data-section="asignarLC" data-value="title">Asignar Lote a Recorrido</h1>
     </div>
     <form action="../../../intermediario/postDataAPI.php" class="form" method="post">
-        <h3 class="form__title">Ingrese datos</h3>
+        <h3 class="form__title" data-section="asignarLC" data-value="text">Ingrese datos</h3>
         <div class="text">
-            <label><b>ID del Lote:</b></label>
+            <label><b data-section="asignarLC" data-value="idL">ID del Lote:</b></label>
             <select name="IDLL" required>
                 <?php
                 foreach ($array as $fila) {
@@ -34,11 +34,11 @@ require("../../../intermediario/getDataAPI.php");
             </select>
         </div>
         <?php
-        $url = "http://localhost/proyecto/controller/almacen/C_esta.php";
+        $url = "localhost/proyecto/Controller/almacen/C_esta.php";
         require("../../../intermediario/getDataAPI.php");
         ?>
         <div class="text">
-            <label><b>ID del Recorrido:</b></label>
+            <label><b data-section="asignarLC" data-value="idR">ID del Recorrido:</b></label>
             <select name="IDRL" required>
                 <?php
                 $recorridosMostrados = array(); // Un array para hacer un seguimiento de lo mostrado
@@ -55,7 +55,7 @@ require("../../../intermediario/getDataAPI.php");
             </select>
         </div>
         <div class="text">
-            <label><b>ID del Almacén:</b></label>
+            <label><b data-section="asignarLC" data-value="idA">Almacén:</b></label>
             <select name="IDAL" required>
                 <?php
                 $almacenesMostrados = array(); // Un array para hacer un seguimiento de lo mostrado
@@ -65,22 +65,23 @@ require("../../../intermediario/getDataAPI.php");
                     if (!in_array($IDA, $almacenesMostrados)) {
                         // Si no se ha mostrado, muestra y agrega al array
                         $almacenesMostrados[] = $IDA;
-                        echo '<option value="' . $fila['IDA'] . '">' . $fila['IDA'] . '</option>';
+                        echo '<option value="' . $fila['IDA'] . '">' . $fila['ubicacion'] . '</option>';
                     }
                 }
                 ?>
             </select>
         </div>
-        <input type="submit" value="Asignar" class="boton_form">
+        <button type="submit" class="boton_form"><b data-section="asignarLC" data-value="btn">Asignar</b></button>
     </form>
     <div class="botones">
         <div class="btn_volver">
-            <?php echo '<a href="lotes.php?idA=1" class="btn">Volver</a>'; ?>
+            <?php echo '<a href="lotes.php?idA=1" class="btn" data-section="asignarLC" data-value="btnV">Volver</a>'; ?>
         </div>
         <div class="btn_tabla">
-            <?php echo '<a href="tabla_asignarLAR.php" class="btn">'; ?>Ver Tabla</a>
+            <?php echo '<a href="tabla_asignarLAR.php" class="btn" data-section="asignarLC" data-value="btnT">'; ?>Ver Tabla</a>
         </div>
     </div>
+    <script src="script.js"></script>
 </body>
 
 </html>

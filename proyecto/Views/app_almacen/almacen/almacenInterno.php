@@ -24,7 +24,7 @@ require("../../../Model/session/session_almacenInterno2.php");
                 </a>
             </div>
             <div class="header__titulo">
-                <h1>Bienvenido</h1>
+                <h1 data-section="header" data-value="title">Bienvenido</h1>
             </div>
             <div class="header__logo">
                 <input type="checkbox" id="menuD" class="menu-toggle">
@@ -32,8 +32,16 @@ require("../../../Model/session/session_almacenInterno2.php");
 
                 <ul class="nav__lista">
                     <li><a href="#"><?php echo $_SESSION['mail']; ?></a></li>
+                    <div class="flags" id="flags">
+                        <div class="flags__item" data-language="es">
+                            <img src="../../../img/es.svg" alt="opción español">
+                        </div>
+                        <div class="flags__item" data-language="en">
+                            <img src="../../../img/en.svg" alt="opción inglés">
+                        </div>
+                    </div>
                     <a href="../../../index.php">
-                        <li class="cerrar">Cerrar Sesión</li>
+                        <li class="cerrar" data-section="header" data-value="logout">Cerrar Sesión</li>
                     </a>
                 </ul>
             </div>
@@ -51,7 +59,7 @@ require("../../../Model/session/session_almacenInterno2.php");
                 echo '<img src="../img/camioneta.svg" alt="imagen camioneta">';
                 echo '</div>';
                 echo '<div class="texto">';
-                echo '<h3>Asignar Paquetes a Camionetas</h3>';
+                echo '<h3 data-section="almacenI" data-value="op4">Asignar Paquetes a Camionetas</h3>';
                 echo '</div>';
                 echo '</a>';
             }
@@ -64,7 +72,7 @@ require("../../../Model/session/session_almacenInterno2.php");
                 echo '<img src="../img/lotes.svg" alt="imagen lote">';
                 echo '</div>';
                 echo '<div class="texto">';
-                echo '<h3>Asignar Paquetes a Lotes</h3>';
+                echo '<h3 data-section="almacenI" data-value="op1">Asignar Paquetes a Lotes</h3>';
                 echo '</div>';
                 echo '</a>';
             }
@@ -77,7 +85,7 @@ require("../../../Model/session/session_almacenInterno2.php");
                 echo '<img src="../img/camion.svg" alt="imagen camión">';
                 echo '</div>';
                 echo '<div class="texto">';
-                echo '<h3>Asignar Lotes a Camiones</h3>';
+                echo '<h3 data-section="almacenI" data-value="op2">Asignar Lotes a Camiones</h3>';
                 echo '</div>';
                 echo '</a>';
             }
@@ -92,7 +100,7 @@ require("../../../Model/session/session_almacenInterno2.php");
                 echo '<img src="../img/camioneta.svg" alt="imagen camión" class="rota-horizontal">';
                 echo '</div>';
                 echo '<div class="texto">';
-                echo '<h3>Marcar Hora de llegada de Camionetas</h3>';
+                echo '<h3 data-section="almacenI" data-value="op5">Marcar Hora de llegada de Camionetas</h3>';
                 echo '</div>';
                 echo '</a>';
             }
@@ -105,7 +113,7 @@ require("../../../Model/session/session_almacenInterno2.php");
                 echo '<img src="../img/camioneta.svg" alt="imagen camión">';
                 echo '</div>';
                 echo '<div class="texto">';
-                echo '<h3>Marcar Hora de Salida de Camionetas</h3>';
+                echo '<h3 data-section="almacenI" data-value="op6">Marcar Hora de Salida de Camionetas</h3>';
                 echo '</div>';
                 echo '</a>';
             }
@@ -115,16 +123,17 @@ require("../../../Model/session/session_almacenInterno2.php");
                 echo '<img src="../img/camion.svg" alt="imagen almacén">';
                 echo '</div>';
                 echo '<div class="texto">';
-                echo '<h3>Disponibilidad de los Camiones</h3>';
+                echo '<h3 data-section="almacenI" data-value="op3">Disponibilidad de los Camiones</h3>';
                 echo '</div>';
                 echo '</a>';
             }
             ?>
         </div>
         <div class="almacen_volver">
-            <?php echo '<a href="../index.php?idA=' . $idA . '" class="btn">'; ?>Volver</a>
+            <?php echo '<a href="../index.php?idA=' . $idA . '" class="btn" data-section="lotesC" data-value="btnV">'; ?>Volver</a>
         </div>
     </main>
+    <script src="script.js"></script>
 </body>
 
 </html>

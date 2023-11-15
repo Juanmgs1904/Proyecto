@@ -108,6 +108,24 @@ a {
     align-items: center;
     justify-content: flex-end;
 }
+.flags{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 2rem 0;
+    gap: 2rem;
+}
+
+.flags__item {
+    width: 4rem;
+    transition: .5s;
+    height: 3.4rem;
+}
+
+.flags__item:hover {
+    transform: scale(1.1);
+    cursor: pointer;
+}
 
 #menuD {
     display: none;
@@ -132,7 +150,7 @@ a {
     position: absolute;
     border-radius: 2rem;
     border: solid 2px #000;
-    margin-top: -23rem;
+    margin-top: -28rem;
     z-index: 600;
 }
 
@@ -161,7 +179,7 @@ a {
 
 .menu-toggle:checked~.nav__lista {
     display: block;
-    margin-top: 23rem;
+    margin-top: 28rem;
     z-index: 2;
 }
 
@@ -266,13 +284,13 @@ a {
 
 .paquete_grid {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(6, 1fr);
     color: var(--letra);
     background-color: #fff;
 }
 .paqueteE_grid {
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(7, 1fr);
     color: var(--letra);
     background-color: #fff;
 }
@@ -356,7 +374,7 @@ a {
     padding: 1rem;
     border-radius: 1rem;
     border: solid #000 2px;
-    font-size: 2rem;
+    font-size: 1.8rem;
     transition: .5s;
 }
 
@@ -386,7 +404,7 @@ a {
     align-items: center;
     margin: 0 auto;
     height: 10rem;
-    width: 40rem;
+    width: 50rem;
 }
 
 .btn:hover {
@@ -522,6 +540,15 @@ a {
         margin: 0 auto;
     }
 
+    .botones {
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    .op{
+        flex-direction: column;
+    }
+
     .opcion:nth-child(1) {
         flex-direction: column;
         justify-content: center;
@@ -601,11 +628,27 @@ a {
         grid-template-columns: repeat(2, 1fr);
     }
 
+    .lotesE_grid{
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .loteE_grid{
+        grid-template-columns: repeat(2, 1fr);
+    }
+
     .paquete_grid{
         grid-template-columns: repeat(2, 1fr);
     }
 
     .paquetes_grid{
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .paqueteE_grid{
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .paquetesE_grid{
         grid-template-columns: repeat(2, 1fr);
     }
 
@@ -615,6 +658,20 @@ a {
 
     .remitos_grid{
         grid-template-columns: repeat(2, 1fr);
+    }
+
+}
+
+
+@media (max-width: 400px) {
+    
+    .op{
+        font-size: 1rem;
+        padding: 1rem;
+    }
+
+    .option {
+        width: 10rem;
     }
 
 }

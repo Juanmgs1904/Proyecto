@@ -1,6 +1,8 @@
 <?php
 $conexion = new mysqli("localhost", "root", "", "ocean");
 
+require("../../Model/session/session_administrador.php");
+
 //conduce
 if (isset($_POST['CIC'])) {
     $CIC = $_POST['CIC'];
@@ -47,6 +49,19 @@ if (isset($_POST['MatriculaC'])) {
 }
 
 
+
+//camioneta en va
+if (isset($_POST['MatriculaVa']) && isset($_POST['idI'])) {
+    $MatriculaC = $_POST['MatriculaVa'];
+    $idI = $_POST['idI'];
+    $sentencia = "INSERT INTO va (MatriculaC, idI) 
+                    VALUES('$MatriculaC', '$idI')";
+    $filas = $conexion->query($sentencia);
+    header("Location: vehiculos/camionetas/camioneta_index.php");
+}
+
+
+
 //vehiculo
 if (isset($_POST['MatriculaV'])) {
     $MatriculaV = $_POST['MatriculaV'];
@@ -62,7 +77,7 @@ if (isset($_POST['MatriculaV'])) {
 if (isset($_POST['idI'])) {
     $idI = $_POST['idI'];
     $ruta = $_POST['ruta'];
-    $sentencia = "INSERT INTO almacenInterno (idI, ruta) 
+    $sentencia = "INSERT INTO almaceninterno (idI, ruta) 
                     VALUES('$idI', '$ruta')";
     $filas = $conexion->query($sentencia);
     header("Location: almacenes/almacenInterno/almacenInterno_index.php");
@@ -74,7 +89,7 @@ if (isset($_POST['idI'])) {
 if (isset($_POST['idE'])) {
     $idE = $_POST['idE'];
     $Empresa = $_POST['Empresa'];
-    $sentencia = "INSERT INTO almacenExterno (idE,Empresa) 
+    $sentencia = "INSERT INTO almacenexterno (idE,Empresa) 
                     VALUES('$idE','$Empresa')";
     $filas = $conexion->query($sentencia);
     header("Location: almacenes/almacenExterno/almacenExterno_index.php");
@@ -114,10 +129,11 @@ if (isset($_POST['ciP'])) {
 if (isset($_POST['ci'])) {
     $ci = $_POST['ci'];
     $nombre = $_POST['nombre'];
+    $Mail = $_POST['Mail'];
     $tel = $_POST['tel'];
     $dir = $_POST['dir'];
-    $sentencia = "INSERT INTO personas (CI,Nombre,Telefono,Direccion) 
-                    VALUES('$ci','$nombre','$tel','$dir')";
+    $sentencia = "INSERT INTO personas (CI,Nombre,Mail,Telefono,Direccion) 
+                    VALUES('$ci','$nombre','$Mail','$tel','$dir')";
     $filas = $conexion->query($sentencia);
     header("Location: usuarios/personas/personas_index.php");
 }

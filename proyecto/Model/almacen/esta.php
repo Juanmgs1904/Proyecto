@@ -7,7 +7,7 @@ class esta extends conexion {
     private $distancia = "";
 
     public function listaHoras(){
-        $sentencia = "SELECT * FROM esta";
+        $sentencia = "SELECT IDA, IDR, Distancia, ubicacion FROM esta JOIN almacen ON esta.IDA = almacen.id";
         $arrayDatos = parent::obtenerDatos($sentencia);
         return $arrayDatos;
     }

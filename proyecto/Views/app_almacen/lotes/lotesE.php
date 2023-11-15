@@ -1,6 +1,6 @@
 <?php
 $empresa = $_GET['empresa'];
-$url = "http://localhost/proyecto/controller/almacen/C_lotesE.php?empresa=$empresa";
+$url = "localhost/proyecto/Controller/almacen/C_lotesE.php?empresa=$empresa";
 require("../../../intermediario/getDataAPI.php");
 
 require("../../../Model/session/session_almacen2.php");
@@ -23,12 +23,12 @@ require("../../../Model/session/session_almacen2.php");
     <header class="header">
         <div class="header__contenedor">
             <div class="header__home">
-                <?php echo '<a href="../indexExterno.php?empresa='.$empresa.'">'; ?>
-                    <img src="../img/Logo_sistema.png" alt="Logo de max truck">
+                <?php echo '<a href="../indexExterno.php?empresa=' . $empresa . '">'; ?>
+                <img src="../img/Logo_sistema.png" alt="Logo de max truck">
                 </a>
             </div>
             <div class="header__titulo">
-                <h1>Bienvenido</h1>
+                <h1 data-section="header" data-value="title">Bienvenido</h1>
             </div>
             <div class="header__logo">
                 <input type="checkbox" id="menuD" class="menu-toggle">
@@ -36,8 +36,16 @@ require("../../../Model/session/session_almacen2.php");
 
                 <ul class="nav__lista">
                     <li><a href="#"><?php echo $_SESSION['mail']; ?></a></li>
+                    <div class="flags" id="flags">
+                        <div class="flags__item" data-language="es">
+                            <img src="../../../img/es.svg" alt="opción español">
+                        </div>
+                        <div class="flags__item" data-language="en">
+                            <img src="../../../img/en.svg" alt="opción inglés">
+                        </div>
+                    </div>
                     <a href="../../../index.php">
-                        <li class="cerrar">Cerrar Sesión</li>
+                        <li class="cerrar" data-section="header" data-value="logout">Cerrar Sesión</li>
                     </a>
                 </ul>
             </div>
@@ -45,35 +53,53 @@ require("../../../Model/session/session_almacen2.php");
     </header>
     <div class="tabla__contenedor">
         <div class="titulo">
-            <h2>LOTES DEL ALMACÉN</h2>
+            <h2 data-section="lotesC" data-value="title">LOTES DEL ALMACÉN</h2>
         </div>
 
         <div class="lotes_grid">
             <div class="datos pFilaH">ID</div>
-            <div class="datos pFilaH">Estado</div>
-            <div class="datos pFilaH">Peso</div>
-            <div class="datos pFilaH">OPCIONES</div>
+            <div class="datos pFilaH" data-section="lotesC" data-value="estado">Estado</div>
+            <div class="datos pFilaH" data-section="lotesC" data-value="peso">Peso</div>
+            <div class="datos pFilaH" data-section="lotesC" data-value="opciones">OPCIONES</div>
             <?php
             foreach ($array as $fila) {
+                if ($fila['Estado'] == 'noAsignado') {
+                    $fila['Estado'] = 'No asignado';
+                }
             ?>
                 <div class="datos pFilaV">ID</div>
                 <div class="datos"><?php echo $fila['IDL'] . " "; ?></div>
-                <div class="datos pFilaV">Estado</div>
+                <div class="datos pFilaV" data-section="lotesC" data-value="estado">Estado</div>
                 <div class="datos"><?php echo $fila['Estado'] . " "; ?></div>
-                <div class="datos pFilaV">Peso</div>
+                <div class="datos pFilaV" data-section="lotesC" data-value="peso">Peso</div>
                 <div class="datos"><?php echo $fila['Peso'] . " "; ?></div>
-                <div class="datos pFilaV">OPCIONES</div>
+                <div class="datos pFilaV" data-section="lotesC" data-value="opciones">OPCIONES</div>
                 <?php
                 $id = $fila['IDL'];
                 ?>
                 <div class="op">
                     <?php
-                    echo '<a href="loteE.php?id='.$id.'&empresa='.$empresa.'">' . '<div class="option">Ver Remito</div>' . ' </a>';
-                    echo '<a href="#" onclick="confirmDelete(\''  . $fila['IDL'] . '\', \'' . $empresa . '\');">' . '<div class="option">Eliminar</div></a>';
+                    echo '<a href="loteE.php?id=' . $id . '&empresa=' . $empresa . '">' . '<div class="option" data-section="lotesC" data-value="verR">Ver Remito</div>' . ' </a>';
+                    echo '<a href="#" onclick="confirmDelete(\''  . $fila['IDL'] . '\', \'' . $empresa . '\');">' . '<div class="option" data-section="lotesC" data-value="eliminar">Eliminar</div></a>';
                     ?>
                     <script>
-                        function confirmDelete(IDL,empresa) {
-                            var confirmation = confirm("¿Estás seguro de que deseas eliminar este Lote?");
+                        const selectedLanguage = sessionStorage.getItem('selectedLanguage');
+
+                        const messages = {
+                            es: {
+                                confirmacion_eliminar: "¿Estás seguro de que deseas eliminar este lote?"
+                            },
+                            en: {
+                                confirmacion_eliminar: "Are you sure you want to delete this lot?"
+                            }
+                        };
+
+                        const defaultLanguage = 'es'; // Establece el lenguaje por defecto aquí
+
+                        function confirmDelete(IDL, empresa) {
+                            const language = selectedLanguage || defaultLanguage; // Usa el lenguaje seleccionado o el por defecto
+
+                            var confirmation = confirm(messages[language].confirmacion_eliminar);
                             if (confirmation) {
                                 // Si el usuario confirma, redirige a la página de eliminación
                                 window.location.href = "../../../intermediario/deleteDataAPI.php?idE=" + IDL + "&empresa=" + empresa;
@@ -88,13 +114,14 @@ require("../../../Model/session/session_almacen2.php");
     </div>
     <div class="botones">
         <div class="btn_volver">
-            <?php echo '<a href="../indexExterno.php?empresa='.$empresa.'" class="btn">'; ?>Volver</a>
+            <?php echo '<a href="../indexExterno.php?empresa=' . $empresa . '" class="btn" data-section="lotesC" data-value="btnV">'; ?>Volver</a>
         </div>
         <div class="btn_tabla">
-        <?php echo '<a href="agregar_loteE.php?empresa='.$empresa.'" class="btn">Agregar Lote</a>'; ?>
+            <?php echo '<a href="agregar_loteE.php?empresa=' . $empresa . '" class="btn" data-section="lotesC" data-value="btnAL">Agregar Lote</a>'; ?>
         </div>
 
     </div>
+    <script src="script.js"></script>
 </body>
 
 </html>

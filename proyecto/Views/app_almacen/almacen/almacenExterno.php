@@ -24,7 +24,7 @@ require("../../../Model/session/session_almacenExterno2.php");
                 </a>
             </div>
             <div class="header__titulo">
-                <h1>Bienvenido</h1>
+                <h1 data-section="header" data-value="title">Bienvenido</h1>
             </div>
             <div class="header__logo">
                 <input type="checkbox" id="menuD" class="menu-toggle">
@@ -32,8 +32,16 @@ require("../../../Model/session/session_almacenExterno2.php");
 
                 <ul class="nav__lista">
                     <li><a href="#"><?php echo $_SESSION['mail']; ?></a></li>
+                    <div class="flags" id="flags">
+                        <div class="flags__item" data-language="es">
+                            <img src="../../../img/es.svg" alt="opción español">
+                        </div>
+                        <div class="flags__item" data-language="en">
+                            <img src="../../../img/en.svg" alt="opción inglés">
+                        </div>
+                    </div>
                     <a href="../../../index.php">
-                        <li class="cerrar">Cerrar Sesión</li>
+                        <li class="cerrar" data-section="header" data-value="logout">Cerrar Sesión</li>
                     </a>
                 </ul>
             </div>
@@ -48,7 +56,7 @@ require("../../../Model/session/session_almacenExterno2.php");
                     <img src="../img/lotes.svg" alt="imagen lote">
                 </div>
                 <div class="texto">
-                    <h3>Asignar Paquetes a Lotes</h3>
+                    <h3 data-section="almacenI" data-value="op1">Asignar Paquetes a Lotes</h3>
                 </div>
             </a>
             
@@ -59,14 +67,15 @@ require("../../../Model/session/session_almacenExterno2.php");
                     <img src="../img/camion.svg" alt="imagen camión">
                 </div>
                 <div class="texto">
-                    <h3>Asignar Lotes a Camiones</h3>
+                    <h3 data-section="almacenI" data-value="op2">Asignar Lotes a Camiones</h3>
                 </div>
             </a>
         </div>
         <div class="almacen_volver">
-            <?php echo '<a href="../indexExterno.php?empresa='.$empresa.'" class="btn">'; ?>Volver</a>
+            <?php echo '<a href="../indexExterno.php?empresa='.$empresa.'" class="btn" data-section="lotesC" data-value="btnV">'; ?>Volver</a>
         </div>
     </main>
+    <script src="script.js"></script>
 </body>
 
 </html>

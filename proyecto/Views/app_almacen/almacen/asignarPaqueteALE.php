@@ -1,6 +1,6 @@
 <?php
 $empresa = $_GET['empresa'];
-$url = 'http://localhost/proyecto/controller/almacen/C_lotesAPE.php?empresa='.$empresa.'';
+$url = 'localhost/proyecto/Controller/almacen/C_lotesAPE.php?empresa='.$empresa.'';
 require("../../../intermediario/getDataAPI.php");
 
 require("../../../Model/session/session_almacen2.php");
@@ -18,12 +18,12 @@ require("../../../Model/session/session_almacen2.php");
 
 <body>
     <div class="title">
-        <h1>ASIGNAR PAQUETES A LOTES</h1>
+        <h1 data-section="lotesC" data-value="title">ASIGNAR PAQUETES A LOTES</h1>
     </div>
     <?php echo '<form action="../../../intermediario/postDataAPI.php?empresa='.$empresa.'" method="post" class="form">'; ?>
-        <h3 class="form__title">Ingrese datos</h3>
+        <h3 class="form__title" data-section="modificarAR" data-value="text">Ingrese datos</h3>
         <div class="text">
-            <label><b>ID del Lote:</b></label>
+            <label><b data-section="asignarLC" data-value="idL">ID del Lote:</b></label>
             <select name="IDLE">
                 <?php
                 foreach ($array as $fila) {
@@ -34,11 +34,11 @@ require("../../../Model/session/session_almacen2.php");
         </div>
 
         <?php
-        $url = 'http://localhost/proyecto/controller/almacen/C_paquetesALE.php?empresa='.$empresa.'';
+        $url = 'localhost/proyecto/Controller/almacen/C_paquetesALE.php?empresa='.$empresa.'';
         require("../../../intermediario/getDataAPI.php");    
         ?>
         <div class="text">
-            <label><b>Codigo:</b></label>
+            <label><b data-section="paquetesC" data-value="codigo">Codigo:</b></label>
             <select name="codigoE">
                 <?php
                 foreach ($array as $fila) {
@@ -47,18 +47,18 @@ require("../../../Model/session/session_almacen2.php");
                 ?>
             </select>
         </div>
-        <input type="submit" value="Asignar Paquete" class="boton_form">
+        <input data-section="asignarPL" data-value="title" type="submit" value="Asignar Paquete" class="boton_form">
     </form>
 
     <div class="botones">
         <div class="btn_volver">
-            <?php  echo '<a href="almacenExterno.php?empresa='.$empresa.'" class="btn">'; ?>Volver</a>
+            <?php  echo '<a href="almacenExterno.php?empresa='.$empresa.'" class="btn" data-section="lotesC" data-value="btnV">'; ?>Volver</a>
         </div>
         <div class="btn_tabla">
-            <?php echo '<a href="tablas/tabla_asignarPALE.php?empresa='.$empresa.'" class="btn">'; ?>Ver Tabla</a>
+            <?php echo '<a href="tablas/tabla_asignarPALE.php?empresa='.$empresa.'" class="btn" data-section="asignarLC" data-value="btnT">'; ?>Ver Tabla</a>
         </div>
     </div>
-
+    <script src="script.js"></script>
 </body>
 
 </html>

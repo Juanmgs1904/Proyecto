@@ -28,7 +28,8 @@
         "titulo" : "Destination Warehouses",
         "almacen" : "Warehouses",
         "ubicacion" : "Location",
-        "distancia" : "Distance"
+        "distancia" : "Distance",
+        "direccion" : "Address"
     },
 
     "boton" : {
@@ -43,8 +44,8 @@
         "peso" : "Weight",
         "estado" : "State",
         "opciones" : "OPTION",
-        "fRecibo" : "ReceiptD",
-        "fEntrega" : "DeliverD",
+        "fRecibo" : "Date of Receipt",
+        "fEntrega" : "Date of delivery",
         "fechaRecibo" : "Receipt Date",
         "fechaEntrega" : "Deliver Date",
         "destinatario" : "Addressee",
@@ -59,15 +60,5 @@
         "almacenExterno" : "External Warehouse",
         "tiempoEstimado" : "Estimated Time",
         "destino" : "Destination"
-    },
-
-    "personal" : {
-        "fecha" : "Date of Birth",
-        "cargo" : "Charge",
-        "op1" : "View Personal",
-        "op2" : "View Assigned Personnel",
-        "id" : "Warehouse ID",
-        "titulo" : "Warehouse Personnel"
     }
-
 }

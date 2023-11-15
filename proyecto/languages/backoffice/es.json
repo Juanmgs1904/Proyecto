@@ -37,6 +37,7 @@
         "agregarPersona" : "Agregar Persona",
         "agregarCamionero" : "Agregar Camionero",
         "asignarV" : "Asignar Vehículo",
+        "asignarVa" : "Asignar Almacén",
         "agregarUsuario" : "Agregar Usuario",
         "agregarPersonal" : "Agregar Personal",
         "asignarA" : "Asignar Alamcén"
@@ -52,6 +53,7 @@
         "fechaRecibo" : "Fecha Recibo",
         "fechaEntrega" : "Fecha Entrega",
         "destinatario" : "Destinatario",
+        "departamento" : "Departamento",
         "destino" : "Destino"
     },
 
@@ -62,6 +64,9 @@
         "si" : "si",
         "almacenExterno" : "Alamcen Externo",
         "tiempoEstimado" : "Tiempo Estimado",
+        "noAsignado" : "No Asignado",
+        "asignado" : "Asignado",
+        "entregado" : "Entregado",
         "destino" : "Destino"
     },
 
@@ -78,8 +83,8 @@
         "disponibilidad" : "Disponibilidad",
         "disponible" : "Disponible",
         "enRuta" : "en Ruta",
-        "Mal" : "Mal Estado",
-        "Buen" : "Buen Estado"
+        "mal" : "Mal Estado",
+        "buen" : "Buen Estado"
     },
 
     "camion" : {
@@ -92,7 +97,8 @@
     },
 
     "camioneta" : {
-        "matricula" : "Matricula"
+        "matricula" : "Matricula",
+        "op": "Ver Camionetas Asignadas"
     },
 
     "almacenes" : {
@@ -101,8 +107,14 @@
         "interno" : "Gestionar Almacenes de QuickCarry",
         "externo" : "Gestionar Almacenes de Empresas",
         "ubicacion" : "Ubicacion",
+        "direccion" : "Dirección",
         "ruta" : "Ruta",
         "empresa" : "Empresa"
+    },
+
+    
+    "va" : {
+        "titulo" : "Camionetas de un Almacén"
     },
 
     "personas" : {

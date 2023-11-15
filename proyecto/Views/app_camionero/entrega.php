@@ -2,7 +2,7 @@
 $matricula = $_GET['matricula'];
 require("../../Model/session/session_camioneta.php");
 
-$url = 'http://localhost/proyecto/controller/transito/C_transporta.php?matricula='.$matricula.'';
+$url = 'localhost/proyecto/Controller/transito/C_transporta.php?matricula='.$matricula.'';
 require("../../intermediario/getDataAPI.php");
 ?>
 <!DOCTYPE html>

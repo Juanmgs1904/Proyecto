@@ -1,6 +1,8 @@
 <?php
 $conexion = new mysqli("localhost", "root", "", "ocean");
 
+require("../../Model/session/session_administrador.php");
+
 //lote
 if (isset($_POST['IDL'])) {
     $IDL = $_POST['IDL'];
@@ -8,9 +10,7 @@ if (isset($_POST['IDL'])) {
     $Estado = $_POST['Estado'];
     $Destino = $_POST['Destino'];
     $tiempoEstimado = $_POST['tiempoEstimado'];
-    $IDR = $_POST['IDR'];
-    $IDA = $_POST['IDA'];
-    $sentencia = "UPDATE lotes SET  Peso='$Peso', Estado='$Estado', Destino='$Destino', tiempoEstimado='$tiempoEstimado', IDR='$IDR', IDA='$IDA' WHERE IDL = $IDL";
+    $sentencia = "UPDATE lotes SET  Peso='$Peso', Estado='$Estado', Destino='$Destino', tiempoEstimado='$tiempoEstimado' WHERE IDL = '$IDL'";
     $conexion->query($sentencia);
     header("Location: lotes/lote_index.php");
 }
@@ -24,7 +24,8 @@ if (isset($_POST['codigo'])) {
     $fEntrega = $_POST['fEntrega'];
     $Destinatario = $_POST['Destinatario'];
     $Destino = $_POST['Destino'];
-    $sentencia = "UPDATE paquetes SET  Peso='$Peso', Estado='$Estado', fRecibo='$fRecibo', fEntrega='$fEntrega', Destinatario='$Destinatario', Destino='$Destino' WHERE codigo = $codigo";
+    $Departamento = $_POST['Departamento'];
+    $sentencia = "UPDATE paquetes SET  Peso='$Peso', Estado='$Estado', fRecibo='$fRecibo', fEntrega='$fEntrega', Destinatario='$Destinatario', Destino='$Destino', Departamento='$Departamento' WHERE codigo = '$codigo'";
     $conexion->query($sentencia);
     header("Location: paquete/paquete_index.php");
 }
@@ -58,7 +59,8 @@ if (isset($_POST['MatriculaV'])) {
 if (isset($_POST['id'])) {
     $id = $_POST['id'];
     $ubicacion = $_POST['ubicacion'];
-    $sentencia = "UPDATE almacen SET  ubicacion='$ubicacion' WHERE id = $id";
+    $Direccion = $_POST['Direccion'];
+    $sentencia = "UPDATE almacen SET ubicacion='$ubicacion', Direccion='$Direccion' WHERE id = '$id'";
     $conexion->query($sentencia);
     header("Location: almacenes/almacen/almacen_index.php");
 }
@@ -69,7 +71,7 @@ if (isset($_POST['id'])) {
 if (isset($_POST['idE'])) {
     $idE = $_POST['idE'];
     $Empresa = $_POST['Empresa'];
-    $sentencia = "UPDATE almacenExterno SET  Empresa='$Empresa' WHERE idE = $idE";
+    $sentencia = "UPDATE almacenexterno SET  Empresa='$Empresa' WHERE idE = '$idE'";
     $conexion->query($sentencia);
     header("Location: almacenes/almacenExterno/almacenExterno_index.php");
 }
@@ -78,7 +80,7 @@ if (isset($_POST['idE'])) {
 if (isset($_POST['idI'])) {
     $idI = $_POST['idI'];
     $ruta = $_POST['ruta'];
-    $sentencia = "UPDATE almacenInterno SET  ruta='$ruta' WHERE idI = $idI";
+    $sentencia = "UPDATE almaceninterno SET ruta='$ruta' WHERE idI = '$idI'";
     $conexion->query($sentencia);
     header("Location: almacenes/almacenInterno/almacenInterno_index.php");
 }
@@ -86,9 +88,9 @@ if (isset($_POST['idI'])) {
 //camionero
 if (isset($_POST['ciC'])) {
     $ciC = $_POST['ciC'];
-    $fechaVL = $_POST['fechaVL'];
-    $turno = $_POST['Turno'];
-    $sentencia = "UPDATE camionero SET  fechaVL='$fechaVL', turno=$turno WHERE CIC = $ciC";
+    $FechaVL = $_POST['FechaVL'];
+    $Turno = $_POST['Turno'];
+    $sentencia = "UPDATE camionero SET FechaVL='$FechaVL', Turno='$Turno' WHERE CIC = '$ciC'";
     $conexion->query($sentencia);
     header("Location: usuarios/camionero/camionero_index.php");
 }
@@ -100,7 +102,7 @@ if (isset($_POST['ciP'])) {
     $ciP = $_POST['ciP'];
     $cargo = $_POST['cargo'];
     $fechaN = $_POST['fechaN'];
-    $sentencia = "UPDATE personal SET Cargo='$cargo',FechaNacimiento='$fechaN' WHERE CIP = $ciP";
+    $sentencia = "UPDATE personal SET Cargo='$cargo',FechaNacimiento='$fechaN' WHERE CIP = '$ciP'";
     $conexion->query($sentencia);
     header("Location: usuarios/personal/personal_index.php");
 }
@@ -110,9 +112,10 @@ if (isset($_POST['ciP'])) {
 if (isset($_POST['ci'])) {
     $ci = $_POST['ci'];
     $nombre = $_POST['nombre'];
+    $Mail = $_POST['Mail'];
     $tel = $_POST['tel'];
     $dir = $_POST['dir'];
-    $sentencia = "UPDATE personas SET  Nombre='$nombre',
+    $sentencia = "UPDATE personas SET  Nombre='$nombre', Mail='$Mail',
                     Telefono='$tel',Direccion='$dir' WHERE ci = '$ci'";
     $conexion->query($sentencia);
     header("Location: usuarios/personas/personas_index.php");
@@ -129,17 +132,4 @@ if (isset($_POST['mail'])) {
     $sentencia = "UPDATE usuario SET  Mail='$mail',Contraseña='$contra',Estado='$estado',Rol='$rol' WHERE mail = '$mail'";
     $conexion->query($sentencia);
     header("Location: usuarios/usuario/usuario_index.php");
-}
-
-//Remito
-if (isset($_POST['IDR']) && isset($_POST['Destinatario'])) {
-    $IDR = $_POST['IDR'];
-    $Destinatario = $_POST['Destinatario'];
-    $Destino = $_POST['Destino'];
-    $Ruta = $_POST['Ruta'];
-    
-    $TiempoEstimado = $_POST['TiempoEstimado'];
-    $sentencia = "UPDATE remito SET  IDR='$IDR',Destinatario='$Destinatario',Destino='$Destino',Ruta='$Ruta',TiempoEstimado='$TiempoEstimado' WHERE IDR = '$IDR'";
-    $conexion->query($sentencia);
-    header("Location: remitos/remito/remito_index.php");
 }

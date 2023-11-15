@@ -55,7 +55,7 @@ require("../../../Model/session/session_administrador2.php");
 
                     <?php
                     $conexion = new mysqli("localhost", "root", "", "ocean");
-                    $sentencia = "SELECT * FROM vwLotesEntregados";
+                    $sentencia = "SELECT * FROM vwlotesentregados";
                     $filas = $conexion->query($sentencia);
                     foreach ($filas->fetch_all(MYSQLI_ASSOC) as $fila) {
                     ?>
@@ -76,7 +76,7 @@ require("../../../Model/session/session_administrador2.php");
                         
                         <div class="datos pFilaV" data-section="lote" data-value="opciones">OPCIONES</div>
                         <?php
-                        echo '<a href="verRemitoL.php?IDL=' . $fila['IDL'] . '">' . '<div class="datosR">'.'<img src="../img/icono_remito.png" alt="Imagen eliminar">'.'</div>' . ' </a>';
+                        echo '<a href="verRemitoLE.php?IDL=' . $fila['IDL'] . '">' . '<div class="datosR">'.'<img src="../img/icono_remito.png" alt="Imagen eliminar">'.'</div>' . ' </a>';
                         ?>
                     <?php
                     }

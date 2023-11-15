@@ -1,7 +1,7 @@
 <?php
 $idA = $_GET['idA'];
 $ruta = true;
-$url = 'http://localhost/proyecto/controller/almacen/C_va.php?ruta='.$ruta.'&idA='.$idA.'';
+$url = 'localhost/proyecto/Controller/almacen/C_va.php?ruta='.$ruta.'&idA='.$idA.'';
 require("../../../intermediario/getDataAPI.php");
 
 require("../../../Model/session/session_almacenInterno2.php");
@@ -21,12 +21,12 @@ require("../../../Model/session/session_almacenInterno2.php");
 
 <body>
     <div class="title">
-        <h1>Marcar Hora de Llegada de Camionetas</h1>
+        <h1 data-section="almacenI" data-value="op5">Marcar Hora de Llegada de Camionetas</h1>
     </div>
     <?php echo '<form action="../../../intermediario/postDataAPI.php?idA='.$idA.'" class="form" method="post">'; ?>
-        <h3 class="form__title">Ingrese datos</h3>
+        <h3 class="form__title" data-section="agregarAR" data-value="text">Ingrese datos</h3>
         <div class="text">
-            <label><b>Matricula:</b></label>
+            <label><b data-section="asignarLAC" data-value="matricula">Matricula:</b></label>
             <select name="MatriculaC">
                 <?php
                 foreach ($array as $fila) {
@@ -36,19 +36,20 @@ require("../../../Model/session/session_almacenInterno2.php");
             </select>
         </div>
         <div class="text">
-            <label><b>Hora de llegada:</b></label>
+            <label><b data-section="horaL" data-value="horaL">Hora de llegada:</b></label>
             <input type="datetime-local" name="fechaLlegada" class="input" placeholder="Ingrese hora" required>
         </div>
-        <input type="submit" value="Marcar" class="boton_form">
+        <input data-section="horaL" data-value="btn" type="submit" value="Marcar" class="boton_form">
     </form>
     <div class="botones">
         <div class="btn_volver">
-            <?php echo '<a href="almacenInterno.php?idA='.$idA.'" class="btn">'; ?>Volver</a>
+            <?php echo '<a href="almacenInterno.php?idA='.$idA.'" class="btn" data-section="lotesC" data-value="btnV">'; ?>Volver</a>
         </div>
         <div class="btn_tabla">
-            <?php echo '<a href="tablas/tabla_llegadaCam.php?idA='.$idA.'" class="btn">'; ?>Ver Tabla</a>
+            <?php echo '<a href="tablas/tabla_llegadaCam.php?idA='.$idA.'" class="btn" data-section="asignarLC" data-value="btnT">'; ?>Ver Tabla</a>
         </div>
     </div>
+    <script src="script.js"></script>
 </body>
 
 </html>

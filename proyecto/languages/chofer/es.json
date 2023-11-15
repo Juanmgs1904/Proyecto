@@ -29,7 +29,8 @@
         "titulo" : "Almacenes de Destino",
         "almacen" : "Almacenes",
         "ubicacion" : "Ubicación",
-        "distancia" : "Distancia"
+        "distancia" : "Distancia",
+        "direccion" : "Dirección"
     },
 
     "boton" : {
@@ -44,8 +45,8 @@
         "peso" : "Peso",
         "estado" : "Estado",
         "opciones" : "OPCIONES",
-        "fRecibo" : "fRecibo",
-        "fEntrega" : "fEntrega",
+        "fRecibo" : "Fecha de Recibo",
+        "fEntrega" : "Fecha de Entrega",
         "fechaRecibo" : "Fecha Recibo",
         "fechaEntrega" : "Fecha Entrega",
         "destinatario" : "Destinatario",
@@ -139,15 +140,5 @@
         "choferCamioneta" : "Chofer Camioneta",
         "interno" : "Almacén Interno",
         "externo" : "Almacén Externo"
-    },
-
-    "personal" : {
-        "fecha" : "Fecha de Nacimiento",
-        "cargo" : "Cargo",
-        "op1" : "Ver Personal",
-        "op2" : "Ver Personal Asignados",
-        "id" : "ID del Alamcén",
-        "titulo" : "Personal de un Almacén"
     }
-    
 }

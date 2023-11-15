@@ -14,7 +14,11 @@ class paquetes extends conexion
     public function listaPaquetes($idA)
     {
         if ($idA == 1) {
-            $sentencia = "SELECT * FROM vwPaquetesEnLotes";
+            $sentencia = "SELECT paquetes.* FROM paquetes 
+            WHERE paquetes.Estado = 'enCentral' OR paquetes.Estado = 'loteAsignado' 
+            AND codigo IN (SELECT paquetes.codigo FROM paquetes
+            JOIN contiene ON paquetes.codigo = contiene.codigo JOIN lotes ON contiene.IDL = lotes.IDL 
+            WHERE lotes.Estado = 'noAsignado')";
             $arrayDatos = parent::obtenerDatos($sentencia);
         } else {
             $sentencia1 = "SELECT lotes.IDL FROM lotes
@@ -24,7 +28,7 @@ class paquetes extends conexion
 
             $sentencia2 = "SELECT paquetes. * FROM paquetes
               INNER JOIN contiene ON paquetes.codigo = contiene.codigo
-              WHERE contiene.IDL IN ($sentencia1) AND (Estado = 'loteDesarmado' OR Estado = 'camionetaAsignada')";
+              WHERE contiene.IDL IN ($sentencia1) AND Estado = 'loteDesarmado'";
 
             $arrayDatos = parent::obtenerDatos($sentencia2);
         }
@@ -150,23 +154,25 @@ class paquetes extends conexion
             return 0;
         }
     }
-    private function buscarToken(){
+    private function buscarToken()
+    {
         $sentencia = "SELECT TokenId,Estado FROM personas_token WHERE Token = '" . $this->token . "' AND Estado = 'Activo'";
         $respuesta = parent::obtenerDatos($sentencia);
-        if($respuesta){
+        if ($respuesta) {
             return $respuesta;
-        }else{
+        } else {
             return 0;
         }
     }
-    private function actualizarToken($tokenId){
-        date_default_timezone_set("America/Montevideo");//cambia la fecha y hora por default
-        $fecha = date('Y-m-d H:i:s');// Obtiene la fecha y hora actual;
+    private function actualizarToken($tokenId)
+    {
+        date_default_timezone_set("America/Montevideo"); //cambia la fecha y hora por default
+        $fecha = date('Y-m-d H:i:s'); // Obtiene la fecha y hora actual;
         $sentecia = "UPDATE personas_token SET Fecha = '$fecha' WHERE TokenId = '$tokenId'";
         $respuesta = parent::guardar($sentecia);
-        if($respuesta >= 1){
+        if ($respuesta >= 1) {
             return $respuesta;
-        }else{
+        } else {
             return 0;
         }
     }

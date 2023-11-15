@@ -54,7 +54,7 @@ require("../../../../Model/session/session_administrador3.php");
 
                 <?php
                 $conexion = new mysqli("localhost", "root", "", "ocean");
-                $sentencia = "SELECT * FROM almacenInterno";
+                $sentencia = "SELECT * FROM almaceninterno";
                 $filas = $conexion->query($sentencia);
                 foreach ($filas->fetch_all(MYSQLI_ASSOC) as $fila) {
                 ?>
@@ -79,15 +79,17 @@ require("../../../../Model/session/session_administrador3.php");
 
                             const messages = {
                                 es: {
-                                    confirmacion_eliminar: "¿Estás seguro de que deseas eliminar este paquete?"
+                                    confirmacion_eliminar: "¿Estás seguro de que deseas eliminar este almacén?"
                                 },
                                 en: {
-                                    confirmacion_eliminar: "Are you sure you want to delete this package?"
+                                    confirmacion_eliminar: "Are you sure you want to delete this Warehouse?"
                                 }
                             };
+                                const defaultLanguage = 'es'; // Establece el lenguaje por defecto aquí
 
                             function confirmDelete(idI) {
-                                var confirmation = confirm(messages[selectedLanguage].confirmacion_eliminar);
+                                        const language = selectedLanguage || defaultLanguage; // Usa el lenguaje seleccionado o el por defecto
+                                var confirmation = confirm(messages[language].confirmacion_eliminar);
                                 if (confirmation) {
                                     // Si el usuario confirma, redirige a la página de eliminación
                                     window.location.href = "../../eliminar.php?idI=" + idI;

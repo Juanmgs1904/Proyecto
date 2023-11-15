@@ -55,7 +55,7 @@ require("../../../Model/session/session_administrador2.php");
 
                     <?php
                     $conexion = new mysqli("localhost", "root", "", "ocean");
-                    $sentencia = "SELECT * FROM vwLotesNoEntregados";
+                    $sentencia = "SELECT * FROM vwlotesnoentregados";
                     $filas = $conexion->query($sentencia);
                     foreach ($filas->fetch_all(MYSQLI_ASSOC) as $fila) {
                     ?>

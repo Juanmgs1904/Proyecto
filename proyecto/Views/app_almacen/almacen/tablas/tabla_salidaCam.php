@@ -1,6 +1,6 @@
 <?php
 $idA = $_GET['idA'];
-$url = 'http://localhost/proyecto/controller/almacen/C_salidaCam.php';
+$url = 'localhost/proyecto/Controller/almacen/C_salidaCam.php';
 require("../../../../intermediario/getDataAPI.php");
 require("../../../../Model/session/session_almacenInterno3.php");
 ?>
@@ -22,8 +22,8 @@ require("../../../../Model/session/session_almacenInterno3.php");
     <header class="header">
         <div class="header__contenedor">
             <div class="header__home">
-                <?php echo '<a href="../../index.php?idA='.$idA.'">'; ?>
-                    <img src="../../img/Logo_sistema.png" alt="Logo de max truck">
+                <?php echo '<a href="../../index.php?idA=' . $idA . '">'; ?>
+                <img src="../../img/Logo_sistema.png" alt="Logo de max truck">
                 </a>
             </div>
             <div class="header__titulo">
@@ -32,11 +32,18 @@ require("../../../../Model/session/session_almacenInterno3.php");
             <div class="header__logo">
                 <input type="checkbox" id="menuD" class="menu-toggle">
                 <label for="menuD" class="label"><img src="../../img/personas.png" alt="personas de max truck"></label>
-
                 <ul class="nav__lista">
                     <li><a href="#"><?php echo $_SESSION['mail']; ?></a></li>
+                    <div class="flags" id="flags">
+                        <div class="flags__item" data-language="es">
+                            <img src="../../../../img/es.svg" alt="opción español">
+                        </div>
+                        <div class="flags__item" data-language="en">
+                            <img src="../../../../img/en.svg" alt="opción inglés">
+                        </div>
+                    </div>
                     <a href="../../../../index.php">
-                        <li class="cerrar">Cerrar Sesión</li>
+                        <li class="cerrar" data-section="header" data-value="logout">Cerrar Sesión</li>
                     </a>
                 </ul>
             </div>
@@ -44,29 +51,44 @@ require("../../../../Model/session/session_almacenInterno3.php");
     </header>
     <div class="tabla__contenedor">
         <div class="titulo">
-            <h2>SALIDAS DE CAMIONETAS</h2>
+            <h2 data-section="tablaSCam" data-value="text">SALIDAS DE CAMIONETAS</h2>
         </div>
         <div class="gridCam">
-            <div class="datos pFilaH">MATRÍCULA</div>
-            <div class="datos pFilaH">FECHA</div>
-            <div class="datos pFilaH">OPCIONES</div>
+            <div class="datos pFilaH" data-section="asignarLAC" data-value="matricula">MATRÍCULA</div>
+            <div class="datos pFilaH" data-section="tablaLCam" data-value="fecha">FECHA</div>
+            <div class="datos pFilaH" data-section="almacenesR" data-value="opciones">OPCIONES</div>
             <?php
             foreach ($array as $fila) {
-            ?><div class="datos pFilaV">MATRÍCULA</div>
+            ?><div class="datos pFilaV" data-section="asignarLAC" data-value="matricula">MATRÍCULA</div>
                 <div class="datos"><?php echo $fila['MatriculaC'] . " "; ?></div>
-                <div class="datos pFilaV">FECHA</div>
+                <div class="datos pFilaV" data-section="tablaLCam" data-value="fecha">FECHA</div>
                 <div class="datos"><?php echo $fila['FechaSalida'] . " "; ?></div>
-                <div class="datos pFilaV">OPCIONES</div>
+                <div class="datos pFilaV" data-section="almacenesR" data-value="opciones">OPCIONES</div>
                 <?php
                 $matriculaC = $fila['MatriculaC'];
                 ?>
                 <div class="datos">
                     <?php
-                    echo '<a href="#" onclick="confirmDelete(\''  . $fila['MatriculaC'] . '\', \'' . $idA . '\', \'' . $fila["FechaSalida"] . '\');">' . '<div class="option">Eliminar</div>' . ' </a>';
+                    echo '<a href="#" onclick="confirmDelete(\''  . $fila['MatriculaC'] . '\', \'' . $idA . '\', \'' . $fila["FechaSalida"] . '\');">' . '<div class="option" data-section="lotesC" data-value="eliminar">Eliminar</div>' . ' </a>';
                     ?>
                     <script>
+                        const selectedLanguage = sessionStorage.getItem('selectedLanguage');
+
+                        const messages = {
+                            es: {
+                                confirmacion_eliminar: "¿Estás seguro de que deseas eliminar este paquete de la camioneta?"
+                            },
+                            en: {
+                                confirmacion_eliminar: "Are you sure you want to remove this package from the van?"
+                            }
+                        };
+
+                        const defaultLanguage = 'es'; // Establece el lenguaje por defecto aquí
+
                         function confirmDelete(matriculaC, IDA, FechaSalida) {
-                            var confirmation = confirm("¿Estás seguro de que deseas eliminar este paquete de la camioneta?");
+                            const language = selectedLanguage || defaultLanguage; // Usa el lenguaje seleccionado o el por defecto
+
+                            var confirmation = confirm(messages[language].confirmacion_eliminar);
                             if (confirmation) {
                                 // Si el usuario confirma, redirige a la página de eliminación
                                 window.location.href = "../../../../intermediario/deleteDataAPI.php?matriculaSC=" + matriculaC + "&idA=" + IDA + "&fechaSalida=" + FechaSalida;
@@ -80,8 +102,9 @@ require("../../../../Model/session/session_almacenInterno3.php");
         </div>
     </div>
     <div class="btn_volver">
-        <?php echo '<a href="../salidaCam.php?idA='.$idA.'" class="btn">'; ?>Volver</a>
+        <?php echo '<a href="../salidaCam.php?idA=' . $idA . '" class="btn" data-section="lotesC" data-value="btnV">'; ?>Volver</a>
     </div>
+    <script src="script.js"></script>
 </body>
 
 </html>

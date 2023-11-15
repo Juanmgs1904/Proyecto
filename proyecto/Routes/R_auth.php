@@ -19,5 +19,5 @@
         $matricula = $datosArray["resultado"]["matricula"];//guarda solo la matrícula
         $token = $datosArray['resultado']['token'];//guarda solo el token
     }
-    echo json_encode($datosArray);
+    json_encode($datosArray);
 ?>

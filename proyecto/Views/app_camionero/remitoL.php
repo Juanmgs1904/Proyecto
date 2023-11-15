@@ -3,7 +3,7 @@ $matricula = $_GET['matricula'];
 if (isset($_GET['id'])) {
     $idL = $_GET['id'];
 }
-$url = "http://localhost/proyecto/controller/transito/C_lotes.php?id=$idL";
+$url = "localhost/proyecto/Controller/transito/C_lotes.php?id=$idL";
 require("../../intermediario/getDataAPI.php");
 require("../../Model/session/session_camion.php");
 ?>

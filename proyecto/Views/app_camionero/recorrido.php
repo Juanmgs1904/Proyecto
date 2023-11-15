@@ -1,6 +1,6 @@
 <?php
 $matricula = $_GET['matricula'];
-$url = 'http://localhost/proyecto/controller/transito/C_vaHacia.php?matricula=' . $matricula . '';
+$url = 'localhost/proyecto/Controller/transito/C_vaHacia.php?matricula=' . $matricula . '';
 require("../../intermediario/getDataAPI.php");
 require("../../Model/session/session_camion.php");
 ?>
@@ -55,19 +55,32 @@ require("../../Model/session/session_camion.php");
             <h2 data-section="recorrido" data-value="titulo">Almacenes de Destino</h2>
         </div>
         <div class="recorrido_grid">
+            <div class="datos pFilaH">IDL</div>
             <div class="datos pFilaH" data-section="recorrido" data-value="almacen">ALMACENES</div>
             <div class="datos pFilaH" data-section="recorrido" data-value="ubicacion">UBICACIÓN</div>
+            <div class="datos pFilaH" data-section="recorrido" data-value="direccion">DIRECCIÓN</div>
             <div class="datos pFilaH" data-section="recorrido" data-value="distancia">DISTANCIA</div>
             <?php
+            $almacenesMostrados = array(); // Un array para hacer un seguimiento de los almacenes mostrados
             foreach ($array as $fila) {
+                $almacen = $fila['IDA'];
+                // Verifica si la matrícula ya se ha mostrado
+                if (!in_array($almacen, $almacenesMostrados)) {
+                    // Si no se ha mostrado, muestra la matrícula y agrega al array
+                    $almacenesMostrados[] = $almacen;
             ?>
-                <div class="datos pFilaV" data-section="recorrido" data-value="almacen">Almacenes</div>
-                <div class="datos"><?php echo $fila['IDA'] . " "; ?></div>
-                <div class="datos pFilaV" data-section="recorrido" data-value="ubicacion">Ubicación</div>
-                <div class="datos"><?php echo $fila['Ubicacion'] . " "; ?></div>
-                <div class="datos pFilaV" data-section="recorrido" data-value="distancia">Distancia</div>
-                <div class="datos"><?php echo $fila['Distancia'] . " "; ?></div>
+                    <div class="datos pFilaV">IDL</div>
+                    <div class="datos"><?php echo $fila['IDL'] . " "; ?></div>
+                    <div class="datos pFilaV" data-section="recorrido" data-value="almacen">Almacenes</div>
+                    <div class="datos"><?php echo $fila['IDA'] . " "; ?></div>
+                    <div class="datos pFilaV" data-section="recorrido" data-value="ubicacion">Ubicación</div>
+                    <div class="datos"><?php echo $fila['Ubicacion'] . " "; ?></div>
+                    <div class="datos pFilaV" data-section="recorrido" data-value="direccion">Dirección</div>
+                    <div class="datos"><?php echo $fila['Direccion'] . " "; ?></div>
+                    <div class="datos pFilaV linea" data-section="recorrido" data-value="distancia">Distancia</div>
+                    <div class="datos linea"><?php echo $fila['Distancia'] . " "; ?></div>
             <?php
+                }
             }
             ?>
         </div>

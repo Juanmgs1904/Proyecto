@@ -25,7 +25,7 @@ require("../../Model/session/session_almacenExterno.php");
                 </a>
             </div>
             <div class="header__titulo">
-                <h1>Bienvenido</h1>
+                <h1 data-section="header" data-value="title">Bienvenido</h1>
             </div>
             <div class="header__logo">
                 <input type="checkbox" id="menuD" class="menu-toggle">
@@ -33,8 +33,16 @@ require("../../Model/session/session_almacenExterno.php");
 
                 <ul class="nav__lista">
                     <li><a href="#"><?php echo $_SESSION['mail']; ?></a></li>
+                    <div class="flags" id="flags">
+                        <div class="flags__item" data-language="es">
+                            <img src="../../img/es.svg" alt="opción español">
+                        </div>
+                        <div class="flags__item" data-language="en">
+                            <img src="../../img/en.svg" alt="opción inglés">
+                        </div>
+                    </div>
                     <a href="../../index.php">
-                        <li class="cerrar">Cerrar Sesión</li>
+                        <li class="cerrar" data-section="header" data-value="logout">Cerrar Sesión</li>
                     </a>
                 </ul>
             </div>
@@ -44,9 +52,9 @@ require("../../Model/session/session_almacenExterno.php");
         <div class="opciones">
 
             <div class="opcion opcionE">
-                <?php echo '<a href="lotes/lotesE.php?empresa=' . $empresa . '" class="BTN">'; ?>Ingresar</a>
+                <?php echo '<a href="lotes/lotesE.php?empresa=' . $empresa . '" class="BTN" data-section="opciones" data-value="btn">'; ?>Ingresar</a>
                 <div class="infoOp">
-                    <h2>Lotes</h2>
+                    <h2 data-section="opciones" data-value="lotes">Lotes</h2>
                     <img src="img/lotes.svg" alt="Imagen lotes">
                 </div>
 
@@ -54,19 +62,20 @@ require("../../Model/session/session_almacenExterno.php");
             <div class="opcion opcionE">
                 <div class="infoOp">
                     <img src="img/paquetes.svg" alt="Imagen paquetes">
-                    <h2>Paquetes</h2>
+                    <h2 data-section="opciones" data-value="paquetes">Paquetes</h2>
                 </div>
-                <?php echo '<a href="paquete/paquetesE.php?empresa='.$empresa.'" class="BTN">'; ?>Ingresar</a>
+                <?php echo '<a href="paquete/paquetesE.php?empresa=' . $empresa . '" class="BTN" data-section="opciones" data-value="btn">'; ?>Ingresar</a>
             </div><!--Opción-->
             <div class="opcion opcionE">
-                <?php echo '<a href="almacen/almacenExterno.php?empresa='.$empresa.'" class="BTN">'; ?>Ingresar</a>
+                <?php echo '<a href="almacen/almacenExterno.php?empresa=' . $empresa . '" class="BTN" data-section="opciones" data-value="btn">'; ?>Ingresar</a>
                 <div class="infoOp">
-                    <h2>Almacén</h2>
+                    <h2 data-section="opciones" data-value="almacen">Almacén</h2>
                     <img src="img/almacen.svg" alt="Imagen almacén">
                 </div>
             </div><!--Opción-->
         </div><!--Fin listado opciones-->
     </main>
+    <script src="script.js"></script>
 </body>
 
 </html>

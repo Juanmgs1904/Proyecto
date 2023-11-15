@@ -1,6 +1,6 @@
 <?php
 $empresa = $_GET['empresa'];
-$url = 'http://localhost/proyecto/controller/almacen/C_asignarPALE.php?empresa='.$empresa.'';
+$url = 'localhost/proyecto/Controller/almacen/C_asignarPALE.php?empresa='.$empresa.'';
 require("../../../../intermediario/getDataAPI.php");
 require("../../../../Model/session/session_almacen3.php");
 ?>
@@ -33,21 +33,28 @@ require("../../../../Model/session/session_almacen3.php");
             <div class="header__logo">
                 <input type="checkbox" id="menuD" class="menu-toggle">
                 <label for="menuD" class="label"><img src="../../img/personas.png" alt="personas de max truck"></label>
-
                 <ul class="nav__lista">
                     <li><a href="#"><?php echo $_SESSION['mail']; ?></a></li>
-                    <a href="../../../../index.php"><li class="cerrar">Cerrar Sesión</li></a>
+                    <div class="flags" id="flags">
+                        <div class="flags__item" data-language="es">
+                            <img src="../../../../img/es.svg" alt="opción español">
+                        </div>
+                        <div class="flags__item" data-language="en">
+                            <img src="../../../../img/en.svg" alt="opción inglés">
+                        </div>
+                    </div>
+                    <a href="../../../../index.php"><li class="cerrar" data-section="header" data-value="logout">Cerrar Sesión</li></a>
                 </ul>
             </div>
         </div>
     </header>
     <div class="tabla__contenedor">
         <div class="titulo">
-            <h2>Lotes</h2>
+            <h2 data-section="opciones" data-value="lotes">Lotes</h2>
         </div>
         <div class="LEC_grid">
-            <div class="datos pFila">LOTES</div>
-            <div class="datos pFila">OPCIÓN</div>
+            <div class="datos pFila" data-section="tablaAPL" data-value="lotes">LOTES</div>
+            <div class="datos pFila" data-section="recorrido" data-value="opcion">OPCIÓN</div>
             <?php
             $lotesMostradas = array(); // Un array para hacer un seguimiento de las matrículas mostradas
             foreach ($array as $fila) {
@@ -65,7 +72,7 @@ require("../../../../Model/session/session_almacen3.php");
                     ?>
                     <div class="datos">
                         <?php
-                        echo '<a href="paquetesALE.php?IDL=' . $fila['IDL'] . '&empresa='.$empresa.'">Ver Paquetes</a>';
+                        echo '<a href="paquetesALE.php?IDL=' . $fila['IDL'] . '&empresa='.$empresa.'" data-section="tablaAPL" data-value="btnP">Ver Paquetes</a>';
                         ?>
                     </div>
             <?php
@@ -75,8 +82,9 @@ require("../../../../Model/session/session_almacen3.php");
         </div>
     </div>
     <div class="btn_volver">
-        <?php echo '<a href="../asignarPaqueteALE.php?empresa='.$empresa.'" class="btn">'; ?>Volver</a>
+        <?php echo '<a href="../asignarPaqueteALE.php?empresa='.$empresa.'" class="btn" data-section="recorrido" data-value="btnV">'; ?>Volver</a>
     </div>
+    <script src="script.js"></script>
 </body>
 
 </html>

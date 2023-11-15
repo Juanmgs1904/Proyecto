@@ -6,7 +6,7 @@ if (isset($_GET['lang'])) {
 }
 
 $codigo = $_POST['codigo'];
-$url = "http://localhost/proyecto/controller/transito/C_paquetes.php?codigo=$codigo";
+$url = "localhost/proyecto/Controller/transito/C_paquetes.php?codigo=$codigo";
 require("../../intermediario/getDataAPI.php");
 ?>
 <!DOCTYPE html>
@@ -48,17 +48,17 @@ require("../../intermediario/getDataAPI.php");
                 <?php
                 foreach ($array as $fila) {
                 ?>
-                    <div class="datos pFilaV">Codigo</div>
+                    <div class="datos pFilaV" data-section="seguimiento" data-value="codigoP">Codigo</div>
                     <div class="datos"><?php echo $fila['codigo'] . " "; ?></div>
-                    <div class="datos pFilaV">Peso</div>
+                    <div class="datos pFilaV" data-section="seguimiento" data-value="pesoP">Peso</div>
                     <div class="datos"><?php echo $fila['Peso'] . " "; ?></div>
-                    <div class="datos pFilaV">Fecha de Recibo</div>
+                    <div class="datos pFilaV" data-section="seguimiento" data-value="fechaRP">Fecha de Recibo</div>
                     <div class="datos"><?php echo $fila['fRecibo'] . " "; ?></div>
-                    <div class="datos pFilaV">Fecha de Entrega</div>
+                    <div class="datos pFilaV" data-section="seguimiento" data-value="fechaEP">Fecha de Entrega</div>
                     <div class="datos"><?php echo $fila['fEntrega'] . " "; ?></div>
-                    <div class="datos pFilaV">Destinatario</div>
+                    <div class="datos pFilaV" data-section="seguimiento" data-value="destinatarioP">Destinatario</div>
                     <div class="datos"><?php echo $fila['Destinatario'] . " "; ?></div>
-                    <div class="datos pFilaV">Destino</div>
+                    <div class="datos pFilaV" data-section="seguimiento" data-value="destinoP">Destino</div>
                     <div class="datos"><?php echo $fila['Destino'] . " "; ?></div>
                 <?php
                 }
@@ -69,45 +69,52 @@ require("../../intermediario/getDataAPI.php");
         foreach ($array as $fila) {
             switch ($fila['Estado']) {
                 case "enAlmacenExterno":
-        ?>
-                    <img src="img/entrega_1.png" alt="Barra de entrega" class="barra">
-                <?php
+                    ?>
+                        <img src="img/entrega_1.png" alt="Barra de entrega" class="barra barra1">
+                        <img src="img/entregaC_1.png" alt="Barra de entrega" class="barraC barraC1">
+                    <?php
                     break;
                 case "loteExternoAsignado":
                 ?>
-                    <img src="img/entrega_2.png" alt="Barra de entrega" class="barra">
+                    <img src="img/entrega_2.png" alt="Barra de entrega" class="barra barra2">
+                    <img src="img/entregaC_2.png" alt="Barra de entrega" class="barraC barraC2">
                 <?php
                     break;
                 case "enCentral":
                 ?>
-                    <img src="img/entrega_3.png" alt="Barra de entrega" class="barra">
+                    <img src="img/entrega_3.png" alt="Barra de entrega" class="barra barra3">
+                    <img src="img/entregaC_3.png" alt="Barra de entrega" class="barraC barraC3">
                 <?php
                     break;
                 case "loteAsignado":
                 ?>
-                    <img src="img/entrega_4.png" alt="Barra de entrega" class="barra">
+                    <img src="img/entrega_4.png" alt="Barra de entrega" class="barra barra4">
+                    <img src="img/entregaC_4.png" alt="Barra de entrega" class="barraC barraC4">
                 <?php
                     break;
                 case "loteDesarmado":
                 ?>
-                    <img src="img/entrega_5.png" alt="Barra de entrega" class="barra">
+                    <img src="img/entrega_5.png" alt="Barra de entrega" class="barra barra5">
+                    <img src="img/entregaC_5.png" alt="Barra de entrega" class="barraC barraC5">
                 <?php
                     break;
                 case "camionetaAsignada":
                 ?>
-                    <img src="img/entrega_6.png" alt="Barra de entrega" class="barra">
+                    <img src="img/entrega_6.png" alt="Barra de entrega" class="barra barra6">
+                    <img src="img/entregaC_6.png" alt="Barra de entrega" class="barraC barraC6">
                 <?php
                     break;
                 case "entregado":
                 ?>
-                    <img src="img/entrega_7.png" alt="Barra de entrega" class="barra">
+                    <img src="img/entrega_7.png" alt="Barra de entrega" class="barra barra7">
+                    <img src="img/entregaC_7.png" alt="Barra de entrega" class="barraC barraC7">
         <?php
                     break;
             }
         }
         ?>
         <?php
-        $url = "http://localhost/proyecto/controller/transito/C_lotesP.php?codigo=$codigo";
+        $url = "localhost/proyecto/Controller/transito/C_lotesP.php?codigo=$codigo";
         require("../../intermediario/getDataAPI.php");
         if (!empty($array)) {
         ?>
@@ -122,11 +129,11 @@ require("../../intermediario/getDataAPI.php");
                     <?php
                     foreach ($array as $fila) {
                     ?>
-                        <div class="datos pFilaV">IDL</div>
+                        <div class="datos pFilaV" data-section="seguimiento" data-value="IDLL">IDL</div>
                         <div class="datos"><?php echo $fila['IDL'] . " "; ?></div>
-                        <div class="datos pFilaV">Destino</div>
+                        <div class="datos pFilaV" data-section="seguimiento" data-value="destinoL">Destino</div>
                         <div class="datos"><?php echo $fila['Destino'] . " "; ?></div>
-                        <div class="datos pFilaV">Tiempo Estimado</div>
+                        <div class="datos pFilaV" data-section="seguimiento" data-value="tiempoL">Tiempo Estimado</div>
                         <div class="datos"><?php echo $fila['tiempoEstimado'] . " "; ?></div>
 
 
@@ -137,7 +144,7 @@ require("../../intermediario/getDataAPI.php");
                 </div>
             </div>
             <?php
-            $url = "http://localhost/proyecto/controller/transito/C_camionP.php?IDL=$IDL";
+            $url = "localhost/proyecto/Controller/transito/C_camionP.php?IDL=$IDL";
             require("../../intermediario/getDataAPI.php");
             if (!empty($array)) {
             ?>
@@ -151,9 +158,9 @@ require("../../intermediario/getDataAPI.php");
                         <?php
                         foreach ($array as $fila) {
                         ?>
-                            <div class="datos pFilaV">Matrícula</div>
+                            <div class="datos pFilaV" data-section="seguimiento" data-value="matriculaC">Matrícula</div>
                             <div class="datos"><?php echo $fila['Matricula'] . " "; ?></div>
-                            <div class="datos pFilaV">Fecha de Entrega</div>
+                            <div class="datos pFilaV" data-section="seguimiento" data-value="fechaEC">Fecha de Entrega</div>
                             <div class="datos"><?php echo $fila['fEntrega'] . " "; ?></div>
                         <?php
                             $matricula = $fila['Matricula'];
@@ -162,13 +169,13 @@ require("../../intermediario/getDataAPI.php");
                     </div>
                 </div>
                 <?php
-                $url = "http://localhost/proyecto/controller/transito/C_choferP.php?Matricula=$matricula";
+                $url = "localhost/proyecto/Controller/transito/C_choferP.php?Matricula=$matricula";
                 require("../../intermediario/getDataAPI.php");
                 if (!empty($array)) {
                 ?>
                     <div class="tabla__contenedor">
                         <div class="titulo">
-                            <h2 data-section="seguimiento" data-value="titleCH">CHOFERES DE LOS CAMIONES</h2>
+                            <h2 data-section="seguimiento" data-value="titleCH">CHOFER DE LOS CAMIONES</h2>
                         </div>
                         <div class="choferes_grid">
                             <div class="datos pFilaH" data-section="seguimiento" data-value="matriculaC">Matrícula</div>
@@ -178,13 +185,13 @@ require("../../intermediario/getDataAPI.php");
                             <?php
                             foreach ($array as $fila) {
                             ?>
-                                <div class="datos pFilaV">Matrícula</div>
+                                <div class="datos pFilaV" data-section="seguimiento" data-value="matriculaC">Matrícula</div>
                                 <div class="datos"><?php echo $fila['MatriculaV'] . " "; ?></div>
-                                <div class="datos pFilaV">Nombre</div>
+                                <div class="datos pFilaV" data-section="seguimiento" data-value="nombre">Nombre</div>
                                 <div class="datos"><?php echo $fila['Nombre'] . " "; ?></div>
-                                <div class="datos pFilaV">Demora</div>
+                                <div class="datos pFilaV" data-section="seguimiento" data-value="demora">Demora</div>
                                 <div class="datos"><?php echo $fila['Demora'] . " "; ?></div>
-                                <div class="datos pFilaV">Fecha de Demora</div>
+                                <div class="datos pFilaV" data-section="seguimiento" data-value="fechaD">Fecha de Demora</div>
                                 <div class="datos"><?php echo $fila['fDemora'] . " "; ?></div>
                             <?php
                             }
@@ -192,7 +199,7 @@ require("../../intermediario/getDataAPI.php");
                         </div>
                     </div>
                     <?php
-                    $url = "http://localhost/proyecto/controller/transito/C_camionetasP.php?codigo=$codigo";
+                    $url = "localhost/proyecto/Controller/transito/C_camionetasP.php?codigo=$codigo";
                     require("../../intermediario/getDataAPI.php");
                     if (!empty($array)) {
                     ?>
@@ -206,9 +213,9 @@ require("../../intermediario/getDataAPI.php");
                                 <?php
                                 foreach ($array as $fila) {
                                 ?>
-                                    <div class="datos pFilaV">Matrícula</div>
+                                    <div class="datos pFilaV" data-section="seguimiento" data-value="matriculaC">Matrícula</div>
                                     <div class="datos"><?php echo $fila['MatriculaC'] . " "; ?></div>
-                                    <div class="datos pFilaV">Fecha de Entrega</div>
+                                    <div class="datos pFilaV" data-section="seguimiento" data-value="fechaE">Fecha de Entrega</div>
                                     <div class="datos"><?php echo $fila['fEntrega'] . " "; ?></div>
                                 <?php
                                 }
@@ -217,13 +224,13 @@ require("../../intermediario/getDataAPI.php");
                         </div>
                         <?php
                         $matricula = $fila['MatriculaC'];
-                        $url = "http://localhost/proyecto/controller/transito/C_choferP.php?Matricula=$matricula";
+                        $url = "localhost/proyecto/Controller/transito/C_choferP.php?Matricula=$matricula";
                         require("../../intermediario/getDataAPI.php");
                         if (!empty($array)) {
                         ?>
                             <div class="tabla__contenedor">
                                 <div class="titulo">
-                                    <h2 data-section="seguimiento" data-value="titleCHCam">CHOFÉR DE LA CAMIONETA</h2>
+                                    <h2 data-section="seguimiento" data-value="titleCHCam">CHOFER DE LA CAMIONETA</h2>
                                 </div>
                                 <div class="choferes_grid">
                                     <div class="datos pFilaH" data-section="seguimiento" data-value="matriculaC">Matrícula</div>
@@ -233,13 +240,13 @@ require("../../intermediario/getDataAPI.php");
                                     <?php
                                     foreach ($array as $fila) {
                                     ?>
-                                        <div class="datos pFilaV">Matrícula</div>
+                                        <div class="datos pFilaV" data-section="seguimiento" data-value="matriculaC">Matrícula</div>
                                         <div class="datos"><?php echo $fila['MatriculaV'] . " "; ?></div>
-                                        <div class="datos pFilaV">Nombre</div>
+                                        <div class="datos pFilaV" data-section="seguimiento" data-value="nombre">Nombre</div>
                                         <div class="datos"><?php echo $fila['Nombre'] . " "; ?></div>
-                                        <div class="datos pFilaV">Demora</div>
+                                        <div class="datos pFilaV" data-section="seguimiento" data-value="demora">Demora</div>
                                         <div class="datos"><?php echo $fila['Demora'] . " "; ?></div>
-                                        <div class="datos pFilaV">Fecha de Demora</div>
+                                        <div class="datos pFilaV" data-section="seguimiento" data-value="fechaD">Fecha de Demora</div>
                                         <div class="datos"><?php echo $fila['fDemora'] . " "; ?></div>
                                     <?php
                                     }

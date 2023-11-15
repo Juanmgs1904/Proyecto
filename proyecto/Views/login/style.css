@@ -7,11 +7,15 @@
  --fuentePrincipal:'Roboto', sans-serif;
  --fuenteSecundaria:'Lato', sans-serif;
 }
-html, body {
-    min-height: 100%;
-}
 html {
     font-size: 62.5%; /* 1rem = 10px*/
+    min-height: 100%;
+    position: relative;
+}
+@media (max-width: 1600px) {
+    html {
+        min-height: 115%;
+    }
 }
 body {
     background-color: var(--fondoP);
@@ -19,6 +23,7 @@ body {
     font-size: 1.6rem;
     line-height: 1.5;
     margin: 0;
+    height: 100%;
 }
 .text-center {
     text-align: center;
@@ -115,7 +120,13 @@ a {
     border-radius: 2rem;
     background-color: var(--fondoP);
 }
-
+@media (max-width:550px) {
+    .form {
+        width: 25rem;
+        height: 40rem;
+        padding: 2rem 5rem;
+    }
+}
 .form h3 {
     border-bottom: solid 2px var(--letra);
 }
@@ -178,6 +189,8 @@ a {
     }
 }
 
+
+
 @media (max-width:550px) {
     h1{
         font-size: 2.5rem;
@@ -188,11 +201,16 @@ a {
     }
 }
 
-/* Footer */
+
 /*Footer*/
-.footer {
+footer {
     margin-top: 5rem;
-    background-color: #FFF;
+    bottom: 0;
+    width: 100%;
+}
+
+.footer {
+    background-color: var(--fondoS);
 }
 
 .footer h2 {
@@ -200,13 +218,14 @@ a {
 }
 
 .footer h3 {
-    margin: 1rem;
     font-size: 2rem;
+    margin: 1rem;
 }
 
 .contact {
     width: 99.9%;
     display: flex;
+    background-color: white;
 }
 
 .flags {
@@ -215,6 +234,7 @@ a {
     align-items: center;
     justify-content: center;
 }
+
 .flags__item {
     width: 4rem;
     margin: 2rem;
@@ -242,4 +262,25 @@ a {
 .logo_info {
     padding-top: 2rem;
     display: flex;
+}
+
+@media (max-width:550px) {
+    .logo-system {
+        width: 15%;
+    }
+    .flags__item {
+        width: 2rem;
+        margin: 1rem;
+        transition: .5s;
+    }
+    .footer h2 {
+        font-size: 2rem;
+        margin: .5rem;
+        text-align: center;
+    }
+    
+    .footer h3 {
+        font-size: 1rem;
+        margin: .5rem;
+    }
 }

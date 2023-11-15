@@ -11,7 +11,7 @@ class camiones extends conexion {
     }
 
     public function camionesRuta(){
-        $sentencia = "SELECT Matricula FROM vwCamionEnRuta";
+        $sentencia = "SELECT Matricula FROM vwcamionenruta";
         $arrayDatos = parent::obtenerDatos($sentencia);
         return $arrayDatos;
     }
@@ -26,7 +26,7 @@ class camiones extends conexion {
         return $arrayDatos;
     }
     public function camionesDisponibles(){
-        $sentencia = "SELECT Matricula FROM vwBuenEstadoCamion";
+        $sentencia = "SELECT Matricula FROM vwbuenestadocamion";
         $arrayDatos = parent::obtenerDatos($sentencia);
         return $arrayDatos;
     }

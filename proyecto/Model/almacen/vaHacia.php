@@ -7,7 +7,9 @@ class vaHacia extends conexion {
     private $IDL = "";
 
     public function listaLotesR(){
-        $sentencia = "SELECT * FROM va_hacia";
+        $sentencia1 = "SELECT IDL FROM vwlotesnoasignados";
+        $sentencia = "SELECT IDL, IDA, IDR, ubicacion FROM va_hacia 
+        JOIN almacen ON va_hacia.IDA = almacen.id WHERE IDL IN ($sentencia1)";
         $arrayDatos = parent::obtenerDatos($sentencia);
         return $arrayDatos;
     }

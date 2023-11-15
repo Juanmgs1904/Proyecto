@@ -25,7 +25,7 @@ require("../../../../Model/session/session_administrador3.php");
                 <select name="idI" required>
                     <?php
                     foreach ($filas->fetch_all(MYSQLI_ASSOC) as $fila) {
-                        echo '<option value="' . $fila['id'] . '">' . $fila['id'] . '</option>';
+                        echo '<option value="' . $fila['id'] . '">' . $fila['ubicacion'] . '</option>';
                     }
                     ?>
                 </select>

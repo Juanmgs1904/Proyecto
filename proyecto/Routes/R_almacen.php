@@ -48,7 +48,7 @@ switch($_SERVER['REQUEST_METHOD']){
         }
         echo json_encode($datosArray);
     break;
-
+    
     //Se mando otro método
     default:
         $datosArray = $_respuestas->error_405();

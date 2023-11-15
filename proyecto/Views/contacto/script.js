@@ -1,4 +1,3 @@
-// hace que el idioma se guarde acá
 document.addEventListener("DOMContentLoaded", () => {
     // Verifica si hay un idioma seleccionado en la variable de sesión
     const selectedLanguage = sessionStorage.getItem('selectedLanguage');

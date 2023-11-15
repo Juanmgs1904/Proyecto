@@ -1,6 +1,6 @@
 <?php
 $empresa = $_GET['empresa'];
-$url = 'http://localhost/proyecto/controller/almacen/C_asignarLote.php?empresa='.$empresa.'';
+$url = 'localhost/proyecto/Controller/almacen/C_asignarLote.php?empresa='.$empresa.'';
 require("../../../../intermediario/getDataAPI.php");
 require("../../../../Model/session/session_almacen3.php");
 ?>
@@ -36,18 +36,26 @@ require("../../../../Model/session/session_almacen3.php");
 
                 <ul class="nav__lista">
                     <li><a href="#"><?php echo $_SESSION['mail']; ?></a></li>
-                    <a href="../../../../index.php"><li class="cerrar">Cerrar Sesión</li></a>
+                    <div class="flags" id="flags">
+                        <div class="flags__item" data-language="es">
+                            <img src="../../../../img/es.svg" alt="opción español">
+                        </div>
+                        <div class="flags__item" data-language="en">
+                            <img src="../../../../img/en.svg" alt="opción inglés">
+                        </div>
+                    </div>
+                    <a href="../../../../index.php"><li class="cerrar" data-section="header" data-value="logout">Cerrar Sesión</li></a>
                 </ul>
             </div>
         </div>
     </header>
     <div class="tabla__contenedor">
         <div class="titulo">
-            <h2>Camiones</h2>
+            <h2 data-section="tablaALC" data-value="text">Camiones</h2>
         </div>
         <div class="LEC_grid">
-            <div class="datos pFila">MATRÍCULA</div>
-            <div class="datos pFila">OPCIÓN</div>
+            <div class="datos pFila" data-section="asignarLAC" data-value="matricula">MATRÍCULA</div>
+            <div class="datos pFila" data-section="recorrido" data-value="opcion">OPCIÓN</div>
             <?php
             $matriculasMostradas = array(); // Un array para hacer un seguimiento de las matrículas mostradas
 
@@ -66,7 +74,7 @@ require("../../../../Model/session/session_almacen3.php");
                     ?>
                     <div class="datos">
                         <?php
-                        echo '<a href="lotesACE.php?matricula=' . $fila['Matricula'] . '&empresa='.$empresa.'">Ver Lotes</a>';
+                        echo '<a href="lotesACE.php?matricula=' . $fila['Matricula'] . '&empresa='.$empresa.'" data-section="tablaALC" data-value="btnL">Ver Lotes</a>';
                         ?>
                     </div>
             <?php
@@ -76,8 +84,9 @@ require("../../../../Model/session/session_almacen3.php");
         </div>
     </div>
     <div class="btn_volver">
-        <?php echo '<a href="../asignarLoteE.php?empresa='.$empresa.'" class="btn">'; ?>Volver</a>
+        <?php echo '<a href="../asignarLoteE.php?empresa='.$empresa.'" class="btn" data-section="lotesC" data-value="btnV">'; ?>Volver</a>
     </div>
+    <script src="script.js"></script>
 </body>
 
 </html>

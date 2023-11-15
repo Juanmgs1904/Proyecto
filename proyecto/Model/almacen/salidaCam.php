@@ -94,8 +94,12 @@ class salida extends conexion {
         }
     }
     private function eliminarHora(){
-        $sentencia1 = "UPDATE vehiculo SET Disponibilidad = 'Disponible' WHERE MatriculaV = '" . $this->matriculaC . "'";
-        parent::guardar($sentencia1);
+        $sentencia = "SELECT MAX(FechaSalida) AS fecha_mayor FROM va_salida WHERE MatriculaC = '" . $this->matriculaC . "'";
+        $fecha_mayor = parent::obtenerDatos($sentencia);
+        if($fecha_mayor[0]["fecha_mayor"] == $this->fSalida){
+            $sentencia1 = "UPDATE vehiculo SET Disponibilidad = 'Disponible' WHERE MatriculaV = '" . $this->matriculaC . "'";
+            parent::guardar($sentencia1);
+        }
         $sentencia2 = "DELETE FROM va_salida WHERE MatriculaC = '" . $this->matriculaC . "' AND FechaSalida = '" . $this->fSalida . "'";
         $respuesta = parent::guardar($sentencia2);
         if($respuesta >= 1){
@@ -105,4 +109,3 @@ class salida extends conexion {
         }
     }
 }
-?>

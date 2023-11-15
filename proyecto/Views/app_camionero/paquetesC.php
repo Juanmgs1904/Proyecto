@@ -1,6 +1,6 @@
 <?php
 $matriculaC = $_GET['matricula'];
-$url = 'http://localhost/proyecto/controller/transito/C_transporta.php?matricula='.$matriculaC.'';
+$url = 'localhost/proyecto/Controller/transito/C_transporta.php?matricula='.$matriculaC.'';
 require("../../intermediario/getDataAPI.php");
 require("../../Model/session/session_camioneta.php");
 ?>

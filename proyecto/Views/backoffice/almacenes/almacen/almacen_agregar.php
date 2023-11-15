@@ -18,7 +18,31 @@ require("../../../../Model/session/session_administrador3.php");
         <form class="form" action="almacen_insertar.php" method="post">
             <div class="form_info text">
                 <label data-section="almacenes" data-value="ubicacion">Ubicacion:</label>
-                <input type="text" name="ubicacion" required>
+                <select name="ubicacion">
+                    <option value="Montevideo">Montevideo</option>
+                    <option value="Canelones">Canelones</option>
+                    <option value="Rivera">Rivera</option>
+                    <option value="Tacuarembo">Tacuarembó</option>
+                    <option value="Salto">Salto</option>
+                    <option value="Artigas">Artigas</option>
+                    <option value="Paysandu">Paysandú</option>
+                    <option value="Río Negro">Río Negro</option>
+                    <option value="Soriano">Soriano</option>
+                    <option value="Colonia">Colonia</option>
+                    <option value="Maldonado">Maldonado</option>
+                    <option value="Rocha">Rocha</option>
+                    <option value="Lavalleja">Lavalleja</option>
+                    <option value="Flores">Flores</option>
+                    <option value="Florida">Florida</option>
+                    <option value="Durazno">Durazno</option>
+                    <option value="Cerro Largo">Cerro Largo</option>
+                    <option value="Treinta y Tres">Treinta y Tres</option>
+                    <option value="San José">San José</option>
+                </select>
+            </div>
+            <div class="form_info text">
+                <label data-section="almacenes" data-value="direccion">Dirección:</label>
+                <input type="text" name="Direccion" required>
             </div>
             <input type="submit" value="Agregar" class="btn" data-section="boton" data-value="agregar">
         </form>

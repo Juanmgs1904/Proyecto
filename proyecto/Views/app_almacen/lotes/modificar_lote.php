@@ -24,10 +24,10 @@ require("../../../Model/session/session_almacen2.php");
     $idA = $_GET['idA'];
     ?>
     <div class="title">
-        <h1>Modificar Lote del Almacén</h1>
+        <h1 data-section="modificarLC" data-value="title">Modificar Lote del Almacén</h1>
     </div>
     <form action="../../../intermediario/putDataAPI.php" class="form" method="post">
-        <h3 class="form__title">Ingrese datos</h3>
+        <h3 class="form__title" data-section="modificarLC" data-value="text">Ingrese datos</h3>
         <!-- Vertical -->
         <div class="text">
             <label><b>ID:</b></label>
@@ -35,23 +35,21 @@ require("../../../Model/session/session_almacen2.php");
         </div>
         <input type="text" name="peso" value="<?= $peso ?>" hidden>
         <div class="text">
-            <label><b>Destino:</b></label>
-            <input type="text" name="destino" class="input" value="<?= $destino ?>">
-        </div>
-        <div class="text">
-            <label><b>Tiempo Estimado:</b></label>
+            <label><b data-section="modificarLC" data-value="tiempoEstimado">Tiempo Estimado:</b></label>
             <input type="datetime-local" name="tiempoEstimado" class="input" placeholder="Ingrese el Tiempo Estimado" value="<?= $tiempoEstimado ?>" required>
         </div>
         <input type="hidden" name="idA" value="<?= $idA ?>">
+        <input type="hidden" name="destino" value="<?= $destino ?>">
 
         <input type="hidden" name="estado" value="<?= $estado ?>">
-        <input type="submit" value="Modificar" class="boton_form">
+        <button type="submit" class="boton_form"><b data-section="modificarLC" data-value="btn">Modifica</b></button>
     </form>
     <div class="btn_volver">
         <?php
-        echo '<a href="lote.php?idA=' . $idA . '&id=' . $id . '" class="btn">' . "Volver" . ' </a>';
+        echo '<a href="lote.php?idA=' . $idA . '&id=' . $id . '" class="btn" data-section="modificarLC" data-value="btnV">' . "Volver" . ' </a>';
         ?>
     </div>
+    <script src="script.js"></script>
 </body>
 
 </html>

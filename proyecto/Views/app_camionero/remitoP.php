@@ -3,7 +3,7 @@ $matricula = $_GET['matricula'];
 if (isset($_GET['id'])) {
     $codigo = $_GET['id'];
 }
-$url = "http://localhost/proyecto/controller/transito/C_paquetes.php?id=$codigo";
+$url = "localhost/proyecto/Controller/transito/C_paquetes.php?id=$codigo";
 require("../../intermediario/getDataAPI.php");
 
 require("../../Model/session/session_camioneta.php");
@@ -67,9 +67,9 @@ require("../../Model/session/session_camioneta.php");
         ?>
                 <div class="datosT pFilaV" data-section="paquete" data-value="codigo">Codigo</div>
                 <div class="datosT"><?php echo $fila['codigo'] . " "; ?></div>
-                <div class="datosT pFilaV" data-section="paquete" data-value="fRecibo">fRecibo</div>
+                <div class="datosT pFilaV" data-section="paquete" data-value="fRecibo">Fecha de Recibo</div>
                 <div class="datosT"><?php echo $fila['fRecibo'] . " "; ?></div>
-                <div class="datosT pFilaV" data-section="paquete" data-value="fEntrega">fEntrega</div>
+                <div class="datosT pFilaV" data-section="paquete" data-value="fEntrega">Fecha de Entrega</div>
                 <div class="datosT"><?php echo $fila['fEntrega'] . " "; ?></div>
                 <div class="datosT pFilaV" data-section="paquete" data-value="destinatario">Destinatario</div>
                 <div class="datosT"><?php echo $fila['Destinatario'] . " "; ?></div>

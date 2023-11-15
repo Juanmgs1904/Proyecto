@@ -1,7 +1,7 @@
 <?php
 $mostrar = $_GET['mostrar'];
 $idA = $_GET['idA'];
-$url = 'http://localhost/proyecto/controller/almacen/C_esta.php';
+$url = 'localhost/proyecto/Controller/almacen/C_esta.php';
 require("../../../intermediario/getDataAPI.php");
 require("../../../Model/session/session_almacenInterno2.php");
 if (isset($_GET['IDR'])) {
@@ -40,8 +40,16 @@ if (isset($_GET['IDR'])) {
 
                 <ul class="nav__lista">
                     <li><a href="#"><?php echo $_SESSION['mail']; ?></a></li>
+                    <div class="flags" id="flags">
+                        <div class="flags__item" data-language="es">
+                            <img src="../../../img/es.svg" alt="opción español">
+                        </div>
+                        <div class="flags__item" data-language="en">
+                            <img src="../../../img/en.svg" alt="opción inglés">
+                        </div>
+                    </div>
                     <a href="../../../index.php">
-                        <li class="cerrar">Cerrar Sesión</li>
+                        <li class="cerrar" data-section="header" data-value="logout">Cerrar Sesión</li>
                     </a>
                 </ul>
             </div>
@@ -49,31 +57,46 @@ if (isset($_GET['IDR'])) {
     </header>
     <div class="tabla__contenedor">
         <div class="titulo">
-            <h2>Almacenes en Recorrido</h2>
+            <h2 data-section="almacenesR" data-value="text">Almacenes en Recorrido</h2>
         </div>
         <div class="almacenes__grid">
-            <div class="datos pFila">ID de los Almacenes</div>
-            <div class="datos pFila">Distancia</div>
-            <div class="datos pFila">OPCIONES</div>
+            <div class="datos pFila" data-section="asignarLC" data-value="idA">Almacén</div>
+            <div class="datos pFila" data-section="almacenesR" data-value="distancia">Distancia</div>
+            <div class="datos pFila" data-section="almacenesR" data-value="opciones">OPCIONES</div>
             <?php
 
             foreach ($array as $fila) {
                 $IDR = $fila['IDR'];
                 if ($IDR == $_GET["IDR"]) {
             ?>
-                    <div class="datos"><?php echo $fila['IDA'] . " "; ?></div>
+                    <div class="datos"><?php echo $fila['ubicacion'] . " "; ?></div>
                     <div class="datos"><?php echo $fila['Distancia'] . " "; ?></div>
                     <div class="datos">
                         <?php
                         $distancia = $fila['Distancia'];
                         $IDA = $fila['IDA'];
-                        echo '<a href="modificar_almacen.php?idA=' . $idA . '&mostrar=' . $mostrar . '&IDR=' . $IDR . '&IDA=' . $IDA . '&distancia=' . $distancia . '">Modificar</a>';
+                        echo '<a href="modificar_almacen.php?idA=' . $idA . '&mostrar=' . $mostrar . '&IDR=' . $IDR . '&IDA=' . $IDA . '&distancia=' . $distancia . '" data-section="almacenesR" data-value="modificar">Modificar</a>';
                         if ($mostrar == true) {
-                            echo '<a href="#" onclick="confirmDelete(\''  . $fila['IDR'] . '\', \'' . $fila['IDA'] . '\', \'' . $idA . '\', \'' . $mostrar . '\');">' . 'Eliminar</a>';
+                            echo '<a href="#" onclick="confirmDelete(\''  . $fila['IDR'] . '\', \'' . $fila['IDA'] . '\', \'' . $idA . '\', \'' . $mostrar . '\');" data-section="almacenesR" data-value="eliminar">' . 'Eliminar</a>';
                         ?>
                             <script>
+                                const selectedLanguage = sessionStorage.getItem('selectedLanguage');
+
+                                const messages = {
+                                    es: {
+                                        confirmacion_eliminar: "¿Estás seguro de que deseas eliminar este Almacén del Recorrido?"
+                                    },
+                                    en: {
+                                        confirmacion_eliminar: "Are you sure you want to remove this Store from the route?"
+                                    }
+                                };
+
+                                const defaultLanguage = 'es'; // Establece el lenguaje por defecto aquí
+
                                 function confirmDelete(IDR, IDA, idA, mostrar) {
-                                    var confirmation = confirm("¿Estás seguro de que deseas eliminar este Almacén del Recorrido?");
+                                    const language = selectedLanguage || defaultLanguage; // Usa el lenguaje seleccionado o el por defecto
+
+                                    var confirmation = confirm(messages[language].confirmacion_eliminar);
                                     if (confirmation) {
                                         // Si el usuario confirma, redirige a la página de eliminación
                                         window.location.href = "../../../intermediario/deleteDataAPI.php?IDRA=" + IDR + "&IDA=" + IDA + "&idA=" + idA + "&mostrar=" + mostrar;
@@ -92,14 +115,15 @@ if (isset($_GET['IDR'])) {
     </div>
     <div class="botones">
         <div class="btn_volver">
-            <?php echo '<a href="recorrido.php?idA=' . $idA . '" class="btn">'; ?>Volver</a>
+            <?php echo '<a href="recorrido.php?idA=' . $idA . '" class="btn" data-section="almacenesR" data-value="btnV">'; ?>Volver</a>
         </div>
         <div class="btn_tabla">
             <?php
-            echo '<a href="agregar_Almacen.php?idA=' . $idA . '&IDR=' . $ID . '&mostrar=' . $mostrar . '" class="btn">Agregar Almacén</a>';
+            echo '<a href="agregar_almacen.php?idA=' . $idA . '&IDR=' . $ID . '&mostrar=' . $mostrar . '" class="btn" data-section="almacenesR" data-value="btnAA">Agregar Almacén</a>';
             ?>
         </div>
     </div>
+    <script src="script.js"></script>
 </body>
 
 </html>

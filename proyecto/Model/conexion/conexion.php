@@ -26,33 +26,25 @@ class conexion {
         $jsondata = file_get_contents($direccion . "/" . "config.json");
         return json_decode($jsondata, true);
     }
-    private function hacerUTF8($array){//Sirve para pasar los datos de la base de datos a UTF-8
-        array_walk_recursive($array, function(&$item,$key){//Esta función ejecuta cada elemento del array en una función 
-            if(!mb_detect_encoding($item,'utf-8',true)){//si no detecta ningún caractér raro dice que es UTF-8
-                $item = utf8_encode($item);//si detecta caractér raro lo pasa a UTF-8
-            }
-        });
-        return $array;
-    }
     public function obtenerDatos($sentencia){//se le pasa la sentencia y forma un array con el resultado
         $resultado = $this->conexion->query($sentencia);
-        $resultadoArray = array();
+        $array = array();
         foreach($resultado as $key){
-            $resultadoArray[] = $key;//crea una nueva fila en el array
+            $array[] = $key;//crea una nueva fila en el array
         }
-        return $this->hacerUTF8($resultadoArray);
+        return $array;
     }
     public function SobtenerDatos($sentencia, $sentencia2){
         $resultado = $this->conexion->query($sentencia);
-        $resultadoArray = array();
+        $array = array();
         foreach($resultado as $key){
-            $resultadoArray[] = $key;//crea una nueva fila en el array
+            $array[] = $key;//crea una nueva fila en el array
         }
         $resultado2 = $this->conexion->query($sentencia2);
         foreach($resultado2 as $key){
-            $resultadoArray[] = $key;//crea una nueva fila en el array
+            $array[] = $key;//crea una nueva fila en el array
         }
-        return $this->hacerUTF8($resultadoArray);
+        return $array;
     }
     public function guardar($sentencia){//Devulve la cantidad de filas afectadas por la sentencia
         $resultado = $this->conexion->query($sentencia);

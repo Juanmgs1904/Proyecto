@@ -64,11 +64,11 @@ require("../../../../Model/session/session_administrador3.php");
                     <div class="datos pFilaVU" data-section="usuario" data-value="mail">Mail</div>
                     <div class="datos"><?php echo $fila['Mail'] . " "; ?></div>
                     <div class="datos pFilaVU" data-section="usuario" data-value="contraseña">Contraseña</div>
-                    <div class="datos"><?php echo $fila['Contraseña'] . " "; ?></div>
+                    <div class="datos chico"><?php echo $fila['Contraseña'] . " "; ?></div>
                     <div class="datos pFilaVU" data-section="usuario" data-value="estado">Estado</div>
                     <div class="datos"><?php echo $fila['Estado'] . " "; ?></div>
                     <div class="datos pFilaVU" data-section="usuario" data-value="rol">Rol</div>
-                    <div class="datos"><?php echo $fila['Rol'] . " "; ?></div>
+                    <div class="datos" ><?php echo $fila['Rol'] . " "; ?></div>
                     <div class="datos pFilaVU" data-section="paquete" data-value="opciones">OPCIONES</div>
                     <div class="datos">
                         <?php
@@ -90,8 +90,11 @@ require("../../../../Model/session/session_administrador3.php");
                                 }
                             };
 
+                            const defaultLanguage = 'es'; // Establece el lenguaje por defecto aquí
+                            
                             function confirmDelete(Mail) {
-                                var confirmation = confirm(messages[selectedLanguage].confirmacion_eliminar);
+                                        const language = selectedLanguage || defaultLanguage; // Usa el lenguaje seleccionado o el por defecto
+                                var confirmation = confirm(messages[language].confirmacion_eliminar);
                                 if (confirmation) {
                                     // Si el usuario confirma, redirige a la página de eliminación
                                     window.location.href = "../../eliminar.php?Mail=" + Mail;

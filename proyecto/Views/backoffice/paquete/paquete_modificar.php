@@ -21,6 +21,7 @@ require("../../../Model/session/session_administrador2.php");
 
     $Destinatario = $_GET['Destinatario'];
     $Destino = $_GET['Destino'];
+    $Departamento = $_GET['Departamento'];
     ?>
     <div class="contenedor_form">
         <h1 data-section="header" data-value="ingresar">Ingresar Datos</h1>
@@ -63,6 +64,33 @@ require("../../../Model/session/session_administrador2.php");
             <div class="form_info text">
                 <label data-section="paquete" data-value="destino">Destino:</label>
                 <input type="text" name="Destino" value="<?= $Destino ?>" required>
+            </div>
+            <div class="form_info text">
+                <label data-section="paquete" data-value="departamento">Departamento:</label>
+                <select name="Departamento">
+                    <?php
+                    echo '<option value="' . $Departamento . '">' . $Departamento . '</option>';
+                    ?>
+                    <option value="Montevideo">Montevideo</option>
+                    <option value="Canelones">Canelones</option>
+                    <option value="Rivera">Rivera</option>
+                    <option value="Tacuarembo">Tacuarembó</option>
+                    <option value="Salto">Salto</option>
+                    <option value="Artigas">Artigas</option>
+                    <option value="Paysandu">Paysandú</option>
+                    <option value="Río Negro">Río Negro</option>
+                    <option value="Soriano">Soriano</option>
+                    <option value="Colonia">Colonia</option>
+                    <option value="Maldonado">Maldonado</option>
+                    <option value="Rocha">Rocha</option>
+                    <option value="Lavalleja">Lavalleja</option>
+                    <option value="Flores">Flores</option>
+                    <option value="Florida">Florida</option>
+                    <option value="Durazno">Durazno</option>
+                    <option value="Cerro Largo">Cerro Largo</option>
+                    <option value="Treinta y Tres">Treinta y Tres</option>
+                    <option value="San José">San José</option>
+                </select>
             </div>
             <input type="submit" value="Modificar" class="btn" data-section="boton" data-value="modificar">
         </form>

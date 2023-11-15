@@ -27,7 +27,7 @@
         "elT2" : "WAREHOUSES ALL OVER THE COUNTRY",
         "el2" : "Allows products to be delivered anywhere in the country",
         "elT3" : "SAFER",
-        "el3" : "Evita las entregas fallidas. Trackeo y control de las entregas",
+        "el3" : "Avoid failed deliveries. Tracking and control of deliveries",
         "elT4" : "MORE PROFITABLE",
         "el4" : "Improve customer satisfaction and generate more sales"
     },
@@ -62,7 +62,7 @@
         "titleC" : "PACKAGE TRUCK",
         "matriculaC" : "Car license plate",
         "fechaEC" : "Date of delivery",
-        "titleCH" : "TRUCK DRIVERS",
+        "titleCH" : "TRUCK DRIVER",
         "nombre" : "Name",
         "demora" : "Delay",
         "fechaD" : "Delay Date",

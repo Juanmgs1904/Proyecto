@@ -49,13 +49,14 @@ require("../../../Model/session/session_administrador2.php");
         </header>
         <div class="info_tabla">
             <div class="tabla">
-                <div class="grid6">
+                <div class="grid7">
 
                     <div class="datos pFilaH" data-section="paquete" data-value="codigo">codigo</div>
                     <div class="datos pFilaH" data-section="paquete" data-value="fRecibo">fRecibo</div>
                     <div class="datos pFilaH" data-section="paquete" data-value="fEntrega">fEntrega</div>
                     <div class="datos pFilaH" data-section="paquete" data-value="destinatario">Destinatario</div>
                     <div class="datos pFilaH" data-section="paquete" data-value="destino">Destino</div>
+                    <div class="datos pFilaH" data-section="paquete" data-value="departamento">Departamento</div>
                     <div class="datos pFilaH" data-section="paquete" data-value="opciones">OPCIONES</div>
 
                     <?php
@@ -77,11 +78,13 @@ require("../../../Model/session/session_administrador2.php");
                             <div class="datos"><?php echo $fila['Destinatario'] . " "; ?></div>
                             <div class="datos pFilaV" data-section="paquete" data-value="destino">Destino</div>
                             <div class="datos"><?php echo $fila['Destino'] . " "; ?></div>
+                            <div class="datos pFilaV" data-section="paquete" data-value="departamento">Departamento</div>
+                            <div class="datos"><?php echo $fila['Departamento'] . " "; ?></div>
                             <div class="datos pFilaV" data-section="paquete" data-value="opciones">OPCIONES</div>
                             <div class="datosL">
                                 <?php
                                 echo '<a href="paquete_modificar.php?codigo=' . $fila['codigo'] . '&Peso=' . $fila['Peso'] . '&Estado=' . $fila['Estado'] . '&fRecibo=' . $fila['fRecibo'] .
-                                    '&fEntrega=' . $fila['fEntrega'] . '&Destinatario=' . $fila['Destinatario'] . '&Destino=' . $fila['Destino'] . '">' . '<img src="../img/modificar.svg" alt="Imagen modificar">' . ' </a>';
+                                    '&fEntrega=' . $fila['fEntrega'] . '&Destinatario=' . $fila['Destinatario'] . '&Destino=' . $fila['Destino'] .'&Departamento=' . $fila['Departamento'] . '">' . '<img src="../img/modificar.svg" alt="Imagen modificar">' . ' </a>';
                                 ?>
                                 <?php
                                 echo '<a href="#" onclick="confirmDelete(\''  . $fila['codigo'] . '\');">' . '<img src="../img/eliminar.svg" alt="Imagen eliminar">' . ' </a>';
@@ -100,8 +103,12 @@ require("../../../Model/session/session_administrador2.php");
                                         }
                                     };
 
+                                    const defaultLanguage = 'es'; // Establece el lenguaje por defecto aquí
+
                                     function confirmDelete(codigo) {
-                                        var confirmation = confirm(messages[selectedLanguage].confirmacion_eliminar);
+                                        const language = selectedLanguage || defaultLanguage; // Usa el lenguaje seleccionado o el por defecto
+
+                                        var confirmation = confirm(messages[language].confirmacion_eliminar);
                                         if (confirmation) {
                                             // Si el usuario confirma, redirige a la página de eliminación
                                             window.location.href = "../eliminar.php?codigo=" + codigo;

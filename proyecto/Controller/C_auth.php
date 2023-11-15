@@ -11,25 +11,24 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $datosArray = $_autenticacion->login($json);
     require('../Routes/R_auth.php');
     if ($responseMsg) {
-        header("location: http://localhost/proyecto/Views/login/login.php?mensaje=$responseMsg");
+        header("location: ../Views/login/login.php?mensaje=$responseMsg");
     }
     if ($app) {
-        session_start();
         $_SESSION['rol'] = $app;
         if ($app == "AlmacenInterno") {
-            header("location: http://localhost/proyecto/Views/app_almacen/index.php?idA=$idA");
+            header("location: ../Views/app_almacen/index.php?idA=$idA");
         } else {
             if ($app == "AlmacenExterno") {
-                header("location: http://localhost/proyecto/Views/app_almacen/indexExterno.php?empresa=$empresa");
+                header("location: ../Views/app_almacen/indexExterno.php?empresa=$empresa");
             } else {
                 if ($app == "Administrador") {
-                    header("location: http://localhost/proyecto/Views/backoffice/index.php");
+                    header("location: ../Views/backoffice/index.php");
                 } else {
                     if ($app == "ChoferCamion") {
-                        header("location: http://localhost/proyecto/Views/app_camionero/indexCamion.php?matricula=$matricula");
+                        header("location: ../Views/app_camionero/indexCamion.php?matricula=$matricula");
                     } else {
                         if ($app == "ChoferCamioneta") {
-                            header("location: http://localhost/proyecto/Views/app_camionero/indexCamioneta.php?matricula=$matricula");
+                            header("location: ../Views/app_camionero/indexCamioneta.php?matricula=$matricula");
                         }
                     }
                 }
@@ -39,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 } else {
     header('Content-Type: application/json');
     $datosArray = $_respuestas->error_405();
-    echo json_encode($datosArray);
+    json_encode($datosArray);
     $responseCode = $datosArray["resultado"]["error_id"];
     http_response_code($responseCode);
 }

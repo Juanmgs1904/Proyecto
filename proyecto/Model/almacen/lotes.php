@@ -7,8 +7,9 @@ class lotes extends conexion {
     private $estado = "";
     private $destino = "";
     private $ruta = "";
+    private $empresa = "";
     private $tiempoEstimado = "";
-    private $enAlmacenExterno = "";
+    private $enAlmacenExterno = "0";
 
     public function listaLotes(){
         $sentencia = "SELECT * FROM lotes";
@@ -39,7 +40,6 @@ class lotes extends conexion {
             $this->estado = $datos['estado'];
             $this->destino = $datos['destino'];
             $this->tiempoEstimado = $datos['tiempoEstimado'];
-            if(isset($datos['peso'])){ $this->peso = $datos['peso']; }
             $respuestaId = $this->altaLote();
             if($respuestaId){
                 $respuesta = $_respuestas->respuesta;
@@ -54,9 +54,9 @@ class lotes extends conexion {
         
     }
     private function altaLote(){
-        $sentencia = "INSERT INTO lotes(Peso,Estado,Destino,tiempoEstimado)
+        $sentencia = "INSERT INTO lotes(Estado,Destino,tiempoEstimado,Empresa,enAlmacenExterno)
         VALUES
-        ('".$this->peso."','". $this->estado."','". $this->destino."','". $this->tiempoEstimado."')";
+        ('". $this->estado."','". $this->destino."','". $this->tiempoEstimado."','" . $this->empresa . "', '" . $this->enAlmacenExterno . "')";
         $respuesta = parent::guardarId($sentencia);
         if($respuesta){
             return $respuesta;
@@ -75,7 +75,6 @@ class lotes extends conexion {
             $this->estado = $datos['estado'];
             $this->destino = $datos['destino'];
             $this->tiempoEstimado = $datos['tiempoEstimado'];
-            if(isset($datos['peso'])){ $this->peso = $datos['peso']; }
             $respuestaFilas = $this->modificarLote();
             if($respuestaFilas){
                 $respuesta = $_respuestas->respuesta;
@@ -90,7 +89,6 @@ class lotes extends conexion {
      }   
      private function modificarLote(){
         $sentencia = "UPDATE lotes SET Estado = '" . $this->estado . "',
-        Peso = '". $this->peso . "',
         Destino = '". $this->destino ."',
         tiempoEstimado = '". $this->tiempoEstimado ."' WHERE IDL = '" . $this->idL . "'";
         $respuesta = parent::guardar($sentencia);

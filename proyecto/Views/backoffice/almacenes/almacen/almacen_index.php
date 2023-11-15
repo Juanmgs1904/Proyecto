@@ -48,11 +48,11 @@ require("../../../../Model/session/session_administrador3.php");
         <div class="info_tabla">
 
             <div class="tabla">
-                <div class="grid3">
+                <div class="grid4">
 
                     <div class="datos pFilaH">ID</div>
                     <div class="datos pFilaH" data-section="almacenes" data-value="ubicacion">Ubicación</div>
-
+                    <div class="datos pFilaH" data-section="almacenes" data-value="direccion">Dirección</div>
                     <div class="datos pFilaH" data-section="paquete" data-value="opciones">OPCIONES</div>
 
                     <?php
@@ -66,11 +66,13 @@ require("../../../../Model/session/session_administrador3.php");
                         <div class="datos"><?php echo $fila['id'] . " "; ?></div>
                         <div class="datos pFilaV"  data-section="almacenes" data-value="ubicaion">ubicacion</div>
                         <div class="datos"><?php echo $fila['ubicacion'] . " "; ?></div>
+                        <div class="datos pFilaV"  data-section="almacenes" data-value="direccion">Direccion</div>
+                        <div class="datos"><?php echo $fila['Direccion'] . " "; ?></div>
 
                         <div class="datos pFilaV" data-section="paquete" data-value="opciones">OPCIONES</div>
                         <div class="datosL">
                             <?php
-                            echo '<a href="almacen_modificar.php?id=' . $fila['id'] . '&ubicacion=' . $fila['ubicacion'] . '">' . '<img src="../../img/modificar.svg" alt="Imagen modificar">' . ' </a>';
+                            echo '<a href="almacen_modificar.php?id=' . $fila['id'] . '&ubicacion=' . $fila['ubicacion'] . '&Direccion=' . $fila['Direccion'] . '">' . '<img src="../../img/modificar.svg" alt="Imagen modificar">' . ' </a>';
                             ?>
                             <?php
                             echo '<a href="#" onclick="confirmDelete(\''  . $fila['id'] . '\');">' . '<img src="../../img/eliminar.svg" alt="Imagen eliminar">' . ' </a>';
@@ -82,15 +84,18 @@ require("../../../../Model/session/session_administrador3.php");
 
                                 const messages = {
                                     es: {
-                                        confirmacion_eliminar: "¿Estás seguro de que deseas eliminar este paquete?"
+                                        confirmacion_eliminar: "¿Estás seguro de que deseas eliminar este almacén?"
                                     },
                                     en: {
-                                        confirmacion_eliminar: "Are you sure you want to delete this package?"
+                                        confirmacion_eliminar: "Are you sure you want to delete this Warehouse?"
                                     }
                                 };
 
+                                const defaultLanguage = 'es'; // Establece el lenguaje por defecto aquí
+
                                 function confirmDelete(id) {
-                                    var confirmation = confirm(messages[selectedLanguage].confirmacion_eliminar);
+                                        const language = selectedLanguage || defaultLanguage; // Usa el lenguaje seleccionado o el por defecto
+                                    var confirmation = confirm(messages[language].confirmacion_eliminar);
                                     if (confirmation) {
                                         // Si el usuario confirma, redirige a la página de eliminación
                                         window.location.href = "../../eliminar.php?id=" + id;

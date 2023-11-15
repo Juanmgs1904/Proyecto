@@ -12,7 +12,7 @@ if (isset($_POST['tiempoEstimadoE']) && isset($_POST['almacenExterno'])) {
         'enAlmacenExterno' => $almacenExterno
     ];
     $json = json_encode($datos);
-    curl_setopt($ch, CURLOPT_URL, "http://localhost/proyecto/controller/almacen/C_lotesE.php");
+    curl_setopt($ch, CURLOPT_URL, "localhost/proyecto/Controller/almacen/C_lotesE.php");
     curl_setopt($ch, CURLOPT_POST, true);
     curl_setopt($ch, CURLOPT_POSTFIELDS, $json);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -20,7 +20,7 @@ if (isset($_POST['tiempoEstimadoE']) && isset($_POST['almacenExterno'])) {
     if (curl_errno($ch)) {
         echo curl_error($ch);
     } else {
-        header("location: http://localhost/proyecto/Views/app_almacen/lotes/lotesE.php?empresa=$empresa");
+        header("location: ../Views/app_almacen/lotes/lotesE.php?empresa=$empresa");
     }
 }
 if (isset($_POST['Destino']) && isset($_POST['tiempoEstimado'])) {
@@ -28,12 +28,12 @@ if (isset($_POST['Destino']) && isset($_POST['tiempoEstimado'])) {
     $tiempoEstimado = $_POST['tiempoEstimado'];
 
     $datos = [
-        'estado' => "NoAsignado",
+        'estado' => "noAsignado",
         'destino' => $Destino,
         'tiempoEstimado' => $tiempoEstimado
     ];
     $json = json_encode($datos);
-    curl_setopt($ch, CURLOPT_URL, "http://localhost/proyecto/controller/almacen/C_lotes.php");
+    curl_setopt($ch, CURLOPT_URL, "localhost/proyecto/Controller/almacen/C_lotes.php");
     curl_setopt($ch, CURLOPT_POST, true);
     curl_setopt($ch, CURLOPT_POSTFIELDS, $json);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -41,32 +41,31 @@ if (isset($_POST['Destino']) && isset($_POST['tiempoEstimado'])) {
     if (curl_errno($ch)) {
         echo curl_error($ch);
     } else {
-        header("location: http://localhost/proyecto/Views/app_almacen/lotes/lotes.php?idA=1");
+        header("location: ../Views/app_almacen/lotes/lotes.php?idA=1");
     }
 }
 
 //Paquete
-if (isset($_POST['pesoE']) && isset($_POST['fEntregaE']) && isset($_POST['DestinatarioE']) && isset($_POST['DestinoE'])) {
+if (isset($_POST['pesoE']) && isset($_POST['fEntregaE']) && isset($_POST['DestinatarioE']) && isset($_POST['DestinoE']) && isset($_POST['departamento'])) {
     $Peso = $_POST['pesoE'];
     $Estado = "enAlmacenExterno";
-    date_default_timezone_set("America/Montevideo");//cambia la fecha y hora por default
-    $fRecibo = date('Y-m-d H:i:s');// Obtiene la fecha y hora actual;
     $fEntrega = $_POST['fEntregaE'];
     $Destinatario = $_POST['DestinatarioE'];
     $Destino = $_POST['DestinoE'];
+    $departamento = $_POST['departamento'];
     $empresa = $_GET['empresa'];
 
     $datos = [
         'Peso' => $Peso,
         'Estado' => $Estado,
-        'fRecibo' => $fRecibo,
         'fEntrega' => $fEntrega,
         'Destinatario' => $Destinatario,
         'Destino' => $Destino,
+        'Departamento' => $departamento,
         'Empresa' => $empresa
     ];
     $json = json_encode($datos);
-    curl_setopt($ch, CURLOPT_URL, "http://localhost/proyecto/controller/almacen/C_paquetesE.php");
+    curl_setopt($ch, CURLOPT_URL, "localhost/proyecto/Controller/almacen/C_paquetesE.php");
     curl_setopt($ch, CURLOPT_POST, true);
     curl_setopt($ch, CURLOPT_POSTFIELDS, $json);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -74,7 +73,7 @@ if (isset($_POST['pesoE']) && isset($_POST['fEntregaE']) && isset($_POST['Destin
     if (curl_errno($ch)) {
         echo curl_error($ch);
     } else {
-        header("location: http://localhost/proyecto/Views/app_almacen/paquete/paquetesE.php?empresa=$empresa");
+        header("location: ../Views/app_almacen/paquete/paquetesE.php?empresa=$empresa");
     }
 }
 
@@ -88,7 +87,7 @@ if (isset($_POST['Matricula']) && isset($_POST['idA'])) {
         'idA' => $idA
     ];
     $json = json_encode($datos);
-    curl_setopt($ch, CURLOPT_URL, "http://localhost/proyecto/controller/almacen/C_vaA.php");
+    curl_setopt($ch, CURLOPT_URL, "localhost/proyecto/Controller/almacen/C_vaA.php");
     curl_setopt($ch, CURLOPT_POST, true);
     curl_setopt($ch, CURLOPT_POSTFIELDS, $json);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -96,7 +95,7 @@ if (isset($_POST['Matricula']) && isset($_POST['idA'])) {
     if (curl_errno($ch)) {
         echo curl_error($ch);
     } else {
-        header("location: http://localhost/proyecto/Views/app_almacen/almacen/almacenInterno.php");
+        header("location: ../Views/app_almacen/almacen/almacenInterno.php");
     }
 }
 
@@ -111,7 +110,7 @@ if (isset($_POST['MatriculaC']) && isset($_POST['idI'])) {
         'idI' => $idI
     ];
     $json = json_encode($datos);
-    curl_setopt($ch, CURLOPT_URL, "http://localhost/proyecto/controller/almacen/C_va.php");
+    curl_setopt($ch, CURLOPT_URL, "localhost/proyecto/Controller/almacen/C_va.php");
     curl_setopt($ch, CURLOPT_POST, true);
     curl_setopt($ch, CURLOPT_POSTFIELDS, $json);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -119,7 +118,7 @@ if (isset($_POST['MatriculaC']) && isset($_POST['idI'])) {
     if (curl_errno($ch)) {
         echo curl_error($ch);
     } else {
-        header("location: http://localhost/proyecto/Views/app_almacen/almacen/almacenInterno.php");
+        header("location: ../Views/app_almacen/almacen/almacenInterno.php");
     }
 }
 
@@ -135,7 +134,7 @@ if (isset($_POST['Matricula']) && isset($_POST['idA']) && isset($_POST['fechaLle
         'fechaLlegada' => $fechaLlegada
     ];
     $json = json_encode($datos);
-    curl_setopt($ch, CURLOPT_URL, "http://localhost/proyecto/controller/almacen/C_llegada.php");
+    curl_setopt($ch, CURLOPT_URL, "localhost/proyecto/Controller/almacen/C_llegada.php");
     curl_setopt($ch, CURLOPT_POST, true);
     curl_setopt($ch, CURLOPT_POSTFIELDS, $json);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -143,7 +142,7 @@ if (isset($_POST['Matricula']) && isset($_POST['idA']) && isset($_POST['fechaLle
     if (curl_errno($ch)) {
         echo curl_error($ch);
     } else {
-        header("location: http://localhost/proyecto/Views/app_almacen/almacen/almacenInterno.php?idA=$idA");
+        header("location: ../Views/app_almacen/almacen/almacenInterno.php?idA=$idA");
     }
 }
 
@@ -159,7 +158,7 @@ if (isset($_POST['Matricula']) && isset($_POST['idA']) && isset($_POST['fechaSal
         'fechaSalida' => $fechaSalida
     ];
     $json = json_encode($datos);
-    curl_setopt($ch, CURLOPT_URL, "http://localhost/proyecto/controller/almacen/C_salida.php");
+    curl_setopt($ch, CURLOPT_URL, "localhost/proyecto/Controller/almacen/C_salida.php");
     curl_setopt($ch, CURLOPT_POST, true);
     curl_setopt($ch, CURLOPT_POSTFIELDS, $json);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -167,7 +166,7 @@ if (isset($_POST['Matricula']) && isset($_POST['idA']) && isset($_POST['fechaSal
     if (curl_errno($ch)) {
         echo curl_error($ch);
     } else {
-        header("location: http://localhost/proyecto/Views/app_almacen/almacen/almacenInterno.php?idA=$idA");
+        header("location: ../Views/app_almacen/almacen/almacenInterno.php?idA=$idA");
     }
 }
 
@@ -182,7 +181,7 @@ if (isset($_POST['MatriculaC']) && isset($_POST['fechaLlegada'])) {
         'fechaLlegada' => $fechaLlegada
     ];
     $json = json_encode($datos);
-    curl_setopt($ch, CURLOPT_URL, "http://localhost/proyecto/controller/almacen/C_llegadaCam.php");
+    curl_setopt($ch, CURLOPT_URL, "localhost/proyecto/Controller/almacen/C_llegadaCam.php");
     curl_setopt($ch, CURLOPT_POST, true);
     curl_setopt($ch, CURLOPT_POSTFIELDS, $json);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -190,7 +189,7 @@ if (isset($_POST['MatriculaC']) && isset($_POST['fechaLlegada'])) {
     if (curl_errno($ch)) {
         echo curl_error($ch);
     } else {
-        header("location: http://localhost/proyecto/Views/app_almacen/almacen/almacenInterno.php?idA=$idA");
+        header("location: ../Views/app_almacen/almacen/almacenInterno.php?idA=$idA");
     }
 }
 
@@ -207,7 +206,7 @@ if (isset($_POST['MatriculaC']) && isset($_POST['fechaSalida'])) {
         'fechaSalida' => $fechaSalida
     ];
     $json = json_encode($datos);
-    curl_setopt($ch, CURLOPT_URL, "http://localhost/proyecto/controller/almacen/C_salidaCam.php");
+    curl_setopt($ch, CURLOPT_URL, "localhost/proyecto/Controller/almacen/C_salidaCam.php");
     curl_setopt($ch, CURLOPT_POST, true);
     curl_setopt($ch, CURLOPT_POSTFIELDS, $json);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -215,7 +214,7 @@ if (isset($_POST['MatriculaC']) && isset($_POST['fechaSalida'])) {
     if (curl_errno($ch)) {
         echo curl_error($ch);
     } else {
-        header("location: http://localhost/proyecto/Views/app_almacen/almacen/almacenInterno.php?idA=$idA");
+        header("location: ../Views/app_almacen/almacen/almacenInterno.php?idA=$idA");
     }
 }
 
@@ -231,7 +230,7 @@ if (isset($_POST['IDL']) && isset($_POST['codigo'])) {
     ];
 
     $json = json_encode($datos);
-    curl_setopt($ch, CURLOPT_URL, "http://localhost/proyecto/controller/almacen/C_asignarPAL.php");
+    curl_setopt($ch, CURLOPT_URL, "localhost/proyecto/Controller/almacen/C_asignarPAL.php");
     curl_setopt($ch, CURLOPT_POST, true);
     curl_setopt($ch, CURLOPT_POSTFIELDS, $json);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -239,7 +238,7 @@ if (isset($_POST['IDL']) && isset($_POST['codigo'])) {
     if (curl_errno($ch)) {
         echo curl_error($ch);
     } else {
-        header("location: http://localhost/proyecto/Views/app_almacen/almacen/almacenInterno.php?idA=$idA");
+        header("location: ../Views/app_almacen/almacen/almacenInterno.php?idA=$idA");
     }
 }
 if (isset($_POST['IDLE']) && isset($_POST['codigoE'])) {
@@ -253,7 +252,7 @@ if (isset($_POST['IDLE']) && isset($_POST['codigoE'])) {
     ];
 
     $json = json_encode($datos);
-    curl_setopt($ch, CURLOPT_URL, "http://localhost/proyecto/controller/almacen/C_asignarPALE.php");
+    curl_setopt($ch, CURLOPT_URL, "localhost/proyecto/Controller/almacen/C_asignarPALE.php");
     curl_setopt($ch, CURLOPT_POST, true);
     curl_setopt($ch, CURLOPT_POSTFIELDS, $json);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -261,7 +260,7 @@ if (isset($_POST['IDLE']) && isset($_POST['codigoE'])) {
     if (curl_errno($ch)) {
         echo curl_error($ch);
     } else {
-        header("location: http://localhost/proyecto/Views/app_almacen/almacen/almacenExterno.php?empresa=$empresa");
+        header("location: ../Views/app_almacen/almacen/almacenExterno.php?empresa=$empresa");
     }
 }
 
@@ -278,7 +277,7 @@ if (isset($_POST['MatriculaC']) && isset($_POST['codigo'])) {
     ];
 
     $json = json_encode($datos);
-    curl_setopt($ch, CURLOPT_URL, "http://localhost/proyecto/controller/almacen/C_asignarPAC.php");
+    curl_setopt($ch, CURLOPT_URL, "localhost/proyecto/Controller/almacen/C_asignarPAC.php");
     curl_setopt($ch, CURLOPT_POST, true);
     curl_setopt($ch, CURLOPT_POSTFIELDS, $json);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -286,7 +285,7 @@ if (isset($_POST['MatriculaC']) && isset($_POST['codigo'])) {
     if (curl_errno($ch)) {
         echo curl_error($ch);
     } else {
-        header("location: http://localhost/proyecto/Views/app_almacen/almacen/almacenInterno.php?idA=$idA");
+        header("location: ../Views/app_almacen/almacen/almacenInterno.php?idA=$idA");
     }
 }
 
@@ -303,7 +302,7 @@ if (isset($_POST['Matricula']) && isset($_POST['IDL'])) {
     ];
 
     $json = json_encode($datos);
-    curl_setopt($ch, CURLOPT_URL, "http://localhost/proyecto/controller/almacen/C_asignarLote.php");
+    curl_setopt($ch, CURLOPT_URL, "localhost/proyecto/Controller/almacen/C_asignarLote.php");
     curl_setopt($ch, CURLOPT_POST, true);
     curl_setopt($ch, CURLOPT_POSTFIELDS, $json);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -311,7 +310,7 @@ if (isset($_POST['Matricula']) && isset($_POST['IDL'])) {
     if (curl_errno($ch)) {
         echo curl_error($ch);
     } else {
-        header("location: http://localhost/proyecto/Views/app_almacen/almacen/almacenInterno.php?idA=$idA");
+        header("location: ../Views/app_almacen/almacen/almacenInterno.php?idA=$idA");
     }
 }
 if (isset($_POST['MatriculaE']) && isset($_POST['IDLE'])) {
@@ -325,7 +324,7 @@ if (isset($_POST['MatriculaE']) && isset($_POST['IDLE'])) {
     ];
 
     $json = json_encode($datos);
-    curl_setopt($ch, CURLOPT_URL, "http://localhost/proyecto/controller/almacen/C_asignarLote.php");
+    curl_setopt($ch, CURLOPT_URL, "localhost/proyecto/Controller/almacen/C_asignarLote.php");
     curl_setopt($ch, CURLOPT_POST, true);
     curl_setopt($ch, CURLOPT_POSTFIELDS, $json);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -333,7 +332,7 @@ if (isset($_POST['MatriculaE']) && isset($_POST['IDLE'])) {
     if (curl_errno($ch)) {
         echo curl_error($ch);
     } else {
-        header("location: http://localhost/proyecto/Views/app_almacen/almacen/almacenExterno.php?empresa=$empresa");
+        header("location: ../Views/app_almacen/almacen/almacenExterno.php?empresa=$empresa");
     }
 }
 
@@ -351,7 +350,7 @@ if (isset($_POST['IDR']) && isset($_POST['IDA']) && isset($_POST['distancia'])) 
         'distancia' => $distancia
     ];
     $json = json_encode($datos);
-    curl_setopt($ch, CURLOPT_URL, "http://localhost/proyecto/controller/almacen/C_esta.php");
+    curl_setopt($ch, CURLOPT_URL, "localhost/proyecto/Controller/almacen/C_esta.php");
     curl_setopt($ch, CURLOPT_POST, true);
     curl_setopt($ch, CURLOPT_POSTFIELDS, $json);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -359,7 +358,7 @@ if (isset($_POST['IDR']) && isset($_POST['IDA']) && isset($_POST['distancia'])) 
     if (curl_errno($ch)) {
         echo curl_error($ch);
     } else {
-        header("location: http://localhost/proyecto/Views/app_almacen/recorrido/almacenes.php?idA=$idA&IDR=$IDR&mostrar=$mostrar");
+        header("location: ../Views/app_almacen/recorrido/almacenes.php?idA=$idA&IDR=$IDR&mostrar=$mostrar");
     }
 }
 
@@ -376,7 +375,7 @@ if (isset($_POST['MatriculaSig']) && isset($_POST['IDR'])) {
     ];
 
     $json = json_encode($datos);
-    curl_setopt($ch, CURLOPT_URL, "http://localhost/proyecto/controller/almacen/C_vaA.php");
+    curl_setopt($ch, CURLOPT_URL, "localhost/proyecto/Controller/almacen/C_vaA.php");
     curl_setopt($ch, CURLOPT_POST, true);
     curl_setopt($ch, CURLOPT_POSTFIELDS, $json);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -384,7 +383,7 @@ if (isset($_POST['MatriculaSig']) && isset($_POST['IDR'])) {
     if (curl_errno($ch)) {
         echo curl_error($ch);
     } else {
-        header("location: http://localhost/proyecto/Views/app_almacen/almacen/almacenInterno.php?idA=$idA");
+        header("location: ../Views/app_almacen/almacen/almacenInterno.php?idA=$idA");
     }
 }
 
@@ -400,7 +399,7 @@ if (isset($_POST['IDRL']) && isset($_POST['IDAL']) && isset($_POST['IDLL'])) {
         'IDL' => $IDL
     ];
     $json = json_encode($datos);
-    curl_setopt($ch, CURLOPT_URL, "http://localhost/proyecto/controller/almacen/C_vaHacia.php");
+    curl_setopt($ch, CURLOPT_URL, "localhost/proyecto/Controller/almacen/C_vaHacia.php");
     curl_setopt($ch, CURLOPT_POST, true);
     curl_setopt($ch, CURLOPT_POSTFIELDS, $json);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -408,7 +407,7 @@ if (isset($_POST['IDRL']) && isset($_POST['IDAL']) && isset($_POST['IDLL'])) {
     if (curl_errno($ch)) {
         echo curl_error($ch);
     } else {
-        header("location: http://localhost/proyecto/Views/app_almacen/lotes/lotes.php?idA=1");
+        header("location: ../Views/app_almacen/lotes/lotes.php?idA=1");
     }
 }
 

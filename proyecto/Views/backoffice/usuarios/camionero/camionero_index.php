@@ -69,7 +69,7 @@ require("../../../../Model/session/session_administrador3.php");
                         <div class="datos pFilaV" data-section="paquete" data-value="opciones">OPCIONES</div>
                         <div class="datosL">
                             <?php
-                            echo '<a href="camionero_modificar.php?ciC=' . $fila['CIC'] . '&fechaVL=' . $fila['FechaVL'] . '&turno=' . $fila['Turno'] . '">' . '<img src="../../img/modificar.svg" alt="Imagen modificar">' . ' </a>';
+                            echo '<a href="camionero_modificar.php?ciC=' . $fila['CIC'] . '&FechaVL=' . $fila['FechaVL'] . '&Turno=' . $fila['Turno'] . '">' . '<img src="../../img/modificar.svg" alt="Imagen modificar">' . ' </a>';
                             ?>
                             <?php
                             echo '<a href="#" onclick="confirmDelete(\''  . $fila['CIC'] . '\');">' . '<img src="../../img/eliminar.svg" alt="Imagen eliminar">' . ' </a>';
@@ -85,9 +85,11 @@ require("../../../../Model/session/session_administrador3.php");
                                         confirmacion_eliminar: "Are you sure you want to delete this Trucker?"
                                     }
                                 };
+                                    const defaultLanguage = 'es'; // Establece el lenguaje por defecto aquí
 
                                 function confirmDelete(CIC) {
-                                    var confirmation = confirm(messages[selectedLanguage].confirmacion_eliminar);
+                                        const language = selectedLanguage || defaultLanguage; // Usa el lenguaje seleccionado o el por defecto
+                                    var confirmation = confirm(messages[language].confirmacion_eliminar);
                                     if (confirmation) {
                                         // Si el usuario confirma, redirige a la página de eliminación
                                         window.location.href = "../../eliminar.php?ciC=" + CIC;

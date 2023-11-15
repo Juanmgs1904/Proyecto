@@ -1,6 +1,6 @@
 <?php
 $idA = $_GET['idA'];
-$url = 'http://localhost/proyecto/controller/almacen/C_recorrido.php';
+$url = 'localhost/proyecto/Controller/almacen/C_recorrido.php';
 require("../../../intermediario/getDataAPI.php");
 require("../../../Model/session/session_almacenInterno2.php");
 ?>
@@ -35,8 +35,16 @@ require("../../../Model/session/session_almacenInterno2.php");
 
                 <ul class="nav__lista">
                     <li><a href="#"><?php echo $_SESSION['mail']; ?></a></li>
+                    <div class="flags" id="flags">
+                        <div class="flags__item" data-language="es">
+                            <img src="../../../img/es.svg" alt="opción español">
+                        </div>
+                        <div class="flags__item" data-language="en">
+                            <img src="../../../img/en.svg" alt="opción inglés">
+                        </div>
+                    </div>
                     <a href="../../../index.php">
-                        <li class="cerrar">Cerrar Sesión</li>
+                        <li class="cerrar" data-section="header" data-value="logout">Cerrar Sesión</li>
                     </a>
                 </ul>
             </div>
@@ -44,11 +52,11 @@ require("../../../Model/session/session_almacenInterno2.php");
     </header>
     <div class="tabla__contenedor">
         <div class="titulo">
-            <h2>Recorrido</h2>
+            <h2 data-section="recorrido" data-value="text">Recorrido</h2>
         </div>
         <div class="recorrido_grid">
-            <div class="datos pFila">ID de la Recorrido</div>
-            <div class="datos pFila">OPCIÓN</div>
+            <div class="datos pFila" data-section="recorrido" data-value="idR">ID del Recorrido</div>
+            <div class="datos pFila" data-section="recorrido" data-value="opcion">OPCIÓN</div>
             <?php
             foreach ($array as $fila) {
             ?>
@@ -56,22 +64,37 @@ require("../../../Model/session/session_almacenInterno2.php");
                 <?php
                 $IDR = $fila['IDR'];
                 ?>
-                <div class="datos">
+                <div class="op datos">
                     <?php
                     $mostrar = 0;
-                    $url = 'http://localhost/proyecto/controller/almacen/C_recorrido.php?mostrar=$mostrar';
+                    $url = 'localhost/proyecto/Controller/almacen/C_recorrido.php?mostrar=$mostrar';
                     require("../../../intermediario/getDataAPI.php");
                     foreach ($array as $filas) {
                         if ($fila['IDR'] == $filas['IDR']) {
                             $mostrar = true;
-                            echo '<a href="#" onclick="confirmDelete(\''  . $fila['IDR'] . '\', \'' . $idA . '\');">' . 'Eliminar</a>';
+                            echo '<a href="#" onclick="confirmDelete(\''  . $fila['IDR'] . '\', \'' . $idA . '\');" data-section="recorrido" data-value="eliminar">' . 'Eliminar</a>';
                         }
                     }
-                    echo '<a href="almacenes.php?IDR=' . $fila['IDR'] . '&idA=' . $idA . '&mostrar=' . $mostrar . '">Ver Almacenes</a>';
+                    echo '<a href="almacenes.php?IDR=' . $fila['IDR'] . '&idA=' . $idA . '&mostrar=' . $mostrar . '" data-section="recorrido" data-value="verA">Ver Almacenes</a>';
                     ?>
                     <script>
+                        const selectedLanguage = sessionStorage.getItem('selectedLanguage');
+
+                        const messages = {
+                            es: {
+                                confirmacion_eliminar: "¿Estás seguro de que deseas eliminar este recorrido?"
+                            },
+                            en: {
+                                confirmacion_eliminar: "Are you sure you want to delete this route?"
+                            }
+                        };
+
+                        const defaultLanguage = 'es'; // Establece el lenguaje por defecto aquí
+
                         function confirmDelete(IDR, idA) {
-                            var confirmation = confirm("¿Estás seguro de que deseas eliminar este recorrido?");
+                            const language = selectedLanguage || defaultLanguage; // Usa el lenguaje seleccionado o el por defecto
+
+                            var confirmation = confirm(messages[language].confirmacion_eliminar);
                             if (confirmation) {
                                 // Si el usuario confirma, redirige a la página de eliminación
                                 window.location.href = "../../../intermediario/deleteDataAPI.php?IDR=" + IDR + "&idA=" + idA;
@@ -89,12 +112,13 @@ require("../../../Model/session/session_almacenInterno2.php");
 
     <div class="botones">
         <div class="btn_volver">
-            <?php echo '<a href="../index.php?idA=' . $idA . '"class="btn"">'; ?>Volver</a>
+            <?php echo '<a href="../index.php?idA=' . $idA . '"class="btn"" data-section="recorrido" data-value="btnV">'; ?>Volver</a>
         </div>
         <div class="btn_volver">
-        <?php echo '<a href="../../../intermediario/agregar_recorrido.php?idA='.$idA.'" class="btn">'; ?>Agregar Recorrido</a>
+            <?php echo '<a href="../../../intermediario/agregar_recorrido.php?idA=' . $idA . '" class="btn" data-section="recorrido" data-value="btnAR">'; ?>Agregar Recorrido</a>
         </div>
     </div>
+    <script src="script.js"></script>
 </body>
 
 </html>

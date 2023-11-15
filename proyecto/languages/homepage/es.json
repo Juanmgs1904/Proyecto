@@ -63,13 +63,13 @@
         "titleC" : "CAMIÓN DEL PAQUETE",
         "matriculaC" : "Matrícula",
         "fechaEC" : "Fecha de Entrega",
-        "titleCH" : "CHOFERES DE LOS CAMIONES",
+        "titleCH" : "CHOFER DE LOS CAMIONES",
         "nombre" : "Nombre",
         "demora" : "Demora",
         "fechaD" : "Fecha de Demora",
         "titleCam" : "CAMIONETA DEL PAQUETE",
         "fechaE" : "Fecha de Entrega",
-        "titleCHCam" : "CHOFÉR DE LA CAMIONETA",
+        "titleCHCam" : "CHOFER DE LA CAMIONETA",
         "error" : "No hay ningún Paquete con ese código"
     },
 

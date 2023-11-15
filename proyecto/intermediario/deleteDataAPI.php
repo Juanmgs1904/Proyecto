@@ -9,14 +9,14 @@ if(isset($_GET['id'])){
     ];
     $json = json_encode($datos);
     curl_setopt($ch,CURLOPT_CUSTOMREQUEST,"DELETE");
-    curl_setopt($ch,CURLOPT_URL,"http://localhost/proyecto/controller/almacen/C_lotes.php");
+    curl_setopt($ch,CURLOPT_URL,"localhost/proyecto/proyecto/Controller/almacen/C_lotes.php");
     curl_setopt($ch,CURLOPT_POSTFIELDS, $json);
     curl_setopt($ch,CURLOPT_RETURNTRANSFER, true);
     curl_exec($ch);
     if(curl_errno($ch)){
         echo curl_error($ch);
     }else{
-       header("location: http://localhost/proyecto/Views/app_almacen/lotes/lotes.php?idA=1");
+       header("location: ../Views/app_almacen/lotes/lotes.php?idA=1");
     }
 }
 if(isset($_GET['idE'])){
@@ -28,14 +28,14 @@ if(isset($_GET['idE'])){
     ];
     $json = json_encode($datos);
     curl_setopt($ch,CURLOPT_CUSTOMREQUEST,"DELETE");
-    curl_setopt($ch,CURLOPT_URL,"http://localhost/proyecto/controller/almacen/C_lotesE.php");
+    curl_setopt($ch,CURLOPT_URL,"localhost/proyecto/proyecto/Controller/almacen/C_lotesE.php");
     curl_setopt($ch,CURLOPT_POSTFIELDS, $json);
     curl_setopt($ch,CURLOPT_RETURNTRANSFER, true);
     curl_exec($ch);
     if(curl_errno($ch)){
         echo curl_error($ch);
     }else{
-       header("location: http://localhost/proyecto/Views/app_almacen/lotes/lotesE.php?empresa=$empresa");
+       header("location: ../Views/app_almacen/lotes/lotesE.php?empresa=$empresa");
     }
 }
 
@@ -52,14 +52,14 @@ if(isset($_GET['codigoC'])){
 
     $json = json_encode($datos);
     curl_setopt($ch,CURLOPT_CUSTOMREQUEST,"DELETE");
-    curl_setopt($ch,CURLOPT_URL,"http://localhost/proyecto/controller/almacen/C_asignarPAC.php");
+    curl_setopt($ch,CURLOPT_URL,"localhost/proyecto/Controller/almacen/C_asignarPAC.php");
     curl_setopt($ch,CURLOPT_POSTFIELDS, $json);
     curl_setopt($ch,CURLOPT_RETURNTRANSFER, true);
     curl_exec($ch);
     if(curl_errno($ch)){
         echo curl_error($ch);
     }else{
-       header("location: http://localhost/proyecto/Views/app_almacen/almacen/tablas/paquetesAC.php?idA=$idA&matriculaC=$matricula");
+       header("location: ../Views/app_almacen/almacen/tablas/paquetesAC.php?idA=$idA&matriculaC=$matricula");
     }
 }
 
@@ -75,14 +75,14 @@ if(isset($_GET['IDL']) && isset($_GET['matricula'])){
 
     $json = json_encode($datos);
     curl_setopt($ch,CURLOPT_CUSTOMREQUEST,"DELETE");
-    curl_setopt($ch,CURLOPT_URL,"http://localhost/proyecto/controller/almacen/C_asignarLote.php");
+    curl_setopt($ch,CURLOPT_URL,"localhost/proyecto/Controller/almacen/C_asignarLote.php");
     curl_setopt($ch,CURLOPT_POSTFIELDS, $json);
     curl_setopt($ch,CURLOPT_RETURNTRANSFER, true);
     curl_exec($ch);
     if(curl_errno($ch)){
         echo curl_error($ch);
     }else{
-       header("location: http://localhost/proyecto/Views/app_almacen/almacen/tablas/lotesAC.php?matricula=$matricula&idA=$idA");
+       header("location: ../Views/app_almacen/almacen/tablas/lotesAC.php?matricula=$matricula&idA=$idA");
     }
 }
 if(isset($_GET['IDLE']) && isset($_GET['matriculaE'])){
@@ -96,14 +96,14 @@ if(isset($_GET['IDLE']) && isset($_GET['matriculaE'])){
 
     $json = json_encode($datos);
     curl_setopt($ch,CURLOPT_CUSTOMREQUEST,"DELETE");
-    curl_setopt($ch,CURLOPT_URL,"http://localhost/proyecto/controller/almacen/C_asignarLote.php");
+    curl_setopt($ch,CURLOPT_URL,"localhost/proyecto/Controller/almacen/C_asignarLote.php");
     curl_setopt($ch,CURLOPT_POSTFIELDS, $json);
     curl_setopt($ch,CURLOPT_RETURNTRANSFER, true);
     curl_exec($ch);
     if(curl_errno($ch)){
         echo curl_error($ch);
     }else{
-       header("location: http://localhost/proyecto/Views/app_almacen/almacen/tablas/lotesACE.php?matricula=$matricula&empresa=$empresa");
+       header("location: ../Views/app_almacen/almacen/tablas/lotesACE.php?matricula=$matricula&empresa=$empresa");
     }
 }
 
@@ -114,19 +114,20 @@ if(isset($_GET['codigoL'])){
     $idA = $_GET['idA'];
 
     $datos = [
-        'codigo' => $codigo
+        'codigo' => $codigo,
+        'IDL' => $IDL
     ];
     
     $json = json_encode($datos);
     curl_setopt($ch,CURLOPT_CUSTOMREQUEST,"DELETE");
-    curl_setopt($ch,CURLOPT_URL,"http://localhost/proyecto/controller/almacen/C_asignarPAL.php");
+    curl_setopt($ch,CURLOPT_URL,"localhost/proyecto/Controller/almacen/C_asignarPAL.php");
     curl_setopt($ch,CURLOPT_POSTFIELDS, $json);
     curl_setopt($ch,CURLOPT_RETURNTRANSFER, true);
     curl_exec($ch);
     if(curl_errno($ch)){
         echo curl_error($ch);
     }else{
-       header("location: http://localhost/proyecto/Views/app_almacen/almacen/tablas/paquetesAL.php?IDL=$IDL&idA=$idA");
+       header("location: ../Views/app_almacen/almacen/tablas/paquetesAL.php?IDL=$IDL&idA=$idA");
     }
 }
 if(isset($_GET['codigoLE'])){
@@ -140,14 +141,14 @@ if(isset($_GET['codigoLE'])){
     
     $json = json_encode($datos);
     curl_setopt($ch,CURLOPT_CUSTOMREQUEST,"DELETE");
-    curl_setopt($ch,CURLOPT_URL,"http://localhost/proyecto/controller/almacen/C_asignarPALE.php");
+    curl_setopt($ch,CURLOPT_URL,"localhost/proyecto/Controller/almacen/C_asignarPALE.php");
     curl_setopt($ch,CURLOPT_POSTFIELDS, $json);
     curl_setopt($ch,CURLOPT_RETURNTRANSFER, true);
     curl_exec($ch);
     if(curl_errno($ch)){
         echo curl_error($ch);
     }else{
-       header("location: http://localhost/proyecto/Views/app_almacen/almacen/tablas/paquetesALE.php?IDL=$IDL&empresa=$empresa");
+       header("location: ../Views/app_almacen/almacen/tablas/paquetesALE.php?IDL=$IDL&empresa=$empresa");
     }
 }
 
@@ -162,14 +163,14 @@ if(isset($_GET['codigo'])){
     ];
     $json = json_encode($datos);
     curl_setopt($ch,CURLOPT_CUSTOMREQUEST,"DELETE");
-    curl_setopt($ch,CURLOPT_URL,"http://localhost/proyecto/controller/almacen/C_paquetes.php");
+    curl_setopt($ch,CURLOPT_URL,"localhost/proyecto/Controller/almacen/C_paquetes.php");
     curl_setopt($ch,CURLOPT_POSTFIELDS, $json);
     curl_setopt($ch,CURLOPT_RETURNTRANSFER, true);
     curl_exec($ch);
     if(curl_errno($ch)){
         echo curl_error($ch);
     }else{
-       header("location: http://localhost/proyecto/Views/app_almacen/paquete/paquetes.php?idA=$idA");
+       header("location: ../Views/app_almacen/paquete/paquetes.php?idA=$idA");
     }
 }
 if(isset($_GET['codigoE'])){
@@ -181,14 +182,14 @@ if(isset($_GET['codigoE'])){
     ];
     $json = json_encode($datos);
     curl_setopt($ch,CURLOPT_CUSTOMREQUEST,"DELETE");
-    curl_setopt($ch,CURLOPT_URL,"http://localhost/proyecto/controller/almacen/C_paquetesE.php");
+    curl_setopt($ch,CURLOPT_URL,"localhost/proyecto/Controller/almacen/C_paquetesE.php");
     curl_setopt($ch,CURLOPT_POSTFIELDS, $json);
     curl_setopt($ch,CURLOPT_RETURNTRANSFER, true);
     curl_exec($ch);
     if(curl_errno($ch)){
         echo curl_error($ch);
     }else{
-       header("location: http://localhost/proyecto/Views/app_almacen/paquete/paquetesE.php?empresa=$empresa");
+       header("location: ../Views/app_almacen/paquete/paquetesE.php?empresa=$empresa");
     }
 }
 
@@ -205,14 +206,14 @@ if(isset($_GET['matricula']) && isset($_GET['IDA']) && isset($_GET['fechaLlegada
     ];
     $json = json_encode($datos);
     curl_setopt($ch,CURLOPT_CUSTOMREQUEST,"DELETE");
-    curl_setopt($ch,CURLOPT_URL,"http://localhost/proyecto/controller/almacen/C_llegada.php");
+    curl_setopt($ch,CURLOPT_URL,"localhost/proyecto/Controller/almacen/C_llegada.php");
     curl_setopt($ch,CURLOPT_POSTFIELDS, $json);
     curl_setopt($ch,CURLOPT_RETURNTRANSFER, true);
     curl_exec($ch);
     if(curl_errno($ch)){
         echo curl_error($ch);
     }else{
-       header("location: http://localhost/proyecto/Views/app_almacen/almacen/tablas/tabla_llegada.php?idA=$IDA");
+       header("location: ../Views/app_almacen/almacen/tablas/tabla_llegada.php?idA=$IDA");
     }
 }
 
@@ -229,14 +230,14 @@ if(isset($_GET['matriculaS'])  && isset($_GET['IDA']) && isset($_GET['fechaSalid
     ];
     $json = json_encode($datos);
     curl_setopt($ch,CURLOPT_CUSTOMREQUEST,"DELETE");
-    curl_setopt($ch,CURLOPT_URL,"http://localhost/proyecto/controller/almacen/C_salida.php");
+    curl_setopt($ch,CURLOPT_URL,"localhost/proyecto/Controller/almacen/C_salida.php");
     curl_setopt($ch,CURLOPT_POSTFIELDS, $json);
     curl_setopt($ch,CURLOPT_RETURNTRANSFER, true);
     curl_exec($ch);
     if(curl_errno($ch)){
         echo curl_error($ch);
     }else{
-       header("location: http://localhost/proyecto/Views/app_almacen/almacen/tablas/tabla_salida.php?idA=$IDA");
+       header("location: ../Views/app_almacen/almacen/tablas/tabla_salida.php?idA=$IDA");
     }
 }
 
@@ -252,14 +253,14 @@ if(isset($_GET['matriculaC']) && isset($_GET['fechaLlegada'])){
     ];
     $json = json_encode($datos);
     curl_setopt($ch,CURLOPT_CUSTOMREQUEST,"DELETE");
-    curl_setopt($ch,CURLOPT_URL,"http://localhost/proyecto/controller/almacen/C_llegadaCam.php");
+    curl_setopt($ch,CURLOPT_URL,"localhost/proyecto/Controller/almacen/C_llegadaCam.php");
     curl_setopt($ch,CURLOPT_POSTFIELDS, $json);
     curl_setopt($ch,CURLOPT_RETURNTRANSFER, true);
     curl_exec($ch);
     if(curl_errno($ch)){
         echo curl_error($ch);
     }else{
-       header("location: http://localhost/proyecto/Views/app_almacen/almacen/tablas/tabla_llegadaCam.php?idA=$idA");
+       header("location: ../Views/app_almacen/almacen/tablas/tabla_llegadaCam.php?idA=$idA");
     }
 }
 
@@ -276,14 +277,14 @@ if(isset($_GET['matriculaSC']) && isset($_GET['fechaSalida'])){
     ];
     $json = json_encode($datos);
     curl_setopt($ch,CURLOPT_CUSTOMREQUEST,"DELETE");
-    curl_setopt($ch,CURLOPT_URL,"http://localhost/proyecto/controller/almacen/C_salidaCam.php");
+    curl_setopt($ch,CURLOPT_URL,"localhost/proyecto/Controller/almacen/C_salidaCam.php");
     curl_setopt($ch,CURLOPT_POSTFIELDS, $json);
     curl_setopt($ch,CURLOPT_RETURNTRANSFER, true);
     curl_exec($ch);
     if(curl_errno($ch)){
         echo curl_error($ch);
     }else{
-       header("location: http://localhost/proyecto/Views/app_almacen/almacen/tablas/tabla_salidaCam.php?idA=$idA");
+       header("location: ../Views/app_almacen/almacen/tablas/tabla_salidaCam.php?idA=$idA");
     }
 }
 
@@ -297,14 +298,14 @@ if(isset($_GET['IDR'])){
     ];
     $json = json_encode($datos);
     curl_setopt($ch,CURLOPT_CUSTOMREQUEST,"DELETE");
-    curl_setopt($ch,CURLOPT_URL,"http://localhost/proyecto/controller/almacen/C_recorrido.php");
+    curl_setopt($ch,CURLOPT_URL,"localhost/proyecto/Controller/almacen/C_recorrido.php");
     curl_setopt($ch,CURLOPT_POSTFIELDS, $json);
     curl_setopt($ch,CURLOPT_RETURNTRANSFER, true);
     curl_exec($ch);
     if(curl_errno($ch)){
         echo curl_error($ch);
     }else{
-       header("location: http://localhost/proyecto/Views/app_almacen/recorrido/recorrido.php?idA=$idA");
+       header("location: ../Views/app_almacen/recorrido/recorrido.php?idA=$idA");
     }
 }
 
@@ -321,14 +322,14 @@ if(isset($_GET['IDRA']) && isset($_GET['IDA'])){
     ];
     $json = json_encode($datos);
     curl_setopt($ch,CURLOPT_CUSTOMREQUEST,"DELETE");
-    curl_setopt($ch,CURLOPT_URL,"http://localhost/proyecto/controller/almacen/C_esta.php");
+    curl_setopt($ch,CURLOPT_URL,"localhost/proyecto/Controller/almacen/C_esta.php");
     curl_setopt($ch,CURLOPT_POSTFIELDS, $json);
     curl_setopt($ch,CURLOPT_RETURNTRANSFER, true);
     curl_exec($ch);
     if(curl_errno($ch)){
         echo curl_error($ch);
     }else{
-       header("location: http://localhost/proyecto/Views/app_almacen/recorrido/almacenes.php?idA=$idA&IDR=$IDR&mostrar=$mostrar");
+       header("location: ../Views/app_almacen/recorrido/almacenes.php?idA=$idA&IDR=$IDR&mostrar=$mostrar");
     }
 }
 
@@ -342,14 +343,14 @@ if(isset($_GET['IDLAR'])){
     ];
     $json = json_encode($datos);
     curl_setopt($ch,CURLOPT_CUSTOMREQUEST,"DELETE");
-    curl_setopt($ch,CURLOPT_URL,"http://localhost/proyecto/controller/almacen/C_vaHacia.php");
+    curl_setopt($ch,CURLOPT_URL,"localhost/proyecto/Controller/almacen/C_vaHacia.php");
     curl_setopt($ch,CURLOPT_POSTFIELDS, $json);
     curl_setopt($ch,CURLOPT_RETURNTRANSFER, true);
     curl_exec($ch);
     if(curl_errno($ch)){
         echo curl_error($ch);
     }else{
-       header("location: http://localhost/proyecto/Views/app_almacen/lotes/tabla_asignarLAR.php");
+       header("location: ../Views/app_almacen/lotes/tabla_asignarLAR.php");
     }
 }
 

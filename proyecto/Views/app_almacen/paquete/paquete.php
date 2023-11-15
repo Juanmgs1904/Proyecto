@@ -5,7 +5,7 @@ if (isset($_GET['codigo'])) {
 if (isset($_GET['idA'])) {
     $idA = $_GET['idA'];
 }
-$url = "http://localhost/proyecto/controller/almacen/C_paquetes.php?id=$codigo";
+$url = "localhost/proyecto/Controller/almacen/C_paquetes.php?id=$codigo";
 require_once "../../../intermediario/getDataAPI.php";
 
 require("../../../Model/session/session_almacen2.php");
@@ -33,7 +33,7 @@ require("../../../Model/session/session_almacen2.php");
                 </a>
             </div>
             <div class="header__titulo">
-                <h1>Bienvenido</h1>
+                <h1 data-section="header" data-value="title">Bienvenido</h1>
             </div>
             <div class="header__logo">
                 <input type="checkbox" id="menuD" class="menu-toggle">
@@ -41,34 +41,45 @@ require("../../../Model/session/session_almacen2.php");
 
                 <ul class="nav__lista">
                     <li><a href="#"><?php echo $_SESSION['mail']; ?></a></li>
-                    <a href="../../../index.php"><li class="cerrar">Cerrar Sesión</li></a>
+                    <div class="flags" id="flags">
+                        <div class="flags__item" data-language="es">
+                            <img src="../../../img/es.svg" alt="opción español">
+                        </div>
+                        <div class="flags__item" data-language="en">
+                            <img src="../../../img/en.svg" alt="opción inglés">
+                        </div>
+                    </div>
+                    <a href="../../../index.php"><li class="cerrar" data-section="header" data-value="logout">Cerrar Sesión</li></a>
                 </ul>
             </div>
         </div>
     </header>
     <div class="tabla__contenedor">
         <div class="titulo">
-            <h2>GESTIONAR PAQUETE</h2>
+            <h2 data-section="paqueteC" data-value="text">GESTIONAR PAQUETE</h2>
         </div>
         <div class="paquete_grid">
-            <div class="datos pFilaH">codigo</div>
-            <div class="datos pFilaH">FECHA DE RECIBO</div>
-            <div class="datos pFilaH">FECHA DE ENTREGA</div>
-            <div class="datos pFilaH">Destinatario</div>
-            <div class="datos pFilaH">Destino</div>
+            <div class="datos pFilaH" data-section="paqueteC" data-value="codigo">codigo</div>
+            <div class="datos pFilaH" data-section="paqueteC" data-value="fechaR">FECHA DE RECIBO</div>
+            <div class="datos pFilaH" data-section="paqueteC" data-value="fechaE">FECHA DE ENTREGA</div>
+            <div class="datos pFilaH" data-section="paqueteC" data-value="destinatario">Destinatario</div>
+            <div class="datos pFilaH" data-section="paqueteC" data-value="destino">Destino</div>
+            <div class="datos pFilaH" data-section="paqueteC" data-value="departamento">Departamento</div>
             <?php
             foreach ($array as $fila) {
             ?>
-                <div class="datos pFilaV">Codigo</div>
+                <div class="datos pFilaV" data-section="paqueteC" data-value="codigo">Codigo</div>
                 <div class="datos"><?php echo $fila['codigo'] . " "; ?></div>
-                <div class="datos pFilaV">fRecibo</div>
+                <div class="datos pFilaV" data-section="paqueteC" data-value="fechaR">FECHA DE RECIBO</div>
                 <div class="datos"><?php echo $fila['fRecibo'] . " "; ?></div>
-                <div class="datos pFilaV">fEntrega</div>
+                <div class="datos pFilaV" data-section="paqueteC" data-value="fechaE">FECHA DE ENTREGA</div>
                 <div class="datos"><?php echo $fila['fEntrega'] . " "; ?></div>
-                <div class="datos pFilaV">Destinatario</div>
+                <div class="datos pFilaV" data-section="paqueteC" data-value="destinatario">Destinatario</div>
                 <div class="datos"><?php echo $fila['Destinatario'] . " "; ?></div>
-                <div class="datos pFilaV">Destino</div>
+                <div class="datos pFilaV" data-section="paqueteC" data-value="destino">Destino</div>
                 <div class="datos"><?php echo $fila['Destino'] . " "; ?></div>
+                <div class="datos pFilaV" data-section="paqueteC" data-value="departamento">Departamento</div>
+                <div class="datos"><?php echo $fila['Departamento'] . " "; ?></div>
             <?php
             }
             ?>
@@ -77,10 +88,11 @@ require("../../../Model/session/session_almacen2.php");
     <div>
         <div class="btn_volver">
             <?php
-            echo '<a href="paquetes.php?idA=' . $idA . '" class="btn">' . "Volver" . ' </a>';
+            echo '<a href="paquetes.php?idA=' . $idA . '" class="btn" data-section="paqueteC" data-value="btnV">' . "Volver" . ' </a>';
             ?>
         </div>
     </div>
+    <script src="script.js"></script>
 </body>
 
 </html>

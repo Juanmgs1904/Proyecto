@@ -9,6 +9,8 @@ require("../../../Model/session/session_administrador2.php");
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lotes</title>
     <link rel="stylesheet" href="../style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 </head>
 
 <body>
@@ -55,7 +57,7 @@ require("../../../Model/session/session_administrador2.php");
                     <div class="datos pFilaH" data-section="lote" data-value="opciones">OPCIONES</div>
 
                     <?php
-                    $conexion = new mysqli("localhost", "root", "", "ocean");
+                    $conexion = new mysqli("192.168.5.50", "agustin.gimenez", "56866521", "ocean");
                     $sentencia = "SELECT * FROM lotes";
                     $filas = $conexion->query($sentencia);
                     foreach ($filas->fetch_all(MYSQLI_ASSOC) as $fila) {
@@ -78,28 +80,30 @@ require("../../../Model/session/session_administrador2.php");
                                 <?php
                                 echo '<a href="#" onclick="confirmDelete(\''  . $fila['IDL'] . '\');">' . '<img src="../img/eliminar.svg" alt="Imagen eliminar">' . ' </a>';
                                 ?>
-                                <!-- Resto del código -->
 
                                 <script>
                                     const selectedLanguage = sessionStorage.getItem('selectedLanguage');
 
                                     const messages = {
                                         es: {
-                                            confirmacion_eliminar: "¿Estás seguro de que deseas eliminar este paquete?"
+                                            confirmacion_eliminar: "¿Estás seguro de que deseas eliminar este lote?"
                                         },
                                         en: {
-                                            confirmacion_eliminar: "Are you sure you want to delete this package?"
+                                            confirmacion_eliminar: "Are you sure you want to delete this lot?"
                                         }
                                     };
 
+                                    const defaultLanguage = 'es'; // Establece el lenguaje por defecto aquí
+
                                     function confirmDelete(IDL) {
-                                        var confirmation = confirm(messages[selectedLanguage].confirmacion_eliminar);
+                                        const language = selectedLanguage || defaultLanguage; // Usa el lenguaje seleccionado o el por defecto
+
+                                        var confirmation = confirm(messages[language].confirmacion_eliminar);
                                         if (confirmation) {
                                             // Si el usuario confirma, redirige a la página de eliminación
                                             window.location.href = "../eliminar.php?IDL=" + IDL;
                                         }
                                     }
-                                    // Resto del código JavaScript
                                 </script>
                             </div>
 
@@ -116,6 +120,7 @@ require("../../../Model/session/session_administrador2.php");
             <a class="btn" href="lote_index.php" data-section="boton" data-value="volver">Volver</a>
         </div>
 
+        <script src="script.js"></script>
 </body>
 
 </html>
