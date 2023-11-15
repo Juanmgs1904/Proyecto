@@ -1,5 +1,0 @@
-30 19 * * 3 /home/centro/Backup_auto/autoBackup_etc.sh
-0 * * * * /home/centro/Backup_auto/autoBackup_group.sh
-0,30 * * * * /home/centro/Backup_auto/autoBackup_ssh.sh
-0 * * * * /home/centro/Backup_auto/autoBackup_passwd.sh
-0 * * * /home/centro/Backup_auto/autoBackup_shadow.sh

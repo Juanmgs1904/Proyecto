@@ -1,2 +1,0 @@
-El centro de computos esta almacenado en el directorio /home/centro
-De no encontrarse en dicha ubicación no funcionara.
