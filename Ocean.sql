@@ -1,29 +1,9 @@
-drop database ocean;
-CREATE database Ocean;
-use Ocean;
- DROP USER 'Administrador'@'localhost';
+use ocean;
  
- DROP USER 'BackOffice'@'localhost';
-  
- DROP USER 'AlmacenInterno'@'localhost';
-   
- DROP USER 'AlmacenExterno'@'localhost';
-    
-DROP USER 'ChoferCamion'@'localhost';
-
-DROP USER 'ChoferCamioneta'@'localhost';
-
-CREATE USER 'Administrador'@'localhost' IDENTIFIED BY '123456';
-CREATE USER 'BackOffice'@'localhost' IDENTIFIED BY '123456';
-CREATE USER 'AlmacenInterno'@'localhost' IDENTIFIED BY '123456';
-CREATE USER 'AlmacenExterno'@'localhost' IDENTIFIED BY '123456';
-CREATE USER 'ChoferCamion'@'localhost' IDENTIFIED BY '123456';
-CREATE USER 'ChoferCamioneta'@'localhost' IDENTIFIED BY '123456';
-
-
 CREATE TABLE `almacen` (
   `id` int(11) NOT NULL PRIMARY KEY,
-  `ubicacion` varchar(30) NOT NULL
+  `ubicacion` varchar(100) NOT NULL,
+  `Direccion` varchar(100) NOT NULL
 );
 
 
@@ -35,7 +15,7 @@ CREATE TABLE `almacenexterno` (
 
 CREATE TABLE `almaceninterno` (
   `idI` int(11) NOT NULL PRIMARY KEY,
-  `ruta` int(11) not null unique
+  `ruta` int(11) not null
 );
 
 
@@ -112,10 +92,11 @@ CREATE TABLE `paquetes` (
   `codigo` int(11) NOT NULL PRIMARY KEY,
   `Peso` float(11) NOT NULL,
   `Estado` varchar(45) default 'enAlmacenExterno' NOT NULL,
-  `fRecibo` TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+  `fRecibo` datetime default null,
   `fEntrega` date NOT NULL,
   `Destinatario` varchar(45) NOT NULL,
   `Destino` varchar(45) NOT NULL,
+  `Departamento` varchar(45) NOT NULL,
   `Empresa` varchar(45) NOT NULL
 );
 
@@ -180,14 +161,14 @@ CREATE TABLE `va` (
 
 CREATE TABLE `va_llegada` (
   `MatriculaC` char(7) NOT NULL,
-  `FechaLlegada` datetime DEFAULT NULL,
+  `FechaLlegada` datetime not NULL,
   PRIMARY KEY (`MatriculaC`,`FechaLlegada`)
 );
 
 
 CREATE TABLE `va_salida` (
   `MatriculaC` char(7) NOT NULL,
-  `FechaSalida` datetime DEFAULT NULL,
+  `FechaSalida` datetime not NULL,
   PRIMARY KEY (`MatriculaC`,`FechaSalida`)  
 );
 
@@ -205,11 +186,11 @@ ALTER TABLE `almacen`
 
 
 ALTER TABLE `lotes`
-  MODIFY `IDL` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
+  MODIFY `IDL` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 
 ALTER TABLE `paquetes`
-  MODIFY `codigo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `codigo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 
 ALTER TABLE `personas_token`
@@ -227,6 +208,18 @@ CHECK (Estado IN ('noAsignado', 'asignado', 'entregado'));
 ALTER TABLE paquetes
 ADD CONSTRAINT paquetes_estado 
 CHECK (Estado IN ('enAlmacenExterno', 'loteExternoAsignado', 'enCentral', 'loteAsignado', 'loteDesarmado', 'camionetaAsignada', 'entregado'));
+
+ALTER TABLE paquetes
+ADD CONSTRAINT paquetes_departamento
+CHECK (Departamento IN ('Canelones', 'Rivera', 'Tacuarembó', 'Salto', 'Artigas', 'Paysandú', 'Río Negro', 'Soriano', 'Colonia', 'Maldonado', 'Rocha', 'Lavalleja', 'Flores', 'Florida', 'Durazno', 'Cerro Largo', 'Treinta y Tres', 'San José'));
+
+ALTER TABLE lotes
+ADD CONSTRAINT lotes_destino
+CHECK (Destino IN ('Montevideo', 'Canelones', 'Rivera', 'Tacuarembó', 'Salto', 'Artigas', 'Paysandú', 'Río Negro', 'Soriano', 'Colonia', 'Maldonado', 'Rocha', 'Lavalleja', 'Flores', 'Florida', 'Durazno', 'Cerro Largo', 'Treinta y Tres', 'San José'));
+
+ALTER TABLE almacen
+ADD CONSTRAINT almacen_ubicacion
+CHECK (ubicacion IN ('Montevideo', 'Canelones', 'Rivera', 'Tacuarembó', 'Salto', 'Artigas', 'Paysandú', 'Río Negro', 'Soriano', 'Colonia', 'Maldonado', 'Rocha', 'Lavalleja', 'Flores', 'Florida', 'Durazno', 'Cerro Largo', 'Treinta y Tres', 'San José'));
 
 ALTER TABLE camionero
 ADD CONSTRAINT camionero_turno
@@ -339,18 +332,6 @@ BEGIN
 END;
 //
 
--- trigger que verifica si el tiempo estimado es mayor que la fecha actual
-DELIMITER //
-CREATE TRIGGER lote_before_insert
-BEFORE INSERT ON lotes
-FOR EACH ROW
-BEGIN
-    IF NEW.tiempoEstimado <= NOW() THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: El tiempo Estimado de entrega debe ser mayor que la fecha actual.';
-    END IF;
-END;
-//
-
 -- trigger que verifica si el lote se puede relacionar con el recorrido
 DELIMITER //
 CREATE TRIGGER va_hacia_before_insert_IDR
@@ -363,51 +344,77 @@ BEGIN
 END;
 //
 
--- trigger que verifica si el tiempo estimado es mayor que la fecha actual
+
+-- trigger que verifica si el lote se puede relacionar con el recorrido
 DELIMITER //
-CREATE TRIGGER paquete_before_insert
-BEFORE INSERT ON paquetes
+CREATE TRIGGER va_hacia_before_update_IDR
+BEFORE UPDATE ON va_hacia
 FOR EACH ROW
 BEGIN
-    IF NEW.fEntrega <= NOW() THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: El tiempo Estimado de entrega debe ser mayor que la fecha actual.';
+    IF NEW.IDL in (select IDL from lotes where enAlmacenExterno = 1) THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: Este lote externo no se puede relacionar con el recorrido.';
     END IF;
 END;
 //
 
 
--- trigger que verifica si la fecha de entrega es mayor que la fecha actual
+-- Trigger para verificar si el paquete tiene el mismo destino que el lote
 DELIMITER //
-CREATE TRIGGER transporta_before_insert
-BEFORE INSERT ON transporta
+CREATE TRIGGER va_hacia_before_insert_destino
+BEFORE INSERT ON va_hacia
 FOR EACH ROW
 BEGIN
-    IF NEW.fEntrega < NOW() THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: La fecha de entrega debe ser mayor que la fecha actual.';
+    DECLARE lote_destino VARCHAR(255);
+    DECLARE almacen_destino VARCHAR(255);
+    
+    SELECT ubicacion INTO almacen_destino FROM almacen WHERE id = NEW.IDA;
+    SELECT Destino INTO lote_destino FROM lotes WHERE IDL = NEW.IDL;
+    
+     IF almacen_destino != lote_destino AND  NEW.IDL IN (SELECT IDL FROM lotes WHERE enAlmacenExterno) = 0 THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: El lote no puede ir a un almacen con una ubicacion diferente.';    
     END IF;
 END;
 //
 
--- trigger que verifica si la fecha de demora es mayor que la fecha actual
+
+-- Trigger para verificar si el paquete tiene el mismo destino que el lote
 DELIMITER //
-CREATE TRIGGER conduce_before_insert
-BEFORE INSERT ON conduce
+CREATE TRIGGER va_hacia_before_update_destino
+BEFORE UPDATE ON va_hacia
 FOR EACH ROW
 BEGIN
-    IF NEW.fDemora < NOW() THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: La fecha de demora debe ser mayor que la fecha actual.';
+    DECLARE lote_destino VARCHAR(255);
+    DECLARE almacen_destino VARCHAR(255);
+    
+    SELECT ubicacion INTO almacen_destino FROM almacen WHERE id = NEW.IDA;
+    SELECT Destino INTO lote_destino FROM lotes WHERE IDL = NEW.IDL;
+    
+     IF almacen_destino != lote_destino AND  NEW.IDL IN (SELECT IDL FROM lotes WHERE enAlmacenExterno) = 0 THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: El lote no puede ir a un almacen con una ubicacion diferente.';    
     END IF;
 END;
 //
 
--- trigger que verifica si ya hay un almacen en Montevideo
-DELIMITER // 
-CREATE TRIGGER almacenInterno_before_insert
+-- Trigger para verificar si ya hay un almacen en una misma ubicación
+DELIMITER //
+CREATE TRIGGER almaceninterno_before_insert
 BEFORE INSERT ON almaceninterno
 FOR EACH ROW
 BEGIN
-    IF (SELECT COUNT(*) FROM almacenInterno join almacen ON almaceninterno.idI = almacen.id WHERE ubicacion LIKE '%Montevideo%') > 1 THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: Ya existe un almacenInterno en Montevideo.';
+    DECLARE ubicacion_existente INT;
+    DECLARE destinoInterno varchar(100);
+
+    SELECT ubicacion INTO destinoInterno
+    FROM almacen
+    WHERE id = NEW.idI;
+    
+    SELECT COUNT(*) INTO ubicacion_existente
+    FROM almaceninterno ai
+    JOIN almacen a ON ai.idI = a.id
+    WHERE a.ubicacion = destinoInterno;
+
+    IF ubicacion_existente > 0 THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: Ya existe un almacen interno con la misma ubicación.';
     END IF;
 END;
 //
@@ -455,7 +462,7 @@ BEFORE INSERT ON camioneta
 FOR EACH ROW
 BEGIN
     IF new.MatriculaC in (SELECT Matricula FROM camion)THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: Ya existe una camioneta con esa Matricula.';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: Ya existe una camion con esa Matricula.';
     END IF;
 END;
 //
@@ -516,22 +523,12 @@ before insert on lleva
 for each row
 begin
     IF NEW.Matricula IN (SELECT Matricula FROM camion join vehiculo ON camion.Matricula = vehiculo.MatriculaV WHERE Estado != 'buenEstado') OR 
-       NEW.Matricula IN (SELECT Matricula FROM camion join vehiculo ON camion.Matricula = vehiculo.MatriculaV WHERE Disponibilidad = 'enRuta') THEN
+       NEW.Matricula IN (SELECT Matricula FROM camion join vehiculo ON camion.Matricula = vehiculo.MatriculaV WHERE Disponibilidad = 'enRuta') OR
+       NEW.Matricula NOT IN (SELECT MatriculaV FROM conduce) OR
+       NEW.Matricula IN (SELECT v.MatriculaV FROM vehiculo v JOIN camion cam on cam.Matricula= v.MatriculaV  LEFT JOIN conduce c ON cam.Matricula = c.MatriculaV WHERE c.MatriculaV IS NULL) THEN
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: La relación camion-lote no es válida.';
     END IF;
 end;
-//
-
--- trigger que verifica si la fecha de entrega es mayor que la fecha actual
-DELIMITER //
-CREATE TRIGGER lleva_before_insert
-BEFORE INSERT ON lleva
-FOR EACH ROW
-BEGIN
-    IF NEW.fEntrega < NOW() THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: La fecha de entrega debe ser mayor que la fecha actual.';
-    END IF;
-END;
 //
 
 -- trigger que prohibe que un camion lleve un lote externo y uno interno a la vez
@@ -572,7 +569,7 @@ IF NEW.IDL NOT IN (SELECT IDL FROM lotes WHERE Estado = 'noAsignado') THEN
 end;
 //
 
--- trigger para verificar si el lote puede acceder a las relaciones
+-- trigger para verificar si el lote puede acceder a las relaciones  X
 delimiter //
 create trigger lleva_before_insert_lote_externo_recorrido
 before insert on lleva
@@ -586,18 +583,19 @@ begin
 end;
 //
 
+-- trigger que verifica si el lote esta en va_hacia
 delimiter //
 create trigger lleva_before_insert_lote_interno_recorrido
 before insert on lleva
 for each row
 begin
     IF (SELECT enAlmacenExterno FROM lotes WHERE IDL = NEW.IDL) = 0 AND NEW.IDL NOT IN (SELECT IDL FROM va_hacia) THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: La relación lote///-camión no es válida.';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: La relación lote-camión no es válida.';
     END IF;
 end;
 //
  
--- trigger para verificar si el peso total es mayor a 3300
+-- trigger para verificar si el peso total es mayor a 24000
 delimiter //
 create trigger lleva_before_insert_peso
 before insert on lleva
@@ -625,23 +623,12 @@ end;
 
 -- Trigger para verificar si la camioneta puede acceder a las relaciones
 delimiter //
-create trigger va_before_insert_camioneta
-before insert on va
-for each row
-begin
-    IF NEW.MatriculaC IN (SELECT MatriculaC FROM camioneta join vehiculo ON camioneta.MatriculaC = vehiculo.MatriculaV WHERE Estado != 'buenEstado') THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: La relación camioneta-almacen no es válida.';
-    END IF;
-end;
-//
-
--- Trigger para verificar si la camioneta puede acceder a las relaciones
-delimiter //
 create trigger va_salida_before_insert_camioneta
 before insert on va_salida
 for each row
 begin
-    IF NEW.MatriculaC IN (SELECT MatriculaC FROM camioneta join vehiculo ON camioneta.MatriculaC = vehiculo.MatriculaV WHERE Disponibilidad = 'enRuta') THEN
+    IF NEW.MatriculaC IN (SELECT MatriculaC FROM camioneta join vehiculo ON camioneta.MatriculaC = vehiculo.MatriculaV WHERE Disponibilidad = 'enRuta') OR
+       NEW.MatriculaC NOT IN (SELECT MatriculaV FROM conduce) THEN
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: La relación camioneta-salida no es válida.';
     END IF;
 end;
@@ -653,39 +640,12 @@ create trigger va_llegada_before_insert_camioneta
 before insert on va_llegada
 for each row
 begin
-    IF NEW.MatriculaC IN (SELECT MatriculaC FROM camioneta join vehiculo ON camioneta.MatriculaC = vehiculo.MatriculaV WHERE Disponibilidad != 'enRuta') THEN
+    IF NEW.MatriculaC IN (SELECT MatriculaC FROM camioneta join vehiculo ON camioneta.MatriculaC = vehiculo.MatriculaV WHERE Disponibilidad != 'enRuta') OR
+       NEW.MatriculaC NOT IN (SELECT MatriculaV FROM conduce) THEN
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: La relación camioneta-llegada no es válida.';
     END IF;
 end;
 //
-
--- Trigger para verificar si hay mas fechas de llegada antes que de salida
-delimiter //
-create trigger va_llegada_before_insert
-before insert on va_llegada
-for each row
-begin
-
-    DECLARE num_salidas INT;
-    DECLARE num_llegadas INT;
-
-    -- Contar el número de salidas
-    SELECT COUNT(*) INTO num_salidas
-    FROM va_salida
-    WHERE MatriculaC = NEW.MatriculaC;
-
-    -- Contar el número de llegadas
-    SELECT COUNT(*) INTO num_llegadas
-    FROM va_llegada
-    WHERE MatriculaC = NEW.MatriculaC;
-
-
-    IF num_llegadas > num_salidas THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: No pueden haber más fechas de llagada que de salida.';
-    END IF;
-end;
-//
-
 
 -- trigger para verificar si la camioneta puede acceder a las relaciones
 delimiter //
@@ -694,6 +654,7 @@ before insert on transporta
 for each row
 begin
     IF NEW.MatriculaC IN (SELECT MatriculaC FROM camioneta JOIN vehiculo ON camioneta.MatriculaC = vehiculo.MatriculaV WHERE Estado != 'buenEstado') OR 
+       NEW.MatriculaC NOT IN (SELECT MatriculaV FROM conduce) OR
        NEW.MatriculaC IN (SELECT MatriculaC FROM camioneta JOIN vehiculo ON camioneta.MatriculaC = vehiculo.MatriculaV WHERE Disponibilidad = 'enRuta') THEN
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: La relación camioneta-paquete no es válida.';
     END IF;
@@ -726,6 +687,80 @@ IF NEW.codigo NOT IN (SELECT codigo FROM paquetes WHERE Estado = 'enAlmacenExter
 END;
 //
 
+
+-- Trigger para verificar si el paquete tiene el mismo destino que el lote
+DELIMITER //
+CREATE TRIGGER contiene_before_insert_destino
+BEFORE INSERT ON contiene
+FOR EACH ROW
+BEGIN
+    DECLARE lote_destino VARCHAR(255);
+    DECLARE paquete_ciudad VARCHAR(255);
+    
+    SELECT Departamento INTO paquete_ciudad FROM paquetes WHERE codigo = NEW.codigo;
+    SELECT Destino INTO lote_destino FROM lotes WHERE IDL = NEW.IDL;
+    
+    IF lote_destino != paquete_ciudad AND NEW.IDL IN (SELECT IDL FROM lotes WHERE enAlmacenExterno) = 0 THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: El paquete no puede ir a un lote con un destino diferente.';    
+    END IF;
+END;
+//
+
+
+DELIMITER //
+CREATE TRIGGER contiene_before_update_destino
+BEFORE UPDATE ON contiene
+FOR EACH ROW
+BEGIN
+    DECLARE lote_destino VARCHAR(255);
+    DECLARE paquete_ciudad VARCHAR(255);
+    
+    SELECT Departamento INTO paquete_ciudad FROM paquetes WHERE codigo = NEW.codigo;
+    SELECT Destino INTO lote_destino FROM lotes WHERE IDL = NEW.IDL;
+    
+    IF lote_destino != paquete_ciudad AND NEW.IDL IN (SELECT IDL FROM lotes WHERE enAlmacenExterno) = 0 THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: El paquete no puede ir a un lote con un destino diferente.';    
+    END IF;
+END;
+//
+
+-- Trigger para verificar si el paquete tiene la misma empresa que el lote
+DELIMITER //
+CREATE TRIGGER contiene_before_insert_Empresa
+BEFORE INSERT ON contiene
+FOR EACH ROW
+BEGIN
+    DECLARE lote_Empresa VARCHAR(255);
+    DECLARE paquete_Empresa VARCHAR(255);
+    
+    SELECT Empresa INTO paquete_Empresa FROM paquetes WHERE codigo = NEW.codigo;
+    SELECT Empresa INTO lote_Empresa FROM lotes WHERE IDL = NEW.IDL;
+    
+    IF lote_Empresa != paquete_Empresa AND NEW.IDL IN (SELECT IDL FROM lotes WHERE enAlmacenExterno) = 1 THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: La empresa del paquete es difetrente que la del lote.';    
+    END IF;
+END;
+//
+
+DELIMITER //
+CREATE TRIGGER contiene_before_update_Empresa
+BEFORE UPDATE ON contiene
+FOR EACH ROW
+BEGIN
+    DECLARE lote_Empresa VARCHAR(255);
+    DECLARE paquete_Empresa VARCHAR(255);
+    
+    SELECT Empresa INTO paquete_Empresa FROM paquetes WHERE codigo = NEW.codigo;
+    SELECT Empresa INTO lote_Empresa FROM lotes WHERE IDL = NEW.IDL;
+    
+    IF lote_Empresa != paquete_Empresa AND NEW.IDL IN (SELECT IDL FROM lotes WHERE enAlmacenExterno) = 1 THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: La empresa del paquete es diferente que la del lote.';    
+    END IF;
+END;
+//
+
+
+
 -- Trigger para verificar si la cantidad de lotes que tiene un paquete son mas de 2
 DELIMITER //
 CREATE TRIGGER contiene_before_insert_paquete_cantidad
@@ -740,7 +775,6 @@ END;
 
 -- Trigger para verificar la relación entre paquetes y lotes en contiene (estado 'enCentral')
 DELIMITER //
-
 CREATE TRIGGER contiene_before_insert_enCentral
 BEFORE INSERT ON contiene
 FOR EACH ROW
@@ -796,18 +830,17 @@ BEGIN
 END;
 //
 
--- Trigger para actualizar el estado del paquete cuando se asigna a un loteExterno
+-- Trigger para actualizar el estado del paquete cuando se elimina de contiene
 DELIMITER //
-CREATE TRIGGER contiene_after_insert_paqueteExterno
-AFTER INSERT ON contiene
+CREATE TRIGGER contiene_after_delete_paquete
+AFTER DELETE ON contiene
 FOR EACH ROW
 BEGIN
-    IF NEW.IDL IN (SELECT IDL FROM lotes WHERE enAlmacenExterno = 1) THEN
-		UPDATE paquetes
-		SET Estado = 'loteExternoAsignado'
-		WHERE codigo = NEW.codigo;
+    IF OLD.IDL IN (SELECT IDL FROM lotes WHERE enAlmacenExterno) = 0 THEN 
+        UPDATE paquetes
+        SET Estado = 'enCentral'
+        WHERE codigo = OLD.codigo;
     END IF;
-   
 END;
 //
 
@@ -817,13 +850,14 @@ CREATE TRIGGER contiene_after_delete_paqueteExterno
 AFTER DELETE ON contiene
 FOR EACH ROW
 BEGIN
-    IF OLD.IDL IN (SELECT IDL FROM lotes WHERE enAlmacenExterno = 1) THEN
+    IF OLD.IDL IN (SELECT IDL FROM lotes WHERE enAlmacenExterno) = 1 THEN
 		UPDATE paquetes
 		SET Estado = 'enAlmacenExterno'
 		WHERE codigo = OLD.codigo;
     END IF;
 END;
 //
+
 
 -- Trigger para actualizar el estado del paquete cuando se asigna a un loteExterno
 DELIMITER //
@@ -836,24 +870,23 @@ BEGIN
 		SET Estado = 'loteAsignado'
 		WHERE codigo = NEW.codigo;
     END IF;
-   
 END;
 //
 
--- Trigger para actualizar el estado del paquete cuando se elimina de contiene
+
+-- Trigger para actualizar el estado del paquete cuando se asigna a un loteExterno
 DELIMITER //
-CREATE TRIGGER contiene_after_delete_paquete
-AFTER DELETE ON contiene
+CREATE TRIGGER contiene_after_insert_paquete_externo
+AFTER INSERT ON contiene
 FOR EACH ROW
 BEGIN
-    IF OLD.IDL IN (SELECT IDL FROM lotes WHERE enAlmacenExterno = 0) THEN
+    IF NEW.IDL IN (SELECT IDL FROM lotes WHERE enAlmacenExterno = 1) THEN
 		UPDATE paquetes
-		SET Estado = 'enCentral'
-		WHERE codigo = OLD.codigo;
+		SET Estado = 'loteExternoAsignado'
+		WHERE codigo = NEW.codigo;
     END IF;
 END;
 //
-
 
 -- trigger que actualiza el estado del lote
 DELIMITER //
@@ -893,7 +926,8 @@ IF NEW.IDL IN (SELECT IDL FROM lotes WHERE enAlmacenExterno = 1) THEN
         
         -- Actualiza el estado de los paquetes a 'enCentral'
         UPDATE paquetes
-        SET Estado = 'enCentral'
+        SET Estado = 'enCentral',
+        fRecibo = now()
         WHERE codigo IN (SELECT codigo FROM contiene WHERE IDL = NEW.IDL);
     END IF;
     END IF;
@@ -967,26 +1001,29 @@ CREATE TRIGGER llegada_after_insert_camioneta
 AFTER INSERT ON va_llegada
 FOR EACH ROW
 BEGIN
-    DECLARE num_salidas INT;
-    DECLARE num_llegadas INT;
+    UPDATE vehiculo
+    SET disponibilidad = 'disponible'
+    WHERE MatriculaV = new.MatriculaC;
+END;
+//
 
-    -- Contar el número de salidas
-    SELECT COUNT(*) INTO num_salidas
-    FROM va_salida
-    WHERE MatriculaC = NEW.MatriculaC;
-
-    -- Contar el número de llegadas
-    SELECT COUNT(*) INTO num_llegadas
+-- Trigger para actualizar la disponibilidad de un camion si este tiene una fecha de llegada
+DELIMITER //
+CREATE TRIGGER llegada_after_delete_camioneta
+AFTER DELETE ON va_llegada
+FOR EACH ROW
+BEGIN 
+	DECLARE maxima_llegada datetime;
+    
+    SELECT MAX(Fechallegada) INTO maxima_llegada
     FROM va_llegada
-    WHERE MatriculaC = NEW.MatriculaC;
-
-    -- Actualizar disponibilidad del camión
-    IF num_llegadas >= num_salidas THEN
-        UPDATE vehiculo SET Disponibilidad = 'disponible' WHERE MatriculaV = NEW.MatriculaC;
-    ELSE
-        UPDATE vehiculo SET Disponibilidad = 'enRuta' WHERE MatriculaV = NEW.MatriculaC;
+    WHERE MatriculaC = OLD.MatriculaC;
+	
+    IF maxima_llegada = OLD.FechaLlegada THEN
+		UPDATE vehiculo
+		SET disponibilidad = 'enRuta'
+		WHERE MatriculaV = OLD.MatriculaC;
     END IF;
-
 END;
 //
 
@@ -996,54 +1033,67 @@ CREATE TRIGGER salida_after_insert_camioneta
 AFTER INSERT ON va_salida
 FOR EACH ROW
 BEGIN
-    DECLARE num_salidas INT;
-    DECLARE num_llegadas INT;
-
-    -- Contar el número de salidas
-    SELECT COUNT(*) INTO num_salidas
-    FROM va_salida
-    WHERE MatriculaC = NEW.MatriculaC;
-
-    -- Contar el número de llegadas
-    SELECT COUNT(*) INTO num_llegadas
-    FROM va_llegada
-    WHERE MatriculaC = NEW.MatriculaC;
-
-    -- Actualizar disponibilidad del camión
-    IF num_salidas > num_llegadas THEN
-        UPDATE vehiculo SET Disponibilidad = 'enRuta' WHERE MatriculaV = NEW.MatriculaC;
-    ELSE
-        UPDATE vehiculo SET Disponibilidad = 'disponible' WHERE MatriculaV = NEW.MatriculaC;
-    END IF;
-
+    UPDATE vehiculo
+    SET disponibilidad = 'enRuta'
+    WHERE MatriculaV = new.MatriculaC;
 END;
 //
 
--- Event para que si pasaron 15 minutos el estado del token cambie 
-DELIMITER //
-CREATE EVENT actualizar_estado_token 
-ON SCHEDULE EVERY 1 minute
-ON COMPLETION PRESERVE ENABLE 
-DO 
-  UPDATE personas_token
-  SET Estado = 'Inactivo'
-  WHERE TIMESTAMPDIFF(MINUTE, Fecha, NOW()) >= 15;
-//
 
+-- Trigger para actualizar la disponibilidad de un camion con la fecha de salida
+DELIMITER //
+CREATE TRIGGER salida_after_delete_camioneta
+AFTER DELETE ON va_salida
+FOR EACH ROW
+BEGIN
+    DECLARE maxima_salida datetime;
+
+    SELECT MAX(FechaSalida) INTO maxima_salida
+    FROM va_salida
+    WHERE MatriculaC = OLD.MatriculaC;
+
+	IF maxima_salida = OLD.FechaSalida THEN
+		UPDATE vehiculo
+		SET disponibilidad = 'disponible'
+		WHERE MatriculaV = OLD.MatriculaC;
+	END IF;
+END;
+//
 DELIMITER ;
 
 
 INSERT INTO `usuario` (`Mail`, `Contraseña`, `Estado`, `Rol`, `Empresa`) VALUES
 ('LuisFernando@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 'Activo', 'AlmacenExterno', 'Crecom'),
 ('CarlosEnrique@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 'Activo', 'AlmacenExterno', 'Crecom'),
-('BrunoMars@gmail.com', '35f4a8d465e6e1edc05f3d8ab658c551', 'Activo', 'Administrador', 'QuickCarry'),
+
+('BrunoMars@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 'Activo', 'Administrador', 'QuickCarry'),
 ('robertoSanchez@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 'Activo', 'Administrador', 'QuickCarry'),
+('JeniferWang@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 'Activo', 'Administrador', 'QuickCarry'),
+('DanubioCampeon@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 'Activo', 'Administrador', 'QuickCarry'),
+
 ('LuisHernandez@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 'Activo', 'AlmacenInterno', 'QuickCarry'),
 ('MartinGarcia@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 'Activo', 'AlmacenInterno', 'QuickCarry'),
+('JuanPablo@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 'Activo', 'AlmacenInterno', 'QuickCarry'),
+('MariaFrancisca@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 'Activo', 'AlmacenInterno', 'QuickCarry'),
+('AdrianaCarrera@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 'Activo', 'AlmacenInterno', 'QuickCarry'),
+('AlejandroParra@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 'Activo', 'AlmacenInterno', 'QuickCarry'),
+
 ('MariaPerez@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 'Activo', 'ChoferCamioneta', 'QuickCarry'),
 ('AdrianoToledo@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 'Activo', 'ChoferCamioneta', 'QuickCarry'),
+('JoseAngel@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 'Activo', 'ChoferCamioneta', 'QuickCarry'),
+('NataliaRodriguez@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 'Activo', 'ChoferCamioneta', 'QuickCarry'),
+('IreneMorales@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 'Activo', 'ChoferCamioneta', 'QuickCarry'),
+('UxiaPino@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 'Activo', 'ChoferCamioneta', 'QuickCarry'),
+('MaribelCasado@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 'Activo', 'ChoferCamioneta', 'QuickCarry'),
+
 ('AbrahamAlvarez@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 'Activo', 'ChoferCamion', 'QuickCarry'),
+('VictorJose@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 'Activo', 'ChoferCamion', 'QuickCarry'),
+('SalvadorGarrido@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 'Activo', 'ChoferCamion', 'QuickCarry'),
+('JoseLuis@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 'Activo', 'ChoferCamion', 'QuickCarry'),
+('JuanCaballero@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 'Activo', 'ChoferCamion', 'QuickCarry'),
+('LuisCarlos@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 'Activo', 'ChoferCamion', 'QuickCarry'),
 ('JoseRamon@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 'Activo', 'ChoferCamion', 'QuickCarry');
+
 
 INSERT INTO `personas_token` (`TokenId`, `Mail`, `Token`, `Estado`, `Fecha`) VALUES
 (340, 'LuisHernandez@gmail.com', '99822586aec01f68a7aa14a085d88d25', 'Activo', '2023-09-19 00:58:00'),
@@ -1057,30 +1107,33 @@ INSERT INTO `personas_token` (`TokenId`, `Mail`, `Token`, `Estado`, `Fecha`) VAL
 (352, 'LuisHernandez@gmail.com', '9efb6ccd076148588d575f5a44833276', 'Activo', '2023-08-20 01:59:00');
 
 
-INSERT INTO `almacen` (`id`, `ubicacion`) VALUES
-(1, 'Montevideo'),
-(2, 'Canelones'),
-(3, 'Rivera'),
-(4, 'Tacuarembó'),
-(5, 'Salto'),
-(6, 'Artigas'),
-(7, 'Paysandú'),
-(8, 'Río Negro'),
-(9, 'Soriano'),
-(10, 'Colonia'),
-(11, 'Maldonado'),
-(12, 'Rocha'),
-(13, 'Lavalleja'),
-(14, 'Flores'),
-(15, 'Florida'),
-(16, 'Durazno'),
-(17, 'Melo'),
-(18, 'Treinta y tres'),
-(19, 'San José'),
-(20, 'Montevideo'),
-(21, 'Montevideo'),
-(22, 'Montevideo'),
-(23, 'Montevideo');
+INSERT INTO `almacen` (`id`, `ubicacion`, `Direccion`) VALUES
+-- Almacenes Internos
+(1, 'Montevideo', 'Montevideo Copacabana 2696'),
+(2, 'Canelones', 'Santa Ana Lavalleja 7561'),
+(3, 'Rivera', 'Minas De Corrales Monteadores 2344'),
+(4, 'Tacuarembó', 'Paso Del Cerro Porongos 3014'),
+(5, 'Salto', 'Termas Del Arapey Paysandu 7868'),
+(6, 'Artigas', 'Palma Coquimbo 5415'),
+(7, 'Paysandú', 'Cerro Chato Sarandi 8040'),
+(8, 'Río Negro', 'Sarandí De Navarro Canelones 7060'),
+(9, 'Soriano', 'Santa Catalina Joaquin Suarez 7981'),
+(10, 'Colonia', 'Artilleros Joaquin Suarez 1536'),
+(11, 'Maldonado', 'Garzón Tala 2568'),
+(12, 'Rocha', 'Rocha Guipúzcoa 2854'),
+(13, 'Lavalleja', 'Minas Monteadores 7521'),
+(14, 'Flores', 'Trinidad Paso Rivero 3324'),
+(15, 'Florida', 'Independencia Neptuno 1290'),
+(16, 'Durazno', 'Centenario Leandro Gomez 1535'),
+(17, 'Cerro Largo', 'Bañado De Medina Purificacion 9474'),
+(18, 'Treinta y Tres', 'Treinta Y Tres Paso Rivero 5681'),
+(19, 'San José', 'Rafael Perazza Costanera 7812'),
+
+-- Almacenes Externos
+(20, 'Montevideo', 'Montevideo Ibirapita 6052'),
+(21, 'Montevideo', 'Montevideo Arenales 8261'),
+(22, 'Montevideo', 'Montevideo Ibirapita 8731'),
+(23, 'Montevideo', 'Montevideo Arenales 5755');
 
 INSERT INTO `almacenexterno` (`idE`, `Empresa`) VALUES
 (20, 'Crecom'),
@@ -1111,52 +1164,146 @@ INSERT INTO `almaceninterno` (`idI`, `ruta`) VALUES
 
 
 INSERT INTO `vehiculo` (`MatriculaV`, `Estado`, `Disponibilidad`) VALUES
-('1538JMH', 'buenEstado', 'disponible'),
-('3455VGV', 'buenEstado', 'disponible'),
+-- camiones
+('6182HNP', 'buenEstado', 'disponible'),
+('7934JJC', 'buenEstado', 'disponible'),
 ('7816TKD', 'buenEstado', 'disponible'),
 ('8828FDZ', 'buenEstado', 'disponible'),
 ('8907YWY', 'buenEstado', 'disponible'),
-('1006TKH', 'malEstado', 'disponible'),
-('6182HNP', 'buenEstado', 'disponible'),
-('7934JJC', 'malEstado', 'disponible'),
+('7293HMN', 'malEstado', 'disponible'),
+('8673ZWN', 'buenEstado', 'enRuta'),
+('9748GGT', 'buenEstado', 'disponible'),
+
+-- camionetas
+('0916KND', 'buenEstado', 'disponible'),
+('1278VSW', 'buenEstado', 'disponible'),
+('2518NMZ', 'malEstado', 'disponible'),
+('2722WKS', 'buenEstado', 'disponible'),
+('1538JMH', 'buenEstado', 'disponible'),
+('3455VGV', 'buenEstado', 'disponible'),
+('1006TKH', 'buenEstado', 'disponible'),
 ('5972BSQ', 'buenEstado', 'disponible');
+
 
 INSERT INTO `camion` (`Matricula`, `Peso`, `Alto`, `Ancho`, `Largo`, `Tipo`) VALUES
 ('7934JJC', 2, 3, 2, 9, '3'),
 ('8828FDZ', 2, 2, 2, 2, '2'),
 ('7816TKD', 2, 3, 2, 9, '3'),
+('7293HMN', 2, 3, 2, 9, '3'),
+('8673ZWN', 2, 2, 2, 2, '2'),
+('9748GGT', 2, 3, 2, 9, '3'),
 ('8907YWY', 2, 2, 2, 2, '2'),
-('6182HNP', 2, 4, 2, 7, '7');
+('6182HNP', 3500, 4, 2, 7, '7');
 
 INSERT INTO `camioneta` (`MatriculaC`) VALUES
 ('3455VGV'),
 ('5972BSQ'),
 ('1538JMH'),
+('0916KND'),
+('1278VSW'),
+('2518NMZ'),
+('2722WKS'),
 ('1006TKH');
 
-INSERT INTO `personas` (`CI`, `Nombre`, `Telefono`, `Direccion`, `Mail`) VALUES
-(66051354, 'Luis Hernández', '097283023', 'Bv Artigas', 'LuisHernandez@gmail.com'),
-(16093047, 'Roberto Sanchez', '095728392', 'Gral Rivera', 'robertoSanchez@gmail.com'),
-(54928301, 'Martín García', '096926710', 'Bv España 6927', 'MartinGarcia@gmail.com'),
-(74469698, 'Bruno Mars', '097283023', 'Bv Artigas', 'BrunoMars@gmail.com'),
 
-(73989524, 'Jose Ramon', '091829323', 'José Batlle y Ordóñez', 'JoseRamon@gmail.com'),
-(1119808, 'Adriano Toledo', '091829323', 'José Batlle y Ordóñez', 'AdrianoToledo@gmail.com'),
+INSERT INTO `personas` (`CI`, `Nombre`, `Telefono`, `Direccion`, `Mail`) VALUES
+-- Administrador
+(74469698, 'Bruno Mars', '097283023', 'Bv Artigas', 'BrunoMars@gmail.com'),
+(16093047, 'Roberto Sanchez', '095728392', 'Gral Rivera', 'robertoSanchez@gmail.com'),
+(28030423, 'Jenifer Wang', '097287623', 'Bv Artigas', 'JeniferWang@gmail.com'),
+(95123687, 'Jorge Álvarez', '095728392', 'Gral Rivera', 'DanubioCampeon@gmail.com'),
+
+-- Almacen Interno
+(66051354, 'Luis Hernández', '097283023', 'Bv Artigas', 'LuisHernandez@gmail.com'),
+(54928301, 'Martín García', '096926710', 'Bv España 6927', 'MartinGarcia@gmail.com'),
+(31195220, 'Juan Pablo', '097283023', 'Bv Artigas', 'JuanPablo@gmail.com'),
+(98784612, 'Maria Francisca', '096926710', 'Bv España 6927', 'MariaFrancisca@gmail.com'),
+(34880995, 'Adriana Carrera', '097283023', 'Bv Artigas', 'AdrianaCarrera@gmail.com'),
+(94655213, 'Alejandro Parra', '096926710', 'Bv España 6927', 'AlejandroParra@gmail.com'),
+
+-- chofer camion
 (24618198, 'Abraham Alvarez', '095728392', 'Gral Rivera', 'AbrahamAlvarez@gmail.com'),
+(73989524, 'Jose Ramon', '091829323', 'José Batlle y Ordóñez', 'JoseRamon@gmail.com'),
+(40387408, 'Victor Jose', '095728392', 'Gral Rivera', 'VictorJose@gmail.com'),
+(41644934, 'Salvador Garrido', '091829323', 'José Batlle y Ordóñez', 'SalvadorGarrido@gmail.com'),
+(64637793, 'Jose Luis', '095728392', 'Gral Rivera', 'JoseLuis@gmail.com'),
+(36033948, 'Juan Caballero', '091829323', 'José Batlle y Ordóñez', 'JuanCaballero@gmail.com'),
+(87033948, 'Uxia del Pino', '091829323', 'José Batlle y Ordóñez', 'UxiaPino@gmail.com'),
+
+-- chofer camioneta
+(1119808, 'Adriano Toledo', '091829323', 'José Batlle y Ordóñez', 'AdrianoToledo@gmail.com'),
+(25557139, 'Jose Angel', '091829323', 'José Batlle y Ordóñez', 'JoseAngel@gmail.com'),
+(68383971, 'Natalia Rodriguez', '091829323', 'José Batlle y Ordóñez', 'NataliaRodriguez@gmail.com'),
+(18925549, 'Irene Morales', '091829323', 'José Batlle y Ordóñez', 'IreneMorales@gmail.com'),
+(94637793, 'Luis Carlos', '095794562', 'Gral Rivera', 'LuisCarlos@gmail.com'),
+(26033948, 'Maribel Casado', '091824523', 'José Batlle y Ordóñez', 'MaribelCasado@gmail.com'),
 (92132307, 'María Pérez', '091829323', 'José Batlle y Ordóñez', 'MariaPerez@gmail.com');
 
 
 INSERT INTO `personal` (`CIP`, `Cargo`, `FechaNacimiento`) VALUES
 (16093047, 'Gerente', '1998-07-07'),
 (74469698, 'Gerente', '1998-07-07'),
+(28030423, 'Gerente', '1998-07-07'),
+(95123687, 'Gerente', '1998-07-07'),
 (66051354, 'Empleado', '1998-07-07'),
+(31195220, 'Empleado', '1998-07-07'),
+(98784612, 'Empleado', '1998-07-07'),
+(34880995, 'Empleado', '1998-07-07'),
+(94655213, 'Empleado', '1998-07-07'),
 (54928301, 'Empleado', '2001-04-21');
 
+INSERT INTO `trabaja` (`IDA`, `CIP`) VALUES
+(1, 66051354),
+(2, 16093047),
+(3, 28030423),
+(4, 95123687),
+(11, 74469698),
+(17, 31195220),
+(18, 98784612),
+(13, 34880995),
+(6, 94655213),
+(15, 54928301);
+
 INSERT INTO `camionero` (`CIC`, `FechaVL`, `Turno`) VALUES
+-- camion
 (73989524, '2025-11-05', 'Tarde'),
-(1119808, '2025-11-05', 'Tarde'),
 (24618198, '2025-11-05', 'Tarde'),
+(40387408, '2025-11-05', 'Tarde'),
+(41644934, '2025-11-05', 'Tarde'),
+(64637793, '2025-11-05', 'Tarde'),
+(36033948, '2025-11-05', 'Tarde'),
+(87033948, '2025-11-05', 'Tarde'),
+
+(26033948, '2025-11-05', 'Tarde'),
+
+-- camioneta 
+(1119808, '2025-11-05', 'Tarde'),
+(25557139, '2025-11-05', 'Tarde'),
+(68383971, '2025-11-05', 'Tarde'),
+(18925549, '2025-11-05', 'Tarde'),
+(94637793, '2025-11-05', 'Tarde'),
 (92132307, '2026-03-02', 'Mañana');
+
+
+INSERT INTO `conduce` (`CIC`, `MatriculaV`, `Demora`, `fDemora`) VALUES
+-- chofer camion
+(24618198, '6182HNP', 'se pinchó una llanta', '2023-12-22 10:31:00'),
+(73989524, '8907YWY', null, null),
+(40387408, '8828FDZ', null, null),
+(41644934, '9748GGT', null, null),
+(64637793, '7816TKD', 'se pinchó una llanta', '2023-12-22 10:31:00'),
+(36033948, '7934JJC', null, null),
+(87033948, '8673ZWN', null, null),
+
+-- chofer camioneta 
+(1119808, '5972BSQ', 'se pinchó una llanta', '2023-12-02 15:01:00'),
+(68383971, '3455VGV', null, null),
+(25557139, '1006TKH', null, null),
+(18925549, '0916KND', 'se pinchó una llanta', '2023-12-02 15:01:00'),
+(94637793, '1278VSW', null, null),
+(26033948, '2722WKS', 'se pinchó una llanta', '2023-12-02 15:01:00'),
+(92132307, '1538JMH', null, null);
+
 
 INSERT INTO `recorrido` (`IDR`) VALUES
 (1),
@@ -1167,127 +1314,479 @@ INSERT INTO `recorrido` (`IDR`) VALUES
 (5);
 
 INSERT INTO `esta` (`IDR`, `IDA`, `Distancia`) VALUES
-(1, 1, '03:01:00'), 
-(6, 2, '03:01:00'),
+(1, 13, '04:01:00'),
+(1, 18, '05:01:00'),
+(2, 17, '03:41:00'),
+(2, 18, '02:01:00'),
+(3, 13, '01:01:00'),
+(3, 18, '03:31:00'),
+(4, 15, '01:21:00'),
+(4, 17, '02:31:00'),
+(4, 4, '03:51:00'),
+(6, 2, '02:01:00'),
 (6, 15, '03:01:00'),
-(6, 16, '03:01:00'),
-(3, 13, '03:01:00'),
-(3, 18, '03:01:00'),
-(5, 14, '03:01:00'),
-(5, 19, '03:01:00');
+(6, 16, '04:31:00'),
+(5, 14, '02:01:00'),
+(5, 19, '05:01:00');
 
 INSERT INTO `lotes` (`IDL`, `Peso`, `Estado`, `Destino`, `tiempoEstimado`, `enAlmacenExterno`, `Empresa`) VALUES
-(1, 0, 'Asignado', '3', '2023-12-22 21:03:00', 0, 'jk'),
-(2, 0, 'entregado', '10', '2023-12-30 21:05:00', 0, 'jk'),
-(3, 0, 'noAsignado', '3', '2023-12-22 21:03:00', 0, 'jk'),
-(4, 0, 'noAsignado', '10', '2023-12-30 21:05:00', 0, 'k'),
-(5, 0, 'noAsignado', '3', '2023-12-22 21:03:00', 0, 'k'),
-(6, 0, 'entregado', '10', '2023-12-30 21:05:00', 0, 'l'),
-(7, 0, 'noAsignado', 's', '2023-12-22 21:03:00', 1, 'Crecom'),
-(8, 0, 'entregado', 'd', '2023-12-30 21:05:00', 1, 'Crecom'),
-(9, 0, 'noAsignado', 'd', '2023-12-30 21:05:00', 1, 'Crecom'),
-(10, 0, 'noAsignado', 'Montevideo', '2023-12-02 22:30:00', 1, 'Devoto');
+(1, 0, 'noAsignado', 'Cerro Largo', '2023-07-12 21:03:00', 0, 'jk'),
+(2, 0, 'noAsignado', 'Cerro Largo', '2023-07-14 21:05:00', 0, 'jk'),
+(3, 0, 'noAsignado', 'Treinta y Tres', '2023-05-11 21:03:00', 0, 'jk'),
+(4, 0, 'noAsignado', 'Lavalleja', '2023-07-12 21:05:00', 0, 'k'),
+(5, 0, 'noAsignado', 'Canelones', '2023-05-13 21:03:00', 0, 'k'),
+(6, 0, 'noAsignado', 'Florida', '2023-12-30 21:05:00', 0, 'l'),
+(7, 0, 'noAsignado', 'Florida', '2023-05-22 21:03:00', 0, 'jk'),
+(8, 0, 'noAsignado', 'Tacuarembó', '2023-05-20 21:05:00', 0, 'jk'),
+(9, 0, 'noAsignado', 'Durazno', '2023-08-11 21:03:00', 0, 'jk'),
+(10, 0, 'noAsignado', 'Maldonado', '2023-07-12 21:05:00', 0, 'k'),
+(11, 0, 'noAsignado', 'Salto', '2023-07-13 21:03:00', 0, 'k'),
+(12, 0, 'noAsignado', 'Artigas', '2023-12-30 21:05:00', 0, 'l'),
+
+(13, 0, 'noAsignado', 's', '2023-12-22 21:03:00', 1, 'Crecom'),
+(14, 0, 'noAsignado', 'd', '2023-12-30 21:05:00', 1, 'Crecom'),
+(15, 0, 'noAsignado', 'd', '2023-12-30 21:05:00', 1, 'Crecom'),
+(16, 0, 'noAsignado', 's', '2023-12-22 21:03:00', 1, 'Crecom'),
+(17, 0, 'noAsignado', 'd', '2023-12-30 21:05:00', 1, 'Crecom'),
+(18, 0, 'noAsignado', 'd', '2023-12-30 21:05:00', 1, 'Crecom'),
+(19, 0, 'noAsignado', 'd', '2023-12-30 21:05:00', 1, 'Devoto'),
+(20, 0, 'noAsignado', 'Montevideo', '2023-12-02 22:30:00', 1, 'Devoto');
 
 INSERT INTO `va_hacia` (`IDL`, `IDR`, `IDA`) VALUES
-(4, 6, 2), 
-(2, 6, 2),
-(3, 6, 16);
+(1, 2, 17), 
+(3, 2, 18), 
+(4, 3, 13), 
+(2, 4, 17),
+(7, 4, 15), 
+(8, 4, 4),
+(5, 6, 2), 
+(6, 6, 15),
+(9, 6, 16);
 
 
-INSERT INTO `paquetes` (`codigo`, `Peso`, `Estado`, `fRecibo`, `fEntrega`, `Destinatario`, `Destino`, `Empresa`) VALUES
-(1, '6', 'enAlmacenExterno', '2023-09-09', '2023-12-10', 'Maria', '8', 'Crecom'),
-(2, '4', 'enAlmacenExterno', '2023-06-06', '2023-12-01', 'Bruno', '6', 'Crecom'),
-(3, '10', 'enAlmacenExterno', '2023-07-07', '2023-12-08', 'Agustín', '77', 'Crecom'),
-(4, '6', 'enAlmacenExterno', '2023-07-07', '2023-12-08', 'Jesús', 'Melo av12', 'Crecom'),
-(5, '34', 'enAlmacenExterno', '2023-08-08', '2023-12-08', 'Tiago', '8', 'Crecom'),
-(6, '12', 'enAlmacenExterno', '2023-05-05', '2023-12-07', 'Ignacio', 'Melo av122', 'Crecom'),
-(7, '7', 'enCentral', '2023-07-07', '2023-12-08', 'Diago', 'Melo av12', 'Crecom'),
-(8, '2', 'enCentral', '2023-08-08', '2023-12-08', 'Mariano', '8', 'Crecom'),
-(9, '5', 'enCentral', '2023-05-05', '2023-12-07', 'Joaquín', 'Melo av122', 'Crecom'),
-(10, '6', 'enCentral', '2023-09-09', '2023-12-10', 'Diego', '8', 'Crecom'),
-(11, '4', 'enCentral', '2023-06-06', '2023-12-01', 'Guillermo', '6', 'Crecom'),
-(12, '9', 'enCentral', '2023-07-07', '2023-12-08', 'Juan Manuel', '77', 'Crecom'),
-(13, '11', 'loteDesarmado', '2023-09-09', '2023-12-10', 'Lucas', '8', 'Crecom'),
-(14, '13', 'loteDesarmado', '2023-06-06', '2023-12-01', 'Mauricio', '6', 'Crecom'),
-(15, '14', 'loteDesarmado', '2023-07-07', '2023-12-08', 'Roberto', '77', 'Crecom'),
-(16, '23', 'loteDesarmado', '2023-07-07', '2023-12-08', 'Luis', 'Melo av12', 'Crecom'),
-(17, '19', 'loteDesarmado', '2023-08-08', '2023-12-08', 'Alberto', '8', 'Crecom'),
-(18, '18', 'loteDesarmado', '2023-05-05', '2023-12-07', 'Javier', 'Melo av122', 'Crecom'),
-(19, '16', 'entregado', '2023-05-05', '2023-12-07', 'Ezequiel', 'Melo av122', 'Crecom'),
-(20, '16', 'entregado', '2023-05-05', '2023-12-07', 'Ezequiel', 'Melo av122', 'Crecom'),
-(21, '3', 'entregado', '2023-05-06', '2023-12-08', 'Matías', 'Melo Av126', 'Crecom');
+INSERT INTO `paquetes` (`codigo`, `Peso`, `Estado`, `fRecibo`, `fEntrega`, `Destinatario`, `Destino`, `Departamento`, `Empresa`) VALUES
+(1, '6', 'enAlmacenExterno', null, '2023-05-10', 'Maria', 'Melo', 'Cerro Largo','Crecom'),
+(2, '4', 'enAlmacenExterno', null, '2023-05-10', 'Bruno', 'Melo av12','Cerro Largo', 'Crecom'),
+(3, '10', 'enAlmacenExterno', null, '2024-05-08', 'Agustín', '77', 'Cerro Largo', 'Crecom'),
+(4, '6', 'enAlmacenExterno', null, '2024-05-08', 'Jesús', 'Melo av12','Cerro Largo', 'Crecom'),
+(5, '34', 'enAlmacenExterno', null, '2024-05-08', 'Tiago', '8','Cerro Largo', 'Crecom'),
+(6, '12', 'enAlmacenExterno', null, '2023-12-07', 'Ignacio', 'Melo av122','Cerro Largo', 'Crecom'),
+(7, '20', 'enAlmacenExterno', null, '2023-12-08', 'Diago', 'Melo av12','Cerro Largo', 'Crecom'),
+(8, '2', 'enAlmacenExterno', null, '2023-12-08', 'Mariano', '8','Cerro Largo', 'Crecom'),
+(9, '5', 'enAlmacenExterno', null, '2023-12-07', 'Joaquín', 'Melo av122','Cerro Largo', 'Crecom'),
+(10, '7', 'enAlmacenExterno', null, '2023-12-08', 'Diago', 'Melo av12','Cerro Largo','Crecom'),
+(11, '2', 'enAlmacenExterno', null, '2023-12-08', 'Mariano', '8','Treinta y Tres', 'Crecom'),
+(12, '5', 'enAlmacenExterno', null, '2023-12-07', 'Joaquín', 'Melo av122','Treinta y Tres', 'Crecom'),
+(13, '6', 'enAlmacenExterno', null, '2023-12-10', 'Diego', '8','Treinta y Tres', 'Crecom'),
+(14, '4', 'enAlmacenExterno', null, '2023-12-01', 'Guillermo', '6','Treinta y Tres', 'Crecom'),
+(15, '9', 'enAlmacenExterno', null, '2023-12-08', 'Juan Manuel', '77','Treinta y Tres', 'Crecom'),
+(16, '11', 'enAlmacenExterno', null, '2023-12-10', 'Lucas', '8','Lavalleja', 'Crecom'),
+(17, '13', 'enAlmacenExterno', null, '2023-12-01', 'Mauricio', '6','Lavalleja', 'Crecom'),
+(18, '14', 'enAlmacenExterno', null, '2023-12-08', 'Roberto', '77','Lavalleja', 'Crecom'),
+(19, '23', 'enAlmacenExterno', null, '2023-12-08', 'Luis', 'Melo av12', 'Lavalleja','Crecom'),
+(20, '19', 'enAlmacenExterno', null, '2023-12-08', 'Alberto', '8','Lavalleja', 'Crecom'),
+(21, '18', 'enAlmacenExterno', null, '2023-12-07', 'Javier', 'Melo av122','Canelones', 'Crecom'),
+(22, '16', 'enAlmacenExterno', null, '2023-07-07', 'Ezequiel', 'Melo av122', 'Canelones','Crecom'),
+(23, '16', 'enAlmacenExterno', null, '2023-07-10', 'Ezequiel', 'Melo av122','Canelones', 'Crecom'),
+(24, '6', 'enAlmacenExterno', null, '2023-12-10', 'Maria', '8','Canelones','Crecom'),
+(25, '4', 'enAlmacenExterno', null, '2023-12-01', 'Bruno', '6','Canelones', 'Crecom'),
+(26, '10', 'enAlmacenExterno', null, '2023-12-08', 'Agustín', '77', 'Florida','Crecom'),
+(27, '6', 'enAlmacenExterno', null, '2023-12-08', 'Jesús', 'Melo av12', 'Florida','Crecom'),
+(28, '34', 'enAlmacenExterno', null, '2023-12-08', 'Tiago', '8', 'Florida','Crecom'),
+(29, '12', 'enAlmacenExterno', null, '2023-12-07', 'Ignacio', 'Melo av122', 'Florida','Crecom'),
+(30, '20', 'enAlmacenExterno', null, '2023-12-08', 'Diago', 'Melo av12','Florida', 'Crecom'),
+(31, '2', 'enAlmacenExterno', null, '2023-12-08', 'Mariano', '8','Florida', 'Crecom'),
+(32, '5', 'enAlmacenExterno', null, '2023-12-07', 'Joaquín', 'Melo av122','Florida', 'Crecom'),
+(33, '7', 'enAlmacenExterno', null, '2023-12-08', 'Diago', 'Melo av12', 'Florida','Crecom'),
+(34, '2', 'enAlmacenExterno', null, '2023-12-08', 'Mariano', '8','Florida', 'Crecom'),
+(35, '5', 'enAlmacenExterno', null, '2023-12-07', 'Joaquín', 'Melo av122', 'Florida','Crecom'),
+(36, '6', 'enAlmacenExterno', null, '2023-12-10', 'Diego', '8','Tacuarembó', 'Crecom'),
+(37, '4', 'enAlmacenExterno', null, '2023-12-01', 'Guillermo', '6','Tacuarembó', 'Crecom'),
+(38, '9', 'enAlmacenExterno', null, '2023-12-08', 'Juan Manuel', '77', 'Tacuarembó','Crecom'),
+(39, '11', 'enAlmacenExterno', null, '2023-12-10', 'Lucas', '8', 'Tacuarembó','Crecom'),
+(40, '13', 'enAlmacenExterno', null, '2023-12-01', 'Mauricio', '6', 'Tacuarembó','Crecom'),
+(41, '14', 'enAlmacenExterno', null, '2023-12-08', 'Roberto', '77','Durazno', 'Crecom'),
+(42, '23', 'enAlmacenExterno', null, '2023-12-08', 'Luis', 'Melo av12','Artigas', 'Crecom'),
+(43, '19', 'enAlmacenExterno', null, '2023-12-08', 'Alberto', '8','Artigas', 'Crecom'),
+(44, '18', 'enAlmacenExterno', null, '2023-12-07', 'Javier', 'Melo av122', 'Artigas','Crecom'),
+(45, '16', 'enAlmacenExterno', null, '2024-07-07', 'Ezequiel', 'Melo av122','Salto', 'Crecom'),
+(46, '16', 'enAlmacenExterno', null, '2024-07-07', 'Ezequiel', 'Melo av122', 'Salto','Crecom'),
+(47, '4', 'enAlmacenExterno', null, '2023-12-01', 'Guillermo', '6','Salto', 'Crecom'),
+(48, '9', 'enAlmacenExterno', null, '2023-12-08', 'Juan Manuel', '77','Maldonado', 'Crecom'),
+(49, '11', 'enAlmacenExterno', null, '2023-12-10', 'Lucas', '8','Maldonado', 'Crecom'),
+(50, '3', 'enAlmacenExterno', null, '2024-07-08', 'Matías', 'Melo Av126','Maldonado', 'Crecom');
 
 INSERT INTO `contiene` (`codigo`, `IDL`) VALUES
-(7, 3),
-(8, 3),
-(9, 4),
-(1, 7),
-(2, 7),
-(3, 10);
+(1, 13),
+(2, 13),
+(3, 13),
+(4, 13),
+(5, 13),
+(6, 13),
+(7, 13),
+(8, 13),
+(9, 13),
+(10, 14),
+(11, 14),
+(12, 14),
+(13, 14),
+(14, 14),
+(15, 14),
+(16, 14),
+(17, 14),
+(18, 14),
+(19, 14),
+(20, 15),
+(21, 15),
+(22, 15),
+(23, 15),
+(24, 15),
+(25, 15),
+(26, 15),
+(27, 15),
+(28, 15),
+(29, 15),
+(30, 16),
+(31, 16),
+(32, 16),
+(33, 16),
+(34, 16),
+(35, 16),
+(36, 16),
+(37, 16),
+(38, 16),
+(39, 16),
+(40, 17),
+(41, 17),
+(42, 17),
+(43, 17),
+(44, 17),
+(45, 17);
 
-INSERT INTO `conduce` (`CIC`, `MatriculaV`, `Demora`, `fDemora`) VALUES
-(24618198, '8828FDZ', 'se pinchó una llanta', '2023-12-22 10:31:00'),
-(1119808, '5972BSQ', 'se pinchó una llanta', '2023-12-02 15:01:00'),
-(73989524, '8907YWY', null, null),
-(92132307, '1538JMH', null, null);
-
-INSERT INTO `trabaja` (`IDA`, `CIP`) VALUES
-(1, 66051354),
-(1, 16093047),
-(15, 74469698),
-(15, 54928301);
 
  INSERT INTO `lleva` (`IDL`, `Matricula`, `fEntrega`) VALUES
- (3, '6182HNP', null),
- (7, '8907YWY', '2024-06-17 18:30:00'),
- (4, '8907YWY', null);
+ (13, '6182HNP', null),
+ (14, '6182HNP', null),
+ (15, '8828FDZ', null),
+ (16, '8907YWY', null),
+ (17, '7934JJC', null);
  
+
 UPDATE lleva
-SET fEntrega = '2023-10-16 19:32:30'
+SET fEntrega = '2024-09-16 19:32:30' 
+WHERE IDL = 13;
+
+UPDATE lleva
+SET fEntrega = '2024-09-16 19:32:30' 
+WHERE IDL = 14;
+
+UPDATE lleva
+SET fEntrega = '2023-09-16 19:32:30' 
+WHERE IDL = 15;
+
+UPDATE lleva
+SET fEntrega = '2024-09-16 19:32:30' 
+WHERE IDL = 16;
+
+UPDATE lleva
+SET fEntrega = '2024-09-16 19:32:30' 
+WHERE IDL = 17;
+
+INSERT INTO `contiene` (`codigo`, `IDL`) VALUES
+(1, 1),
+(2, 1),
+(3, 1),
+(4, 1),
+(5, 1),
+(6, 2),
+(7, 2),
+(8, 2),
+(9, 2),
+(10, 2),
+(11, 3),
+(12, 3),
+(13, 3),
+(14, 3),
+(15, 3),
+(16, 4),
+(17, 4),
+(18, 4),
+(19, 4),
+(20, 4),
+(21, 5),
+(22, 5),
+(23, 5),
+(24, 5),
+(25, 5),
+(26, 6),
+(27, 6),
+(28, 6),
+(29, 6),
+(30, 6),
+(31, 7),
+(32, 7),
+(33, 7),
+(34, 7),
+(35, 7),
+(36, 8),
+(37, 8),
+(38, 8),
+(39, 8),
+(40, 8),
+(41, 9);
+
+INSERT INTO `lleva` (`IDL`, `Matricula`, `fEntrega`) VALUES
+ (1, '6182HNP', null),
+ (2, '6182HNP', null),
+ (3, '8828FDZ', null),
+ (4, '8907YWY', null),
+ (5, '6182HNP', null),
+ (6, '6182HNP', null),
+ (7, '6182HNP', null),
+ (8, '8907YWY', null);
+
+
+UPDATE lleva
+SET fEntrega = '2022-09-16 19:32:30' 
+WHERE IDL = 1;
+
+UPDATE lleva
+SET fEntrega = '2023-09-16 19:32:30' 
+WHERE IDL = 2;
+
+UPDATE lleva
+SET fEntrega = '2023-06-16 19:32:30' 
 WHERE IDL = 3;
 
+UPDATE lleva
+SET fEntrega = '2023-09-16 19:32:30' 
+WHERE IDL = 4;
+
+UPDATE lleva
+SET fEntrega = '2024-06-16 19:32:30' 
+WHERE IDL = 5;
+
+UPDATE lleva
+SET fEntrega = '2023-07-16 19:32:30' 
+WHERE IDL = 6;
+
+UPDATE lleva
+SET fEntrega = '2023-07-16 19:32:30' 
+WHERE IDL = 7;
+
+UPDATE vehiculo
+SET Disponibilidad = 'enRuta'
+WHERE MatriculaV = '6182HNP';
+
+UPDATE vehiculo
+SET Disponibilidad = 'enRuta'
+WHERE MatriculaV = '8907YWY';
+
 INSERT INTO `transporta` (`codigo`, `MatriculaC`, `fEntrega`) VALUES
-(13, '1538JMH', null),
-(14, '5972BSQ', '2023-12-22 18:01:00'),
-(15, '1538JMH', null),
-(8, '1538JMH', null);
+(1, '3455VGV', null),
+(2, '3455VGV', null),
+(3, '3455VGV', null),
+(4, '3455VGV', null),
+(5, '3455VGV', null),
+(6, '1006TKH', null),
+(7, '1006TKH', null),
+(8, '1006TKH', null),
+(9, '1006TKH', null),
+(10, '1006TKH', null),
+(11, '0916KND', null),
+(12, '0916KND', null),
+(13, '0916KND', null),
+(14, '0916KND', null),
+(15, '0916KND', null),
+(16, '2722WKS', null),
+(17, '2722WKS', null),
+(18, '2722WKS', null),
+(19, '2722WKS', null),
+(20, '2722WKS', null),
+(21, '1278VSW', null),
+(22, '1278VSW', null),
+(23, '1278VSW', null),
+(24, '1278VSW', null),
+(25, '1278VSW', null),
+(26, '1538JMH', null),
+(27, '1538JMH', null),
+(28, '1538JMH', null),
+(29, '1538JMH', null),
+(30, '1538JMH', null);
+
+UPDATE transporta
+SET fEntrega = '2023-05-16 19:32:30'
+WHERE codigo = 1;
+
+UPDATE transporta
+SET fEntrega = '2023-05-16 19:32:30'
+WHERE codigo = 2;
 
 UPDATE transporta
 SET fEntrega = '2023-10-16 19:32:30'
+WHERE codigo = 3;
+
+UPDATE transporta
+SET fEntrega = '2024-10-16 19:32:30'
+WHERE codigo = 4;
+
+UPDATE transporta
+SET fEntrega = '2023-10-16 19:32:30'
+WHERE codigo = 5;
+
+UPDATE transporta
+SET fEntrega = '2024-10-16 19:32:30'
+WHERE codigo = 6;
+
+UPDATE transporta
+SET fEntrega = '2023-10-16 19:32:30'
+WHERE codigo = 7;
+
+UPDATE transporta
+SET fEntrega = '2024-10-16 19:32:30'
 WHERE codigo = 8;
+
+UPDATE transporta
+SET fEntrega = '2023-10-16 19:32:30'
+WHERE codigo = 9;
+
+UPDATE transporta
+SET fEntrega = '2024-10-16 19:32:30'
+WHERE codigo = 10;
+UPDATE transporta
+SET fEntrega = '2023-10-16 19:32:30'
+WHERE codigo = 11;
+
+UPDATE transporta
+SET fEntrega = '2024-10-16 19:32:30'
+WHERE codigo = 12;
+
+UPDATE transporta
+SET fEntrega = '2023-10-16 19:32:30'
+WHERE codigo = 13;
+
+UPDATE transporta
+SET fEntrega = '2023-05-16 19:32:30'
+WHERE codigo = 14;
+
+UPDATE transporta
+SET fEntrega = '2023-10-16 19:32:30'
+WHERE codigo = 15;
+
+UPDATE transporta
+SET fEntrega = '2024-10-16 19:32:30'
+WHERE codigo = 16;
+
+UPDATE transporta
+SET fEntrega = '2023-10-16 19:32:30'
+WHERE codigo = 17;
+
+UPDATE transporta
+SET fEntrega = '2024-10-16 19:32:30'
+WHERE codigo = 18;
+
+UPDATE transporta
+SET fEntrega = '2023-10-16 19:32:30'
+WHERE codigo = 19;
+
+UPDATE transporta
+SET fEntrega = '2024-10-16 19:32:30'
+WHERE codigo = 20;
+
+UPDATE transporta
+SET fEntrega = '2023-10-16 19:32:30'
+WHERE codigo = 21;
+
+UPDATE transporta
+SET fEntrega = '2024-10-16 19:32:30'
+WHERE codigo = 22;
+
+UPDATE transporta
+SET fEntrega = '2023-10-16 19:32:30'
+WHERE codigo = 23;
+
+UPDATE transporta
+SET fEntrega = '2024-10-16 19:32:30'
+WHERE codigo = 24;
+
+UPDATE transporta
+SET fEntrega = '2023-10-16 19:32:30'
+WHERE codigo = 25;
+
 
 INSERT INTO `va` (`MatriculaC`, `idI`) VALUES
 ('1538JMH', 15),
-('5972BSQ', 1),
-('3455VGV', 12);  
+('5972BSQ', 15),
+('3455VGV', 17),
+('1006TKH', 17),
+('0916KND', 18),
+('2518NMZ', 4),
+('1278VSW', 2),
+('2722WKS', 13);  
 
 INSERT INTO `va_salida` (`MatriculaC`, `FechaSalida`) VALUES
 ('1538JMH', '2023-09-22 18:01:00'),
 ('5972BSQ', '2023-09-17 18:30:00');
 
 INSERT INTO `va_llegada` (`MatriculaC`,`FechaLlegada`) VALUES
-('1538JMH', '2023-09-22 18:01:00'),
 ('5972BSQ', '0088-06-08 08:08:00');
+
+UPDATE paquetes
+SET fRecibo = '2023-10-16 19:32:30'
+WHERE codigo = 21;
+
+UPDATE paquetes
+SET fRecibo = '2024-10-16 19:32:30'
+WHERE codigo = 22;
+
+UPDATE paquetes
+SET fRecibo = '2023-10-16 19:32:30'
+WHERE codigo = 23;
+
+UPDATE paquetes
+SET fRecibo = '2024-10-16 19:32:30'
+WHERE codigo = 24;
+
+UPDATE paquetes
+SET fRecibo = '2023-10-16 19:32:30'
+WHERE codigo = 25;
 
 
 -- Sentencias
--- 1V) Mostrar los paquetes entregados en el mes de mayo del 2023 con destino a la ciudad de Melo
-SELECT *
+-- 1V) Mostrar los paquetes entregados en el mes de mayo del 2023 con destino a la ciudad de Melo 
+SELECT paquetes.*
 FROM paquetes
-WHERE MONTH(fEntrega) = 5 AND YEAR(fEntrega) = 2023 AND Destino LIKE '%Melo%';
+JOIN transporta ON paquetes.codigo = transporta.codigo
+WHERE YEAR(transporta.fEntrega) = 2023
+  AND MONTH(transporta.fEntrega) = 5
+  AND paquetes.Destino LIKE '%Melo%'
+  AND paquetes.Estado = 'entregado';
 
--- 2V) MOSTRAR TODOS LOS ALMACENES Y LOS PAQUETES QUE FUERON ENTREGADOS EN LOS MISMOS DURANTE EL 2023,
+
+-- 2AV) MOSTRAR TODOS LOS ALMACENES Y LOS PAQUETES QUE FUERON ENTREGADOS EN LOS MISMOS DURANTE EL 2023,
 -- ORDENARLOS ADEMÁS DE LOS QUE RECIBIERON MAS PAQUETES A LOS QUE RECIBIERON MENOS. 
- SELECT a.*, COUNT(c.codigo) as total_paquetes
- FROM almacen a
- JOIN va_hacia ON va_hacia.IDA = a.id 
- JOIN lotes ON lotes.IDL = va_hacia.IDL
- JOIN lleva ON lleva.IDL = lotes.IDL 
- JOIN camion ON camion.Matricula = lleva.Matricula 
- JOIN contiene c ON c.IDL = lleva.IDL 
- WHERE YEAR(lleva.fEntrega) = 2023
- GROUP BY a.id
- ORDER BY total_paquetes DESC;
+SELECT a.ubicacion AS Almacen, COUNT(*) AS Cantidad_de_Paquetes
+FROM almacen a 
+JOIN va_hacia vh ON vh.IDA = a.id
+JOIN lotes lo ON lo.IDL = vh.IDL
+JOIN lleva l ON l.IDL = lo.IDL
+JOIN contiene c ON lo.IDL = c.IDL
+JOIN paquetes p ON c.codigo = p.codigo
+JOIN transporta t ON p.codigo = t.codigo
+WHERE p.Estado = 'entregado' AND t.fEntrega IS NOT NULL AND year(t.fEntrega) = 2023
+GROUP BY a.ubicacion
+ORDER BY COUNT(*) DESC;
+
+-- 2BV) MOSTRAR TODOS LOS ALMACENES Y LA CANTIDAD DE LOTES QUE TIENEN,
+-- ORDENARLOS ADEMÁS DE LOS QUE TIENEN MÁS LOTES A LOS QUE MENOS TIENEN. 
+SELECT a.ubicacion AS Almacen, COUNT(*) AS Cantidad_de_Lotes
+FROM almacen a 
+JOIN va_hacia vh ON vh.IDA = a.id
+JOIN lotes lo ON lo.IDL = vh.IDL
+JOIN lleva l ON l.IDL = lo.IDL
+WHERE lo.Estado = 'entregado' AND l.fEntrega IS NOT NULL
+GROUP BY a.ubicacion
+ORDER BY COUNT(*) DESC;
 
 -- 3V) Mostrar todos los camiones registrados y qué tarea se encuentran realizando en este momento
 SELECT MatriculaV, Estado, Disponibilidad
@@ -1295,7 +1794,7 @@ FROM vehiculo
 JOIN camion ON MatriculaV = Matricula;
 
 
--- 4V) Mostrar todos los camiones que visitaron durante el mes de junio un almacén dado
+-- 4V) Mostrar todos los camiones que visitaron durante el mes de junio un almacén dado X
 SELECT lleva.Matricula
 FROM lleva
 JOIN lotes ON lleva.IDL = lotes.IDL
@@ -1325,21 +1824,33 @@ WHERE DATEDIFF(CURRENT_DATE(), p.fRecibo) > 3;
 -- 7V) Mostrar todos los paquetes a los que aún no se les ha asignado un lote y la fecha en la que fueron recibidos
 SELECT codigo, fRecibo
 FROM paquetes
-WHERE Estado = 'enCentral' AND codigo NOT IN (SELECT codigo FROM contiene);
+WHERE Estado = 'enCentral' AND codigo NOT IN (SELECT codigo FROM contiene join lotes on contiene.IDL = lotes.IDL where enAlmacenExterno = 0);
 
 
--- 8V) Mostrar matrícula de los camiones que se encuentran fuera de servicio
+-- 8AV) Mostrar matrícula de los camiones que se encuentran fuera de servicio
 SELECT Matricula
 FROM camion
 JOIN vehiculo on camion.Matricula = vehiculo.MatriculaV 
 WHERE Estado = 'malEstado';
 
+-- 8BV) Mostrar matrícula de las camionetas que se encuentran fuera de servicio
+SELECT MatriculaC
+FROM camioneta
+JOIN vehiculo on camioneta.MatriculaC = vehiculo.MatriculaV 
+WHERE Estado = 'malEstado';
 
--- 9V)Mostrar todos los camiones que no tienen un conductor asignado y su estado operativo
+-- 9AV)Mostrar todos los camiones que no tienen un conductor asignado y su estado operativo
 SELECT v.MatriculaV, v.Estado 
 FROM vehiculo v
 JOIN camion cam on cam.Matricula= v.MatriculaV 
 LEFT JOIN conduce c ON cam.Matricula = c.MatriculaV
+WHERE c.MatriculaV IS NULL;
+
+-- 9BV)Mostrar todos las camionetas que no tienen un conductor asignado y su estado operativo
+SELECT v.MatriculaV, v.Estado 
+FROM vehiculo v
+JOIN camioneta cam on cam.MatriculaC= v.MatriculaV 
+LEFT JOIN conduce c ON cam.MatriculaC = c.MatriculaV
 WHERE c.MatriculaV IS NULL;
 
 
@@ -1347,91 +1858,211 @@ WHERE c.MatriculaV IS NULL;
 SELECT a.*
 FROM almacen a
 JOIN esta e ON a.id = e.IDA
-WHERE e.IDR = 2;
+WHERE e.IDR = 6;
 
+-- 11V) MOSTRAR LA LISTA DE LOS PAQUETES Y SU ESTADO, QUE SE ENCUENTREN EN UN ALMACÉN ESPECÍFICO. 
+SELECT paquetes.*
+FROM paquetes
+INNER JOIN contiene ON paquetes.codigo = contiene.codigo
+WHERE contiene.IDL IN (
+    SELECT lotes.IDL
+    FROM lotes
+    INNER JOIN contiene ON lotes.IDL = contiene.IDL
+    INNER JOIN va_hacia ON va_hacia.IDL = lotes.IDL
+    WHERE va_hacia.IDA = 15 AND lotes.Estado = 'entregado'
+) AND (Estado = 'loteDesarmado' OR Estado = 'camionetaAsignada');
+
+
+-- 12V) MOSTRAR LOS LOTES QUE LLEGARON A UN ALMACÉN ESPECÍFICO DURANTE EL MES DE AGOSTO DEL 2023. 
+SELECT lotes.*, lotes.IDL
+FROM lotes
+JOIN lleva ON lleva.IDL = lotes.IDL
+WHERE lotes.IDL IN (
+    SELECT va_hacia.IDL
+    FROM va_hacia
+    WHERE va_hacia.IDA = 15
+)
+AND YEAR(lleva.fEntrega) = 2023
+AND MONTH(lleva.fEntrega) = 7;
+
+
+
+-- 13V) MUESTRA LA INFORMACIÓN DE LOS CAMIONES QUE ACTUALMENTE SE ENCUENTREN EN RUTA, JUNTO CON SU CARGA, DESTINO Y HORARIO 
+-- ESTIMADO DE LLEGADA.
+SELECT v.MatriculaV, lotes.IDL, lotes.Peso, lotes.Destino, IDA, lotes.tiempoEstimado, v.Disponibilidad
+FROM vehiculo v
+JOIN lleva ON v.MatriculaV = lleva.Matricula
+JOIN lotes on lotes.IDL = lleva.IDL 
+JOIN va_hacia ON va_hacia.IDL = lotes.IDL
+WHERE v.Disponibilidad = 'enRuta' AND lotes.Estado='asignado';
+
+
+
+-- 14V) MUESTRE INFORMACIÓN DE UN PAQUETE ESPECÍFICO QUE YA HAYA SIDO ENTREGADO. ESTO IMPLICA, IDENTIFICADOR DE: LOTE, RECORRIDO, CAMIÓN 
+-- QUE LO TRANSPORTÓ, ALMACÉN DONDE SE ALMACENÓ, CAMIONETA QUE HIZO EL ÚLTIMO TRAMO Y DIRECCIÓN FINAL.
+SELECT p.codigo AS 'ID del Paquete', 
+       contiene.IDL AS 'ID del Lote', 
+       vh.IDR AS 'Recorrido', 
+       lleva.Matricula AS 'Matrícula del Camión', 
+       vh.IDA AS 'Almacén', 
+       t.MatriculaC AS 'Matrícula de la Camioneta', 
+       p.Destino AS 'Dirección'
+FROM paquetes p
+JOIN contiene ON contiene.codigo = p.codigo
+JOIN lleva ON lleva.IDL = contiene.IDL
+JOIN va_hacia vh ON lleva.IDL = vh.IDL
+JOIN transporta t ON p.codigo = t.codigo
+WHERE p.Estado = 'entregado'
+  AND p.codigo = 8;
+
+
+-- 15V) DADO UN CAMIÓN, MOSTRAR LOS RECORRIDOS REALIZADOS Y LOS ALMACENES VISITADOS EN EL ÚLTIMO MES. H
+SELECT DISTINCT l.IDL, vh.IDR AS Recorrido, vh.IDA AS AlmacenVisitado
+FROM camion c
+JOIN lleva l ON l.Matricula = c.Matricula
+JOIN va_hacia vh ON vh.IDL = l.IDL
+WHERE c.Matricula = '6182HNP'
+AND l.fEntrega >= DATE_SUB(CURRENT_DATE(), INTERVAL 1 MONTH);
+
+
+
+-- 16V) MOSTRAR LOS PAQUETES ENTREGADOS EN EL MES DE JULIO DE 2023, ORDENADOS POR FECHA DE ENTREGA DE FORMA DESCENDENTE. 
+SELECT *
+FROM paquetes
+WHERE Estado = 'entregado'
+    AND MONTH(fEntrega) = 7
+    AND YEAR(fEntrega) = 2023
+ORDER BY fEntrega DESC;
+
+
+
+-- 17V) MOSTRAR LOS CAMIONES QUE NO HICIERON NINGÚN RECORRIDO ENTRE EL 10 Y 17 DE JULIO DE 2024.
+SELECT DISTINCT c.Matricula
+FROM camion c
+JOIN lleva ON lleva.Matricula = c.Matricula
+JOIN lotes ON lotes.IDL = lleva.IDL
+JOIN va_hacia vh ON vh.IDL = lotes.IDL
+WHERE c.Matricula NOT IN (
+    SELECT DISTINCT c.Matricula
+    FROM camion c
+    JOIN lleva l ON l.Matricula = c.Matricula
+    JOIN lotes lo ON lo.IDL = l.IDL
+    WHERE lo.tiempoEstimado >= '2023-07-10 00:00:00' AND lo.tiempoEstimado <= '2023-07-17 23:59:59'
+);
+
+
+-- 18V) MOSTRAR LA LISTA DE ALMACENES QUE PERTENECEN A UN RECORRIDO DADO Y SU DISTANCIA CON EL CENTRO DE DISTRIBUCIÓN.
+SELECT esta.IDA, esta.Distancia AS Distancia_Central
+FROM esta
+where IDR = 6;
+
+
+
+-- 19V) MUESTRA LOS RECORRIDOS UTILIZADOS EN MAYO DEL 2023, ORDENADOS POR LA CANTIDAD DE CAMIONES QUE LO RECORRIERON DE MÁS A MENOS.
+SELECT va_hacia.IDR, COUNT(DISTINCT lleva.Matricula) AS CantidadCamiones
+FROM va_hacia
+JOIN lleva ON va_hacia.IDL = lleva.IDL
+JOIN lotes ON lotes.IDL = va_hacia.IDL 
+WHERE YEAR(lotes.tiempoEstimado) = 2023 AND MONTH(lotes.tiempoEstimado) = 05 
+GROUP BY va_hacia.IDR
+ORDER BY CantidadCamiones DESC;
+
+
+-- 20) MOSTRAR MATRÍCULA DEL CAMIÓN E IDENTIFICADOR DE ALMACÉN/ES Y RECORRIDO, DE LOS CAMIONES QUE EN SEPTIEMBRE DEL 2023 VIAJARON CON
+-- MENOS DEL 100% DE SU CARGA.
+SELECT l.Matricula, vh.IDA, vh.IDR, l.IDL
+FROM camion c
+JOIN lleva l ON c.Matricula = l.Matricula
+JOIN va_hacia vh ON vh.IDL = l.IDL
+JOIN lotes lo ON lo.IDL = vh.IDL
+WHERE 
+	MONTH(l.fEntrega) = 9 
+    AND YEAR(l.fEntrega) = 2023
+    AND lo.Estado = 'entregado'
+    AND (c.Peso + (SELECT SUM(lotes.Peso) FROM lotes JOIN lleva ON lotes.IDL = lleva.IDL WHERE lleva.Matricula = l.Matricula)) < 21000;
 
 
 
 -- vistas
 -- view que muestra las personas que noestan en un camionero ni en un personal
-CREATE VIEW vwPersonas AS
+CREATE VIEW vwpersonas AS
 SELECT * 
 FROM personas 
 WHERE CI NOT IN (SELECT CIC FROM camionero) AND CI NOT IN (SELECT CIP FROM personal);
 
 -- view que muestra los camioneros que no tienen un camion asignado
-CREATE VIEW vwCamionero AS
+CREATE VIEW vwcamionero AS
 SELECT CIC 
 FROM camionero 
 WHERE CIC NOT IN (SELECT CIC FROM conduce);
 
 -- view que muestra los trabajadores que no tienen un almacen asignado
-CREATE VIEW vwPersonal AS
+CREATE VIEW vwpersonal AS
 SELECT CIP 
 FROM personal 
 WHERE CIP NOT IN (SELECT CIP FROM trabaja);
 
 -- view que muestra los IDA de trabaja
-CREATE VIEW vwIdTrabaja AS
+CREATE VIEW vwidtrabaja AS
 SELECT IDA 
 FROM trabaja;
 
 -- view que muestra los almacenes que no estan ni en un almacenInterno ni en un almacenExterno
-CREATE VIEW vwAlmacen AS
+CREATE VIEW vwalmacen AS
 SELECT * 
 FROM almacen 
-WHERE id NOT IN (SELECT idE FROM AlmacenExterno) AND id NOT IN (SELECT idI FROM AlmacenInterno);
+WHERE id NOT IN (SELECT idE FROM almacenexterno) AND id NOT IN (SELECT idI FROM almaceninterno);
 
 -- view que muestra las matriculas de conduce
-CREATE VIEW vwMatriculaConduce AS
+CREATE VIEW vwmatriculaconduce AS
 SELECT MatriculaV 
 FROM conduce;
 
 -- view que muestra los vehiculos que no estan en un camion ni en una camioneta
-CREATE VIEW vwVehiculo AS
+CREATE VIEW vwvehiculo AS
 SELECT * 
 FROM vehiculo 
 WHERE MatriculaV NOT IN (SELECT MatriculaC FROM camioneta) AND MatriculaV NOT IN (SELECT Matricula FROM camion);
 
 -- view que muestra los vehiculos con buenEstado y que están disponibles
-CREATE VIEW vwBuenEstadoVehiculo AS
+CREATE VIEW vwbuenestadovehiculo AS
 SELECT MatriculaV 
 FROM vehiculo 
 WHERE Estado = 'buenEstado' AND Disponibilidad = 'disponible';
 
 -- view que muestra los camiones con buenEstado y que están disponibles
-CREATE VIEW vwBuenEstadoCamion AS
+CREATE VIEW vwbuenestadocamion AS
 SELECT Matricula
 FROM camion join vehiculo on Matricula = MatriculaV 
-WHERE Estado = 'buenEstado' AND Disponibilidad = 'disponible';
+WHERE Estado = 'buenEstado' AND Disponibilidad = 'disponible' AND camion.Matricula IN (SELECT MatriculaV FROM conduce);
 
 -- view que muestra los camiones con buenEstado y que están en ruta
-CREATE VIEW vwCamionEnRuta AS
+CREATE VIEW vwcamionenruta AS
 SELECT Matricula
 FROM camion join vehiculo on Matricula = MatriculaV 
-WHERE Estado = 'buenEstado' AND Disponibilidad = 'enRuta';
+WHERE Estado = 'buenEstado' AND Disponibilidad = 'enRuta' AND camion.Matricula IN (SELECT MatriculaV FROM conduce);
 
 -- view que muestra las camionetas con buenEstado y que están disponibles
-CREATE VIEW vwBuenEstadoCamioneta AS
+CREATE VIEW vwbuenestadocamioneta AS
 SELECT MatriculaC
 FROM camioneta join vehiculo on MatriculaC = MatriculaV 
 WHERE Estado = 'buenEstado' AND Disponibilidad = 'disponible';
 
 -- view que muestra las camionetas con buenEstado y que están en ruta
-CREATE VIEW vwCamionetaEnRuta AS
+CREATE VIEW vwcamionetaenruta AS
 SELECT MatriculaC
 FROM camioneta join vehiculo on MatriculaC = MatriculaV 
 WHERE Estado = 'buenEstado' AND Disponibilidad = 'enRuta';
 
 -- view que muestra los camiones que estan en buen estado y la fEntrega = null
-CREATE VIEW vwLleva AS
+CREATE VIEW vwlleva AS
 SELECT l.*
 FROM lleva l JOIN vehiculo v ON l.Matricula = v.MatriculaV
 WHERE v.Estado = 'buenEstado' AND v.Disponibilidad = 'disponible' AND l.fEntrega IS NULL;
 
 
 -- view que te muestra todos los camiones que no llevan un lote externo
-CREATE VIEW vwLleva_interno AS
+CREATE VIEW vwlleva_interno AS
 SELECT l.*
 FROM lleva l
 JOIN vehiculo v ON l.Matricula = v.MatriculaV 
@@ -1452,7 +2083,7 @@ AND l.fEntrega IS NULL;
 
 
 -- view que te muestra todos los camiones que no llevan un lote interno
-CREATE VIEW vwLleva_externo AS
+CREATE VIEW vwlleva_externo AS
 SELECT l.*
 FROM lleva l
 JOIN vehiculo v ON l.Matricula = v.MatriculaV 
@@ -1476,24 +2107,24 @@ CREATE VIEW vwcamion_interno AS
 SELECT *
 FROM camion join vehiculo on camion.Matricula = vehiculo.MatriculaV
 WHERE camion.Matricula not in (select Matricula FROM lleva join lotes on lleva.IDL = lotes.IDL where enAlmacenExterno=1 and lleva.fEntrega IS NULL) 
-AND vehiculo.Estado = 'buenEstado' AND vehiculo.Disponibilidad = 'disponible';
+AND vehiculo.Estado = 'buenEstado' AND vehiculo.Disponibilidad = 'disponible' AND camion.Matricula IN (SELECT MatriculaV FROM conduce);
 
 -- view que te muestra todos los camiones que no llevan un lote interno
 CREATE VIEW vwcamion_externo AS
 SELECT *
 FROM camion join vehiculo on camion.Matricula = vehiculo.MatriculaV
 WHERE camion.Matricula not in (select Matricula FROM lleva join lotes on lleva.IDL = lotes.IDL where enAlmacenExterno=0 and lleva.fEntrega IS NULL) 
-AND vehiculo.Estado = 'buenEstado' AND vehiculo.Disponibilidad = 'disponible';
+AND vehiculo.Estado = 'buenEstado' AND vehiculo.Disponibilidad = 'disponible' AND camion.Matricula IN (SELECT MatriculaV FROM conduce);
 
 
 -- view que muestra los lotes de QuickCarry
-CREATE VIEW vwLotesInterno AS
+CREATE VIEW vwlotesinterno AS
 SELECT * 
 FROM lotes 
 WHERE enAlmacenExterno = 0;
 
 -- view que muestra los lotes sin asignar y que son de QuickCarry
-CREATE VIEW vwLotesNoAsignados AS
+CREATE VIEW vwlotesnoasignados AS
 SELECT *
 FROM lotes 
 WHERE Estado = 'noAsignado' AND enAlmacenExterno = 0;
@@ -1505,38 +2136,44 @@ FROM lotes
 WHERE Estado = 'noAsignado' AND enAlmacenExterno = 0 and lotes.IDL not in (SELECT IDL FROM va_hacia);
 
 -- view que muestra los lotes de otros almacenes
-CREATE VIEW vwLotesExterno AS
+CREATE VIEW vwlotesexterno AS
 SELECT * 
 FROM lotes 
 WHERE enAlmacenExterno = 1;
 
 -- view que muestra los lotes sin asignar y que son de otra empresa
-CREATE VIEW vwLotesExternosNoAsignados AS
+CREATE VIEW vwlotesexternosnoasignados AS
 SELECT *
 FROM lotes 
 WHERE Estado = 'noAsignado' AND enAlmacenExterno = 1;
 
+-- view que muestra los lotes sin asignar y que son de otra empresa
+CREATE VIEW vwlotesexternosnoasignadosencontiene AS
+SELECT *
+FROM lotes 
+WHERE Estado = 'noAsignado' AND enAlmacenExterno = 1 AND IDL IN (SELECT IDL from contiene);
+
 -- view que muestra los paquetes en almacenes externos
-CREATE VIEW vwLotesEntregados AS
+CREATE VIEW vwlotesentregados AS
 SELECT * 
 FROM lotes 
 WHERE Estado = 'entregado';
 
 -- view que muestra los paquetes en almacenes externos
-CREATE VIEW vwLotesNoEntregados AS
+CREATE VIEW vwlotesnoentregados AS
 SELECT * 
 FROM lotes 
 WHERE Estado != 'entregado';
 
 -- view que muestra los lotes sin asignar y que son de otra empresa
- CREATE VIEW vwRecorridosNoAsignados AS
+ CREATE VIEW vwrecorridosnoasignados AS
  SELECT *
  FROM recorrido 
  WHERE IDR not in (SELECT IDR FROM va_hacia);
 
 
 -- view que muestra los paquetes en central o en lotes sin asignar
-CREATE VIEW vwPaquetesEnLotes AS 
+CREATE VIEW vwpaquetesenlotes AS 
 SELECT paquetes.* 
 FROM paquetes 
 LEFT JOIN contiene ON paquetes.codigo = contiene.codigo
@@ -1548,307 +2185,44 @@ WHERE
 
 
 -- view que muestra los paquetes en central
-CREATE VIEW vwPaquetesEnCentral AS
+CREATE VIEW vwpaquetesencentral AS
 SELECT * 
 FROM paquetes 
 WHERE Estado = 'enCentral';
 
 -- view que muestra los paquetes en almacenes externos
-CREATE VIEW vwPaquetesEnAlmacenExterno AS
+CREATE VIEW vwpaquetesenalmacenexterno AS
 SELECT * 
 FROM paquetes 
 WHERE Estado = 'enAlmacenExterno';
 
 -- view que muestra los paquetes en almacenes externos
-CREATE VIEW vwPaquetesEntregados AS
+CREATE VIEW vwpaquetesentregados AS
 SELECT * 
 FROM paquetes 
 WHERE Estado = 'entregado';
 
 -- view que muestra los paquetes en almacenes externos
-CREATE VIEW vwPaquetesNoEntregados AS
+CREATE VIEW vwpaquetesnoentregados AS
 SELECT * 
 FROM paquetes 
 WHERE Estado != 'entregado';
 
 
 -- view que muestra los paquetes que no se han entregado
-CREATE VIEW vwPaquetesCamioneta AS
+CREATE VIEW vwpaquetescamioneta AS
 SELECT transporta.* 
 FROM transporta join paquetes on transporta.codigo = paquetes.codigo 
 where paquetes.Estado='camionetaAsignada' AND transporta.fEntrega IS NULL;
 
 -- view que muestra los lotes sin asignar y que son de QuickCarry
-CREATE VIEW vwPaquetesContiene AS
+CREATE VIEW vwpaquetescontiene AS
 SELECT codigo, contiene.IDL
 FROM contiene join lotes on contiene.IDL = lotes.IDL
 WHERE lotes.Estado = 'noAsignado' AND lotes.enAlmacenExterno = 0;
 
 -- view que muestra los paquetes que no se han entregado
-CREATE VIEW vwPaqueteCamioneta AS
+CREATE VIEW vwpaquetecamioneta AS
 SELECT * 
 FROM transporta 
 where fEntrega is null;
-
-
--- Permisos de todos los usuarios
--- Permisos del Administrador
-GRANT USAGE ON ocean.* TO 'Administrador'@'localhost';
-
-grant all privileges on ocean.* to 'Administrador'@'localhost';
-
--- GRANT REPLICATION SLAVE ON *.* TO 'Administrador'@'%';
-
-show grants for Administrador@localhost;
-
-
--- Permisos de BackOffice
-GRANT USAGE ON ocean.usuario TO 'BackOffice'@'localhost';
-GRANT USAGE ON ocean.personas_token TO 'BackOffice'@'localhost';
-GRANT USAGE ON ocean.personas TO 'BackOffice'@'localhost';
-GRANT USAGE ON ocean.personal TO 'BackOffice'@'localhost';
-GRANT USAGE ON ocean.camionero TO 'BackOffice'@'localhost';
-GRANT USAGE ON ocean.camion TO 'BackOffice'@'localhost';
-GRANT USAGE ON ocean.camioneta TO 'BackOffice'@'localhost';
-GRANT USAGE ON ocean.vehiculo TO 'BackOffice'@'localhost';
-GRANT USAGE ON ocean.trabaja TO 'BackOffice'@'localhost';
-GRANT USAGE ON ocean.conduce TO 'BackOffice'@'localhost';
-GRANT USAGE ON ocean.lotes TO 'BackOffice'@'localhost';
-GRANT USAGE ON ocean.paquetes TO 'BackOffice'@'localhost';
-GRANT USAGE ON ocean.vwalmacen TO 'BackOffice'@'localhost';
-GRANT USAGE ON ocean.vwcamionero TO 'BackOffice'@'localhost';
-GRANT USAGE ON ocean.vwidtrabaja TO 'BackOffice'@'localhost';
-GRANT USAGE ON ocean.vwmatriculaconduce TO 'BackOffice'@'localhost';
-GRANT USAGE ON ocean.vwpersonal TO 'BackOffice'@'localhost';
-GRANT USAGE ON ocean.vwpersonas TO 'BackOffice'@'localhost';
-GRANT USAGE ON ocean.vwvehiculo TO 'BackOffice'@'localhost';
-GRANT USAGE ON ocean.vwpaquetesentregados TO 'BackOffice'@'localhost';
-GRANT USAGE ON ocean.vwpaquetesnoentregados TO 'BackOffice'@'localhost';
-GRANT USAGE ON ocean.vwlotesnoentregados TO 'BackOffice'@'localhost';
-GRANT USAGE ON ocean.vwlotesentregados TO 'BackOffice'@'localhost';
-
-
-GRANT SELECT ON ocean.vwpaquetesentregados TO 'BackOffice'@'localhost';
-GRANT SELECT ON ocean.vwpaquetesnoentregados TO 'BackOffice'@'localhost';
-GRANT SELECT ON ocean.vwlotesnoentregados TO 'BackOffice'@'localhost';
-GRANT SELECT ON ocean.vwlotesentregados TO 'BackOffice'@'localhost';
-
-GRANT SELECT ON ocean.vwalmacen TO 'BackOffice'@'localhost';
-GRANT SELECT ON ocean.vwcamionero TO 'BackOffice'@'localhost';
-GRANT SELECT ON ocean.vwidtrabaja TO 'BackOffice'@'localhost';
-GRANT SELECT ON ocean.vwmatriculaconduce TO 'BackOffice'@'localhost';
-GRANT SELECT ON ocean.vwpersonal TO 'BackOffice'@'localhost';
-GRANT SELECT ON ocean.vwpersonas TO 'BackOffice'@'localhost';
-GRANT SELECT ON ocean.vwvehiculo TO 'BackOffice'@'localhost';
-
-GRANT SELECT, INSERT, DELETE, update ON ocean.almacenexterno TO 'BackOffice'@'localhost';
-GRANT SELECT, INSERT, DELETE, update ON ocean.almaceninterno TO 'BackOffice'@'localhost';
-GRANT SELECT, INSERT, DELETE, update ON ocean.almacen TO 'BackOffice'@'localhost';
-
-GRANT SELECT ON ocean.personas_token TO 'BackOffice'@'localhost';
-GRANT SELECT, INSERT, DELETE, update ON ocean.personas TO 'BackOffice'@'localhost';
-GRANT SELECT, INSERT, DELETE, update ON ocean.usuario TO 'BackOffice'@'localhost';
-GRANT SELECT, INSERT, DELETE, update ON ocean.personal TO 'BackOffice'@'localhost';
-GRANT SELECT, INSERT, DELETE, update ON ocean.camionero TO 'BackOffice'@'localhost';
-
-GRANT SELECT, INSERT, DELETE, update ON ocean.vehiculo TO 'BackOffice'@'localhost';
-GRANT SELECT, INSERT, DELETE, update ON ocean.camion TO 'BackOffice'@'localhost';
-GRANT SELECT, INSERT, DELETE, update ON ocean.camioneta TO 'BackOffice'@'localhost';
-
-GRANT SELECT, INSERT, DELETE ON ocean.trabaja TO 'BackOffice'@'localhost';
-GRANT SELECT, INSERT, DELETE ON ocean.conduce TO 'BackOffice'@'localhost';
-
-GRANT SELECT, INSERT, DELETE, update ON ocean.lotes TO 'BackOffice'@'localhost';
-GRANT SELECT, INSERT, DELETE, update ON ocean.paquetes TO 'BackOffice'@'localhost';
-
--- GRANT replication slave ON *.* TO 'BackOffice'@'%';
-
-show grants for BackOffice@localhost;
-
-
--- Permisos del AlmacenExterno
-GRANT USAGE ON ocean.personas_token TO 'AlmacenExterno'@'localhost';
-GRANT USAGE ON ocean.camion TO 'AlmacenExterno'@'localhost';
-GRANT USAGE ON ocean.almacen TO 'AlmacenExterno'@'localhost';
-GRANT USAGE ON ocean.almacenexterno TO 'AlmacenExterno'@'localhost';
-GRANT USAGE ON ocean.lotes TO 'AlmacenExterno'@'localhost';
-GRANT USAGE ON ocean.contiene TO 'AlmacenExterno'@'localhost';
-GRANT USAGE ON ocean.paquetes TO 'AlmacenExterno'@'localhost';
-GRANT USAGE ON ocean.lleva TO 'AlmacenExterno'@'localhost';
-GRANT USAGE ON ocean.vwbuenestadocamion TO 'AlmacenExterno'@'localhost';
-GRANT USAGE ON ocean.vwcamionenruta TO 'AlmacenExterno'@'localhost';
-GRANT USAGE ON ocean.vwlleva_externo TO 'AlmacenExterno'@'localhost';
-GRANT USAGE ON ocean.vwlleva TO 'AlmacenExterno'@'localhost';
-GRANT USAGE ON ocean.vwlotesexterno TO 'AlmacenExterno'@'localhost';
-GRANT USAGE ON ocean.vwlotesexternosnoasignados TO 'AlmacenExterno'@'localhost';
-GRANT USAGE ON ocean.vwpaquetescontiene TO 'AlmacenExterno'@'localhost';
-GRANT USAGE ON ocean.vwpaquetesenalmacenexterno TO 'AlmacenExterno'@'localhost';
-
-
-GRANT SELECT ON ocean.vwbuenestadocamion TO 'AlmacenExterno'@'localhost';
-GRANT SELECT ON ocean.vwcamionenruta TO 'AlmacenExterno'@'localhost';
-GRANT SELECT ON ocean.vwlleva_externo TO 'AlmacenExterno'@'localhost';
-GRANT SELECT ON ocean.vwlleva TO 'AlmacenExterno'@'localhost';
-GRANT SELECT ON ocean.vwlotesexterno TO 'AlmacenExterno'@'localhost';
-GRANT SELECT ON ocean.vwlotesexternosnoasignados TO 'AlmacenExterno'@'localhost';
-GRANT SELECT ON ocean.vwpaquetescontiene TO 'AlmacenExterno'@'localhost';
-GRANT SELECT ON ocean.vwpaquetesenalmacenexterno TO 'AlmacenExterno'@'localhost';
-
-GRANT SELECT (Matricula) ON ocean.camion TO 'AlmacenExterno'@'localhost';
-
-GRANT SELECT ON ocean.personas_token TO 'AlmacenExterno'@'localhost';
-
-GRANT SELECT ON ocean.almacen TO 'AlmacenExterno'@'localhost';
-GRANT SELECT ON ocean.almacenexterno TO 'AlmacenExterno'@'localhost';
-GRANT SELECT, INSERT, DELETE ON ocean.lotes TO 'AlmacenExterno'@'localhost';
-GRANT SELECT (enAlmacenExterno) ON ocean.lotes TO 'AlmacenExterno'@'localhost';
-GRANT SELECT, INSERT, DELETE ON ocean.paquetes TO 'AlmacenExterno'@'localhost';
-GRANT SELECT (Peso), INSERT, DELETE, UPDATE (Peso) ON ocean.paquetes TO 'AlmacenExterno'@'localhost';
-
-GRANT SELECT, INSERT, DELETE ON ocean.contiene TO 'AlmacenExterno'@'localhost';
-GRANT SELECT, INSERT, DELETE ON ocean.lleva TO 'AlmacenExterno'@'localhost';
-
--- GRANT replication slave ON *.* TO 'AlmacenExterno'@'%';
-
-show grants for AlmacenExterno@localhost;
-
-
--- Permisos de AlmacenInterno
-GRANT USAGE ON ocean.personas_token TO 'AlmacenInterno'@'localhost';
-GRANT USAGE ON ocean.camion TO 'AlmacenInterno'@'localhost';
-GRANT USAGE ON ocean.almacen TO 'AlmacenInterno'@'localhost';
-GRANT USAGE ON ocean.almaceninterno TO 'AlmacenInterno'@'localhost';
-GRANT USAGE ON ocean.lotes TO 'AlmacenInterno'@'localhost';
-GRANT USAGE ON ocean.paquetes TO 'AlmacenInterno'@'localhost';
-GRANT USAGE ON ocean.lleva TO 'AlmacenInterno'@'localhost';
-GRANT USAGE ON ocean.camioneta TO 'AlmacenInterno'@'localhost';
-GRANT USAGE ON ocean.recorrido TO 'AlmacenInterno'@'localhost';
-GRANT USAGE ON ocean.contiene TO 'AlmacenInterno'@'localhost';
-GRANT USAGE ON ocean.transporta TO 'AlmacenInterno'@'localhost';
-GRANT USAGE ON ocean.esta TO 'AlmacenInterno'@'localhost';
-GRANT USAGE ON ocean.va TO 'AlmacenInterno'@'localhost';
-GRANT USAGE ON ocean.va_salida TO 'AlmacenInterno'@'localhost';
-GRANT USAGE ON ocean.va_llegada TO 'AlmacenInterno'@'localhost';
-GRANT USAGE ON ocean.vwbuenestadocamion TO 'AlmacenInterno'@'localhost';
-GRANT USAGE ON ocean.vwbuenestadocamioneta TO 'AlmacenInterno'@'localhost';
-GRANT USAGE ON ocean.vwbuenestadovehiculo TO 'AlmacenInterno'@'localhost';
-GRANT USAGE ON ocean.vwcamionenruta TO 'AlmacenInterno'@'localhost';
-GRANT USAGE ON ocean.vwcamionetaenruta TO 'AlmacenInterno'@'localhost';
-GRANT USAGE ON ocean.vwlleva TO 'AlmacenInterno'@'localhost';
-GRANT USAGE ON ocean.vwlleva_interno TO 'AlmacenInterno'@'localhost';
-GRANT USAGE ON ocean.vwlotesinterno TO 'AlmacenInterno'@'localhost';
-GRANT USAGE ON ocean.vwlotesnoasignados TO 'AlmacenInterno'@'localhost';
-GRANT USAGE ON ocean.vwpaquetescamioneta TO 'AlmacenInterno'@'localhost';
-GRANT USAGE ON ocean.vwpaquetescontiene TO 'AlmacenInterno'@'localhost';
-GRANT USAGE ON ocean.vwpaquetesencentral TO 'AlmacenInterno'@'localhost';
-GRANT USAGE ON ocean.vwpaquetesenlotes TO 'AlmacenInterno'@'localhost';
-
-
-GRANT SELECT ON ocean.vwbuenestadocamion TO 'AlmacenInterno'@'localhost';
-GRANT SELECT ON ocean.vwbuenestadocamioneta TO 'AlmacenInterno'@'localhost';
-GRANT SELECT ON ocean.vwbuenestadovehiculo TO 'AlmacenInterno'@'localhost';
-GRANT SELECT ON ocean.vwcamionenruta TO 'AlmacenInterno'@'localhost';
-GRANT SELECT ON ocean.vwcamionetaenruta TO 'AlmacenInterno'@'localhost';
-GRANT SELECT ON ocean.vwlleva TO 'AlmacenInterno'@'localhost';
-GRANT SELECT ON ocean.vwlleva_interno TO 'AlmacenInterno'@'localhost';
-GRANT SELECT ON ocean.vwlotesinterno TO 'AlmacenInterno'@'localhost';
-GRANT SELECT ON ocean.vwlotesnoasignados TO 'AlmacenInterno'@'localhost';
-GRANT SELECT ON ocean.vwpaquetescamioneta TO 'AlmacenInterno'@'localhost';
-GRANT SELECT ON ocean.vwpaquetescontiene TO 'AlmacenInterno'@'localhost';
-GRANT SELECT ON ocean.vwpaquetesencentral TO 'AlmacenInterno'@'localhost';
-GRANT SELECT ON ocean.vwpaquetesenlotes TO 'AlmacenInterno'@'localhost';
-
-GRANT SELECT ON ocean.personas_token TO 'AlmacenInterno'@'localhost';
-
-GRANT SELECT (Matricula) ON ocean.camion TO 'AlmacenInterno'@'localhost';
-GRANT SELECT (MatriculaC) ON ocean.camioneta TO 'AlmacenInterno'@'localhost';
-
-GRANT SELECT ON ocean.almacen TO 'AlmacenInterno'@'localhost';
-GRANT SELECT ON ocean.almaceninterno TO 'AlmacenInterno'@'localhost';
-
-GRANT SELECT, INSERT, DELETE ON ocean.lotes TO 'AlmacenInterno'@'localhost';
-GRANT SELECT (enAlmacenExterno) ON ocean.lotes TO 'AlmacenInterno'@'localhost';
-
-GRANT SELECT, INSERT, DELETE ON ocean.recorrido TO 'AlmacenInterno'@'localhost';
-
-GRANT SELECT, INSERT, DELETE ON ocean.esta TO 'AlmacenInterno'@'localhost';
-
-GRANT SELECT, INSERT, DELETE ON ocean.paquetes TO 'AlmacenInterno'@'localhost';
-GRANT SELECT, INSERT, DELETE, UPDATE (Peso) ON ocean.paquetes TO 'AlmacenInterno'@'localhost';
-
-GRANT SELECT, INSERT, DELETE ON ocean.contiene TO 'AlmacenInterno'@'localhost';
-GRANT SELECT, INSERT, DELETE ON ocean.lleva TO 'AlmacenInterno'@'localhost';
-GRANT SELECT, INSERT, DELETE ON ocean.lleva TO 'AlmacenInterno'@'localhost';
-
-GRANT SELECT, INSERT, DELETE ON ocean.va TO 'AlmacenInterno'@'localhost';
-GRANT SELECT, INSERT, DELETE ON ocean.va_llegada TO 'AlmacenInterno'@'localhost';
-GRANT SELECT, INSERT, DELETE ON ocean.va_salida TO 'AlmacenInterno'@'localhost';
-
--- GRANT replication slave ON *.* TO 'AlmacenInterno'@'%';
-
-show grants for AlmacenInterno@localhost;
-
-
--- Permisos de ChoferCamion
-GRANT USAGE ON ocean.personas_token TO 'ChoferCamion'@'localhost';
-GRANT USAGE ON ocean.camion TO 'ChoferCamion'@'localhost';
-GRANT USAGE ON ocean.lotes TO 'ChoferCamion'@'localhost';
-GRANT USAGE ON ocean.paquetes TO 'ChoferCamion'@'localhost';
-GRANT USAGE ON ocean.lleva TO 'ChoferCamion'@'localhost';
-GRANT USAGE ON ocean.recorrido TO 'ChoferCamion'@'localhost';
-GRANT USAGE ON ocean.conduce TO 'ChoferCamion'@'localhost';
-GRANT USAGE ON ocean.esta TO 'ChoferCamion'@'localhost';
-
-GRANT SELECT ON ocean.personas_token TO 'ChoferCamion'@'localhost';
-
-GRANT SELECT ON ocean.camion TO 'ChoferCamion'@'localhost';
-
-GRANT SELECT ON ocean.lotes TO 'ChoferCamion'@'localhost';
-GRANT SELECT, UPDATE (Estado) ON ocean.lotes TO 'ChoferCamion'@'localhost';
-
-GRANT SELECT (codigo) ON ocean.paquetes TO 'ChoferCamion'@'localhost';
-GRANT SELECT, UPDATE (Estado) ON ocean.paquetes TO 'ChoferCamion'@'localhost';
-
-GRANT SELECT ON ocean.recorrido TO 'ChoferCamion'@'localhost';
-
-GRANT SELECT ON ocean.conduce TO 'ChoferCamion'@'localhost';
-GRANT SELECT, update (Demora) ON ocean.conduce TO 'ChoferCamion'@'localhost';
-GRANT SELECT, update (fDemora) ON ocean.conduce TO 'ChoferCamion'@'localhost';
-
-GRANT SELECT ON ocean.lleva TO 'ChoferCamion'@'localhost';
-GRANT SELECT, UPDATE (fEntrega) ON ocean.lleva TO 'ChoferCamion'@'localhost';
-
-GRANT SELECT ON ocean.esta TO 'ChoferCamion'@'localhost';
-
-
--- GRANT replication slave ON *.* TO 'ChoferCamion'@'%';
-
-show grants for ChoferCamion@localhost;
-
-
--- Permisos de ChoferCamioneta
-GRANT USAGE ON ocean.personas_token TO 'ChoferCamioneta'@'localhost';
-GRANT USAGE ON ocean.camioneta TO 'ChoferCamioneta'@'localhost';
-GRANT USAGE ON ocean.paquetes TO 'ChoferCamioneta'@'localhost';
-GRANT USAGE ON ocean.transporta TO 'ChoferCamioneta'@'localhost';
-GRANT USAGE ON ocean.conduce TO 'ChoferCamioneta'@'localhost';
-
-GRANT SELECT ON ocean.personas_token TO 'ChoferCamioneta'@'localhost';
-
-GRANT SELECT ON ocean.camioneta TO 'ChoferCamioneta'@'localhost';
-
-GRANT SELECT ON ocean.paquetes TO 'ChoferCamioneta'@'localhost';
-GRANT SELECT, update (Estado) ON ocean.paquetes TO 'ChoferCamioneta'@'localhost';
-
-GRANT SELECT ON ocean.transporta TO 'ChoferCamioneta'@'localhost';
-GRANT SELECT, update (fEntrega) ON ocean.transporta TO 'ChoferCamioneta'@'localhost';
-
-GRANT SELECT ON ocean.conduce TO 'ChoferCamioneta'@'localhost';
-GRANT SELECT, update (Demora) ON ocean.conduce TO 'ChoferCamioneta'@'localhost';
-GRANT SELECT, update (fDemora) ON ocean.conduce TO 'ChoferCamioneta'@'localhost';
-
--- GRANT replication slave ON *.* TO 'ChoferCamioneta'@'%';
-
-show grants for ChoferCamioneta@localhost;
-
-flush privileges;
